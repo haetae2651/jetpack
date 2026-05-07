@@ -1,0 +1,60 @@
+# Visual Studio
+.vs/
+*.VC.db
+*.VC.opendb
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build Results
+Debug/
+Release/
+x64/
+x86/
+Win32/
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+
+# Compiled Object files
+*.obj
+*.o
+*.pch
+*.pdb
+*.ilk
+*.idb
+
+# Executables
+*.exe
+*.out
+*.app
+
+# DLL / LIB
+*.dll
+*.lib
+*.exp
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Visual Studio Code
+.vscode/
+
+# Generated files
+*.aps
+*.ncb
+*.opt
+
+# Auto generated
+ipch/
