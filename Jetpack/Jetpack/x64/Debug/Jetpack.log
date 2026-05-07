@@ -1,3 +1,8 @@
-﻿  Main.cpp
-C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(33,16): warning C4244: 'return': 'WPARAM'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Jetpack.vcxproj -> C:\Users\user\Documents\GitHub\jetpack\Jetpack\x64\Debug\Jetpack.exe
+﻿  모듈 종속성의 소스를 검사하는 중...
+  소스.h
+  컴파일하는 중...
+  소스.h
+  Main.cpp
+C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(36,16): warning C4244: 'return': 'WPARAM'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+소스.h.obj : error LNK2005: "void __cdecl test(void)" (?test@@YAXXZ)이(가) Main.obj에 이미 정의되어 있습니다.
+C:\Users\user\Documents\GitHub\jetpack\Jetpack\x64\Debug\Jetpack.exe : fatal error LNK1169: 여러 번 정의된 기호가 있습니다.

@@ -5,6 +5,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|solutionrelative:Jetpack\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\Test.bmp||{58961B49-13E0-48C0-9258-13CBC4D40279}",
+      "RelativeMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|solutionrelative:Jetpack\\Test.bmp||{58961B49-13E0-48C0-9258-13CBC4D40279}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,8 +18,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Test.bmp",
+              "DocumentMoniker": "C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\Test.bmp",
+              "RelativeDocumentMoniker": "Jetpack\\Test.bmp",
+              "ToolTip": "C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\Test.bmp",
+              "RelativeToolTip": "Jetpack\\Test.bmp",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2026-05-07T03:36:52.687Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -24,7 +40,7 @@
               "RelativeDocumentMoniker": "Jetpack\\Main.cpp",
               "ToolTip": "C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\Main.cpp",
               "RelativeToolTip": "Jetpack\\Main.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAA+AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-05-07T03:08:54.123Z",
               "EditorCaption": ""

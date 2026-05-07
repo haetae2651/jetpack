@@ -1,11 +1,13 @@
 ﻿#include <windows.h>
 #include <tchar.h>
+
 HINSTANCE g_hInst;
 LPCTSTR lpszClass = L"My Window Class";
 LPCTSTR lpszWindowName = L"Window Programming Lab";
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
+
 	HWND hWnd;
 	MSG Message;
 	WNDCLASSEX WndClass;
@@ -44,6 +46,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	//--- 메시지 처리하기
 	switch (uMsg) {
 	case WM_CREATE:
+				//test();
 		break;
 	case WM_PAINT:
 		hDC = BeginPaint(hWnd, &ps);

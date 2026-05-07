@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "x64\\Debug\\소스.h.obj",
+            "outputs": [
+                "C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\x64\\Debug\\vc145.pdb",
+                "x64\\Debug\\",
+                "C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\x64\\Debug\\소스.h.ifc"
+            ],
+            "provides": [
+                {
+                    "logical-name": "소스.h",
+                    "source-path": "c:\\users\\user\\documents\\github\\jetpack\\jetpack\\jetpack\\소스.h",
+                    "lookup-method": "absolute"
+                }
+            ],
+            "requires": []
+        }
+    ]
+}
