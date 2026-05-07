@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="Jetpack/Jetpack.vcxproj" />
+  <Project Path="Jetpack/Jetpack.vcxproj" Id="81031b2e-c4de-4811-b1ef-eb5b0cdf22e7" />
 </Solution>
