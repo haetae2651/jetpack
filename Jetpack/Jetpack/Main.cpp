@@ -3,10 +3,13 @@
 
 HINSTANCE g_hInst;
 LPCTSTR lpszClass = L"My Window Class";
-LPCTSTR lpszWindowName = L"Window Programming Lab";
+LPCTSTR lpszWindowName = L"Jetpack";
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
+
+	int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+	int screenHeight = GetSystemMetrics(SM_CYSCREEN);
 
 	HWND hWnd;
 	MSG Message;
@@ -25,8 +28,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 	WndClass.lpszClassName = lpszClass;
 	WndClass.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 	RegisterClassEx(&WndClass);
-	hWnd = CreateWindow(lpszClass, lpszWindowName, WS_OVERLAPPEDWINDOW, 0, 0, 800, 600, NULL, (HMENU)NULL, hInstance, NULL);
-	ShowWindow(hWnd, nCmdShow);
+	hWnd = CreateWindowW(
+		lpszClass,
+		lpszWindowName,
+		WS_POPUP | WS_VISIBLE, 
+		0, 0,                  
+		GetSystemMetrics(SM_CXSCREEN), // 전체 가로 길이
+		GetSystemMetrics(SM_CYSCREEN), // 전체 세로 길이
+		nullptr, nullptr, hInstance, nullptr
+	);	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 	while (GetMessage(&Message, 0, 0, 0)) {
 		TranslateMessage(&Message);
@@ -48,6 +58,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 				//test();
 		break;
+	case WM_CHAR:
+		switch (wParam) {
+
+		case 'q':
+			PostQuitMessage(0);
+			break;
+		}
 	case WM_PAINT:
 		hDC = BeginPaint(hWnd, &ps);
 		EndPaint(hWnd, &ps);
