@@ -1,5 +1,6 @@
 ﻿#include <windows.h>
 #include <tchar.h>
+#include "Player.h"
 
 HINSTANCE g_hInst;
 LPCTSTR lpszClass = L"My Window Class";
@@ -23,7 +24,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 	WndClass.hInstance = hInstance;
 	WndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
-	WndClass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
+	WndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 	WndClass.lpszMenuName = NULL;
 	WndClass.lpszClassName = lpszClass;
 	WndClass.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
@@ -53,25 +54,88 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	PAINTSTRUCT ps;
 	HDC hDC;
-	//--- 메시지 처리하기
+	HDC mDC;
+	HBITMAP hBitmap;
+
+	static int playerX, playerY; // 플레이어 위치 변수
+
+	static int maxSpeed = 10;
+	static Player player;
+	
+	static RECT win;
+
 	switch (uMsg) {
 	case WM_CREATE:
-				//test();
+		GetClientRect(hWnd, &win);		// win: 창 클라이언트의 크기
+		SetTimer(hWnd, 1, 1, NULL);		// 타이머 설정 (1ms)
+		player.setPos({ win.right / 2, win.bottom / 2 });	// 플레이어 초기 위치 설정 (창 중앙)
+
 		break;
+
+
 	case WM_CHAR:
 		switch (wParam) {
 
 		case 'q':
-			PostQuitMessage(0);
-			break;
+				PostQuitMessage(0);
+				break;
 		}
-	case WM_PAINT:
+
+		break;
+
+
+
+	case WM_KEYDOWN:
+
+
+
+
+
+		break;
+	case WM_TIMER:
+		player.decel();				//감속은 항상 적용
+		player.update();			//위치 업데이트
+		player.move(wParam,maxSpeed);		//좌우 이동
+
+
+		InvalidateRect(hWnd, NULL, FALSE);
+		break;
+
+	case WM_PAINT: {
+
 		hDC = BeginPaint(hWnd, &ps);
+
+		//더블 버퍼링을 위한 메모리 DC와 비트맵 생성
+		mDC = CreateCompatibleDC(hDC);
+		hBitmap = CreateCompatibleBitmap(hDC, win.right, win.bottom);
+		SelectObject(mDC, hBitmap);
+		FillRect(mDC, &win, (HBRUSH)GetStockObject(WHITE_BRUSH));		//mDC 배경 흰색으로 채우기
+
+		playerX = player.getPos().x;
+		playerY = player.getPos().y;
+
+
+
+
+		Rectangle(mDC, playerX - 10, playerY - 10, playerX + 10, playerY	 + 10);   //플레이어 그리기(임시 사각형)
+
+
+
+		BitBlt(hDC, 0, 0, win.right, win.bottom, mDC, 0, 0, SRCCOPY);
+
+
+		DeleteObject(hBitmap);
+		DeleteDC(mDC);
 		EndPaint(hWnd, &ps);
 		break;
+	}
+
+
+
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
+
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
