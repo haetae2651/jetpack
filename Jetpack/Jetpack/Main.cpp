@@ -1,6 +1,7 @@
 ﻿#include <windows.h>
 #include <tchar.h>
 #include "Player.h"
+#include "BackGround.h"
 
 HINSTANCE g_hInst;
 LPCTSTR lpszClass = L"My Window Class";
@@ -64,12 +65,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	
 	static RECT win;
 
+	// ------------------------ BackGround 변수
+	static BackGround bg;
+
+
 	switch (uMsg) {
 	case WM_CREATE:
 		GetClientRect(hWnd, &win);		// win: 창 클라이언트의 크기
 		SetTimer(hWnd, 1, 1, NULL);		// 타이머 설정 (1ms)
 		player.setPos({ win.right / 2, win.bottom / 2 });	// 플레이어 초기 위치 설정 (창 중앙)
 
+		bg.Load(g_hInst); // 배경 비트맵 불러오기
 		break;
 
 
@@ -105,11 +111,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		hDC = BeginPaint(hWnd, &ps);
 
+		
+		
 		//더블 버퍼링을 위한 메모리 DC와 비트맵 생성
 		mDC = CreateCompatibleDC(hDC);
 		hBitmap = CreateCompatibleBitmap(hDC, win.right, win.bottom);
 		SelectObject(mDC, hBitmap);
-		FillRect(mDC, &win, (HBRUSH)GetStockObject(WHITE_BRUSH));		//mDC 배경 흰색으로 채우기
+
+		bg.Render(mDC, win); // 5월12일 배경 비트맵 그리기 - mDC사용
+
+		// FillRect(mDC, &win, (HBRUSH)GetStockObject(WHITE_BRUSH));		//mDC 배경 흰색으로 채우기
+		// (내가 하늘배경으로 바꿈)
 
 		playerX = player.getPos().x;
 		playerY = player.getPos().y;
