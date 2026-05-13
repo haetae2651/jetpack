@@ -140,7 +140,7 @@
     <ResourceCompile Include="Jetpack.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Users\유하영\OneDrive\바탕 화면\BackGround.bmp" />
+    <Image Include="..\BackGround.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
