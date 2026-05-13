@@ -1,5 +1,4 @@
 #include <windows.h>
-#include "resource.h"
 #include "BackGround.h"
 
 extern HINSTANCE hInstance;
@@ -18,7 +17,7 @@ BackGround::~BackGround() {}
 
 void BackGround::Load(HINSTANCE hInstance) 
 {
-    hBitmap = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP1));
+	// hBitmap = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP1)); 이거 리소스 비트맵 추가하고 주석 풀면 됨
     GetObject(hBitmap, sizeof(bmp), &bmp);
 }
 

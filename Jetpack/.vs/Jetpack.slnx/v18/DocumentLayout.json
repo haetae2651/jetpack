@@ -36,7 +36,7 @@
               "RelativeDocumentMoniker": "Jetpack\\BackGround.cpp",
               "ToolTip": "C:\\jetpack\\Jetpack\\Jetpack\\BackGround.cpp",
               "RelativeToolTip": "Jetpack\\BackGround.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAABjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-05-13T08:04:04.163Z",
               "EditorCaption": ""
@@ -63,8 +63,7 @@
               "RelativeToolTip": "Jetpack\\Player.h",
               "ViewState": "AgIAAAkAAAAAAAAAAADwvyMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-05-10T14:08:53.694Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-10T14:08:53.694Z"
             },
             {
               "$type": "Document",
@@ -76,8 +75,7 @@
               "RelativeToolTip": "Jetpack\\Main.cpp",
               "ViewState": "AgIAADoAAAAAAAAAAAAmwEkAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-05-07T03:08:54.123Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-07T03:08:54.123Z"
             }
           ]
         }

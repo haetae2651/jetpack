@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\jetpack\\Jetpack\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|C:\\jetpack\\Jetpack\\Jetpack\\BackGround.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|solutionrelative:Jetpack\\BackGround.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|C:\\jetpack\\Jetpack\\Jetpack\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|solutionrelative:Jetpack\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -22,11 +26,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
+              "Title": "BackGround.cpp",
+              "DocumentMoniker": "C:\\jetpack\\Jetpack\\Jetpack\\BackGround.cpp",
+              "RelativeDocumentMoniker": "Jetpack\\BackGround.cpp",
+              "ToolTip": "C:\\jetpack\\Jetpack\\Jetpack\\BackGround.cpp",
+              "RelativeToolTip": "Jetpack\\BackGround.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-05-13T08:04:04.163Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "PlayerCon.cpp",
               "DocumentMoniker": "C:\\jetpack\\Jetpack\\Jetpack\\PlayerCon.cpp",
               "RelativeDocumentMoniker": "Jetpack\\PlayerCon.cpp",
@@ -38,7 +55,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Player.h",
               "DocumentMoniker": "C:\\jetpack\\Jetpack\\Jetpack\\Player.h",
               "RelativeDocumentMoniker": "Jetpack\\Player.h",
@@ -51,7 +68,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Main.cpp",
               "DocumentMoniker": "C:\\jetpack\\Jetpack\\Jetpack\\Main.cpp",
               "RelativeDocumentMoniker": "Jetpack\\Main.cpp",
