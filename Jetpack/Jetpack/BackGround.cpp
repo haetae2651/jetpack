@@ -1,6 +1,6 @@
 #include <windows.h>
 #include "BackGround.h"
-
+#include "resource.h"
 extern HINSTANCE hInstance;
 extern HWND hWnd;
 extern RECT win;
@@ -10,22 +10,22 @@ BackGround::BackGround()
     hBitmap = NULL;
     hMemDC = NULL;
     hWnd = NULL;
-    bmp = {}; // BITMAPÀº ±¸Á¶Ã¼ÀÓ
+    bmp = {}; // BITMAPï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½
 }
 
 BackGround::~BackGround() {}
 
 void BackGround::Load(HINSTANCE hInstance) 
 {
-	// hBitmap = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP1)); ÀÌ°Å ¸®¼Ò½º ºñÆ®¸Ê Ãß°¡ÇÏ°í ÁÖ¼® Ç®¸é µÊ
+	hBitmap = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP1));// ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½Ò½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ï°ï¿½ ï¿½Ö¼ï¿½ Ç®ï¿½ï¿½ ï¿½ï¿½
     GetObject(hBitmap, sizeof(bmp), &bmp);
 }
 
 void BackGround::Render(HDC hDC, RECT win) 
 {
-    hMemDC = CreateCompatibleDC(hDC); //--- ¸Þ¸ð¸® DC ¸¸µé±â
-    (HBITMAP)SelectObject(hMemDC, hBitmap); //--- ºñÆ®¸Ê°ú ¸Þ¸ð¸® DC ¿¬°áÇÏ±â
+    hMemDC = CreateCompatibleDC(hDC); //--- ï¿½Þ¸ï¿½ DC ï¿½ï¿½ï¿½ï¿½ï¿½
+    (HBITMAP)SelectObject(hMemDC, hBitmap); //--- ï¿½ï¿½Æ®ï¿½Ê°ï¿½ ï¿½Þ¸ï¿½ DC ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
     StretchBlt(hDC, 0, 0, win.right, win.bottom, 
-        hMemDC, 0, 0, bmp.bmWidth, bmp.bmHeight, SRCCOPY); //--- À©µµ¿ì Å©±â¿¡ ¸Â±â ºñÆ®¸Ê ±×·ÁÁÖ±â
+        hMemDC, 0, 0, bmp.bmWidth, bmp.bmHeight, SRCCOPY); //--- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å©ï¿½â¿¡ ï¿½Â±ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½×·ï¿½ï¿½Ö±ï¿½
     DeleteDC(hMemDC);
 }
