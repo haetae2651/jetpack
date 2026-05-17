@@ -7,10 +7,23 @@ private :
 	HDC hMemDC;
 	HWND hWnd;
 	BITMAP bmp;
+
+	float cameraY; // 카메라의 Y 위치
+	float newcameraY;
+	float enemyY;  // 적의 Y 위치
+
+	float critical_point; // 임계점 y위치
+
 public :
 	BackGround();
 	~BackGround();
 
 	void Load(HINSTANCE hInstance);
 	void Render(HDC hDC, RECT win);
+
+	// 카메라 관련 함수 05.18
+	void Camera_Init(int winBottom);
+	void Camera_Update(float playerY);
+	void Render_Objects(HDC hDC);
+	float GetCameraY() const;
 };

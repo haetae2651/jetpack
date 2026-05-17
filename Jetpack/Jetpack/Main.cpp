@@ -67,6 +67,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 	// ------------------------ BackGround 변수
 	static BackGround bg;
+	static float cameraY;
 
 
 	switch (uMsg) {
@@ -76,6 +77,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		player.setPos({ win.right / 2, win.bottom / 2 });	// 플레이어 초기 위치 설정 (창 중앙)
 
 		bg.Load(g_hInst); // 배경 비트맵 불러오기
+		bg.Camera_Init(win.bottom);
+		cameraY = bg.GetCameraY();
 		break;
 
 
@@ -103,6 +106,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		player.update();			//위치 업데이트
 		player.move(wParam,maxSpeed);		//좌우 이동
 
+		// 카메라 임계점 5.18
+		bg.Camera_Update(player.getPos().y);
+		cameraY = bg.GetCameraY();
 
 		InvalidateRect(hWnd, NULL, FALSE);
 		break;
@@ -112,24 +118,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		hDC = BeginPaint(hWnd, &ps);
 
 		
-		
-		//더블 버퍼링을 위한 메모리 DC와 비트맵 생성
+		// 5.15 더블 버퍼링을 위한 메모리 DC와 비트맵 생성
 		mDC = CreateCompatibleDC(hDC);
 		hBitmap = CreateCompatibleBitmap(hDC, win.right, win.bottom);
 		SelectObject(mDC, hBitmap);
 
-		bg.Render(mDC, win); // 5월12일 배경 비트맵 그리기 - mDC사용
+		bg.Render(mDC, win); // 배경 비트맵 그리기 - mDC사용
 
 		// FillRect(mDC, &win, (HBRUSH)GetStockObject(WHITE_BRUSH));		//mDC 배경 흰색으로 채우기
-		// (내가 하늘배경으로 바꿈)
+
 
 		playerX = player.getPos().x;
 		playerY = player.getPos().y;
 
 
-
-
-		Rectangle(mDC, playerX - 10, playerY - 10, playerX + 10, playerY	 + 10);   //플레이어 그리기(임시 사각형)
+		// ***********유하영이 " - cameraY " 추가했다***********
+		Rectangle(mDC, playerX - 10, playerY - cameraY - 10, playerX + 10, playerY - cameraY + 10);   //플레이어 그리기(임시 사각형)
 
 
 

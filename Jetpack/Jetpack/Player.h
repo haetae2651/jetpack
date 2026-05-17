@@ -26,9 +26,11 @@ public:
 			//왼쪽키: 우측으로 이동, 오른쪽키: 좌측으로 이동 (누른 키 방향의 로켓이 켜지기 떄문에 반대로 이동)
 			if(GetAsyncKeyState(VK_RIGHT) & 0x8000) {
 				Xspeed -= 0.5;
+				if (Yspeed > -10.0) Yspeed -= 0.3;  // -5.0 이하로 안 내려가게 제한  // ***********유하영이 추가했다***********
 			}
 			if( GetAsyncKeyState(VK_LEFT) & 0x8000) {
 				Xspeed += 0.5;
+				if (Yspeed > -10.0) Yspeed -= 0.3;  // -5.0 이하로 안 내려가게 제한  // ***********유하영이 추가했다***********
 			}
 
 		}
@@ -52,6 +54,8 @@ public:
 	}
 
 	void update() {						//위치 업데이트 (현재 스피드 만큼 위치에 더함)
+		Yspeed += 0.1; // 중력 - ***********유하영이 추가했다***********
+		
 		pos.x += static_cast<int>(Xspeed);
 		pos.y += static_cast<int>(Yspeed);
 	}
