@@ -15,34 +15,27 @@ public:
 	void setFuel(int newFuel) { fuel = newFuel; }
 
 
-	void move(WPARAM wParam, int maxSpeed) {			// 좌우 누르면 속도 증가
+	void move(WPARAM wParam, int maxSpeed) {
 		
 
-		// GetAsyncKeyState는 현재 키의 상태를 반환하는 함수 (KeyDown으로 처리하면 버벅거림)
 
 		if (Xspeed <= maxSpeed && Xspeed >= -maxSpeed)
 		{
 
-			//왼쪽키: 우측으로 이동, 오른쪽키: 좌측으로 이동 (누른 키 방향의 로켓이 켜지기 떄문에 반대로 이동)
 			if(GetAsyncKeyState(VK_RIGHT) & 0x8000) {
 				Xspeed -= 0.5;
-				if (Yspeed > -10.0) Yspeed -= 0.3;  // -5.0 이하로 안 내려가게 제한  // ***********유하영이 추가했다***********
+				if (Yspeed > -5.0) Yspeed -= 0.4;  // -5.0 이하로 안 내려가게 제한  // ***********유하영이 추가했다*********** //잘했다 -_-b
 			}
 			if( GetAsyncKeyState(VK_LEFT) & 0x8000) {
 				Xspeed += 0.5;
-				if (Yspeed > -10.0) Yspeed -= 0.3;  // -5.0 이하로 안 내려가게 제한  // ***********유하영이 추가했다***********
+				if (Yspeed > -5.0) Yspeed -= 0.4;  // -5.0 이하로 안 내려가게 제한  // ***********유하영이 추가했다*********** //잘했다 -_-b
 			}
 
 		}
-		
-
-
-		
-		
 
 	}
 
-	void decel() {						//감속
+	void decel() {
 		if (Xspeed > 0) {
 			Xspeed -= 0.25;
 			if (Xspeed < 0) Xspeed = 0;
@@ -53,8 +46,15 @@ public:
 		}
 	}
 
+	void setImage(HINSTANCE hInstance) {
+
+		//플레이어 이미지 설정
+		//플레이어 속도에 따라 각도가 다른 이미지 로드
+
+	}
+
 	void update() {						//위치 업데이트 (현재 스피드 만큼 위치에 더함)
-		Yspeed += 0.1; // 중력 - ***********유하영이 추가했다***********
+		Yspeed += 0.2; // 중력 - ***********유하영이 추가했다***********
 		
 		pos.x += static_cast<int>(Xspeed);
 		pos.y += static_cast<int>(Yspeed);

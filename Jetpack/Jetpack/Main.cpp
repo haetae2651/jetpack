@@ -2,6 +2,7 @@
 #include <tchar.h>
 #include "Player.h"
 #include "BackGround.h"
+#include "Obstacles.h"
 
 HINSTANCE g_hInst;
 LPCTSTR lpszClass = L"My Window Class";
@@ -35,8 +36,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 		lpszWindowName,
 		WS_POPUP | WS_VISIBLE, 
 		0, 0,                  
-		GetSystemMetrics(SM_CXSCREEN), // 전체 가로 길이
-		GetSystemMetrics(SM_CYSCREEN), // 전체 세로 길이
+		GetSystemMetrics(SM_CXSCREEN), 
+		GetSystemMetrics(SM_CYSCREEN),
 		nullptr, nullptr, hInstance, nullptr
 	);	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
@@ -57,26 +58,35 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	HDC hDC;
 	HDC mDC;
 	HBITMAP hBitmap;
-
-	static int playerX, playerY; // 플레이어 위치 변수
-
-	static int maxSpeed = 10;
-	static Player player;
-	
 	static RECT win;
 
-	// ------------------------ BackGround 변수
+
+	//플레이어 관련 변수
+	static int playerX, playerY; // 플레이어 위치 변수
+	static int maxSpeed = 10;
+	static Player player;
+
+
+
+	//임시 테스트용 장애물
+	static Obstacles tempObs{ 0,{1000,-10},100 };
+	static int obsX, obsY;
+	static int obsSize = tempObs.getSize();
+	
+
+
+	//BackGround 변수
 	static BackGround bg;
 	static float cameraY;
 
 
 	switch (uMsg) {
 	case WM_CREATE:
-		GetClientRect(hWnd, &win);		// win: 창 클라이언트의 크기
-		SetTimer(hWnd, 1, 1, NULL);		// 타이머 설정 (1ms)
-		player.setPos({ win.right / 2, win.bottom / 2 });	// 플레이어 초기 위치 설정 (창 중앙)
+		GetClientRect(hWnd, &win);		
+		SetTimer(hWnd, 1, 1, NULL);		
+		player.setPos({ win.right / 2, win.bottom / 2 });	
 
-		bg.Load(g_hInst); // 배경 비트맵 불러오기
+		bg.Load(g_hInst);
 		bg.Camera_Init(win.bottom);
 		cameraY = bg.GetCameraY();
 		break;
@@ -102,9 +112,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		break;
 	case WM_TIMER:
-		player.decel();				//감속은 항상 적용
-		player.update();			//위치 업데이트
-		player.move(wParam,maxSpeed);		//좌우 이동
+
+		//플레이어 이동처리
+		player.decel();				
+		player.update();			
+		player.move(wParam,maxSpeed);
+
+
 
 		// 카메라 임계점 5.18
 		bg.Camera_Update(player.getPos().y);
@@ -118,22 +132,35 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		hDC = BeginPaint(hWnd, &ps);
 
 		
-		// 5.15 더블 버퍼링을 위한 메모리 DC와 비트맵 생성
 		mDC = CreateCompatibleDC(hDC);
 		hBitmap = CreateCompatibleBitmap(hDC, win.right, win.bottom);
 		SelectObject(mDC, hBitmap);
 
-		bg.Render(mDC, win); // 배경 비트맵 그리기 - mDC사용
+		bg.Render(mDC, win);
 
-		// FillRect(mDC, &win, (HBRUSH)GetStockObject(WHITE_BRUSH));		//mDC 배경 흰색으로 채우기
 
 
 		playerX = player.getPos().x;
 		playerY = player.getPos().y;
 
+		
+		
 
 		// ***********유하영이 " - cameraY " 추가했다***********
 		Rectangle(mDC, playerX - 10, playerY - cameraY - 10, playerX + 10, playerY - cameraY + 10);   //플레이어 그리기(임시 사각형)
+
+
+		//----------------------임시 테스트용 장애물 그리기
+		obsX = tempObs.getPos().x;
+		obsY = tempObs.getPos().y;
+		Rectangle(mDC, obsX - obsSize / 2, obsY - cameraY - obsSize / 2, obsX + obsSize / 2, obsY - cameraY + obsSize / 2);   //장애물 그리기(임시 사각형)
+		TCHAR str[10];
+		wsprintf(str, L"장애물", playerY);
+		TextOut(mDC, obsX - 50, obsY - cameraY, str, lstrlen(str));
+		//----------------------
+
+
+
 
 
 
