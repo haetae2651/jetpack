@@ -1,12 +1,14 @@
 ﻿  모듈 종속성의 소스를 검사하는 중...
+  BackGround.cpp
+C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\BackGround.cpp(37,25): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\BackGround.cpp(38,29): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   Main.cpp
-  PlayerCon.cpp
 C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(48,16): warning C4244: 'return': 'WPARAM'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(124,35): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(150,88): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(150,50): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(156,103): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(156,53): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(159,32): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(122,89): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(122,51): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(127,104): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(127,54): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(130,33): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(133,35): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   코드를 생성하고 있습니다...
   Jetpack.vcxproj -> C:\Users\user\Documents\GitHub\jetpack\Jetpack\x64\Debug\Jetpack.exe

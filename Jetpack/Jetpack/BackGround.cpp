@@ -23,14 +23,12 @@ void BackGround::Load(HINSTANCE hInstance)
     GetObject(hBitmap, sizeof(bmp), &bmp);
 }
 
-void BackGround::Render(HDC hDC, RECT win) 
+void BackGround::Render(HDC mDC1,HDC mDC2, RECT win) 
 {
-    hMemDC = CreateCompatibleDC(hDC); // 메모리 DC 생성
-	(HBITMAP)SelectObject(hMemDC, hBitmap); // 비트맵과 메모리 DC 연결
-    StretchBlt(hDC, 0, 0, win.right, win.bottom, 
-		hMemDC, 0, 0, bmp.bmWidth, bmp.bmHeight, SRCCOPY); // 화면의 크기에 맞게 비트맵을 그리기
-
-    DeleteDC(hMemDC);
+	HBITMAP OldBit = (HBITMAP)SelectObject(mDC2, hBitmap); // 비트맵과 메모리 DC 연결
+    StretchBlt(mDC1, 0, 0, win.right, win.bottom, 
+		mDC2, 0, 0, bmp.bmWidth, bmp.bmHeight, SRCCOPY); // 화면의 크기에 맞게 비트맵을 그리기
+    SelectObject(mDC2, OldBit);
 }
 
 // ======== 카메라 관련 함수 ========

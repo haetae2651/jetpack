@@ -51,134 +51,124 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 }
 
 
-
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	PAINTSTRUCT ps;
 	HDC hDC;
-	HDC mDC;
-	HBITMAP hBitmap;
+	HDC mDC1, mDC2;
+	static HBITMAP hBitmap;
 	static RECT win;
+	HBITMAP OldBit[1]; // Old 비트맵 저장용
 
+	static int bWidth, bHeight;
 
-	//플레이어 관련 변수
-	static int playerX, playerY; // 플레이어 위치 변수
+	// 플레이어 관련 변수
+	static int playerX, playerY;
 	static int maxSpeed = 10;
 	static Player player;
 
-
-
-	//임시 테스트용 장애물
-	static Obstacles tempObs{ 0,{1000,-10},100 };
+	// 임시 테스트용 장애물
+	static Obstacles tempObs{ 0, {1000, -10}, 100 };
 	static int obsX, obsY;
 	static int obsSize = tempObs.getSize();
-	
 
 
-	//BackGround 변수
 	static BackGround bg;
 	static float cameraY;
 
-
 	switch (uMsg) {
 	case WM_CREATE:
-		GetClientRect(hWnd, &win);		
-		SetTimer(hWnd, 1, 1, NULL);		
-		player.setPos({ win.right / 2, win.bottom / 2 });	
+		hDC = GetDC(hWnd);
+		GetClientRect(hWnd, &win);
+		SetTimer(hWnd, 1, 1, NULL);
+		player.setPos({ win.right / 2, win.bottom / 2 });
+
+		hBitmap = CreateCompatibleBitmap(hDC, win.right, win.bottom);
 
 		bg.Load(g_hInst);
 		bg.Camera_Init(win.bottom);
 		cameraY = bg.GetCameraY();
-		break;
 
+		bWidth = bg.bmp.bmWidth;
+		bHeight = bg.bmp.bmHeight;
+
+		ReleaseDC(hWnd, hDC); // GetDC를 했으므로 반드시 ReleaseDC 해주어야 합니다.
+		break;
 
 	case WM_CHAR:
 		switch (wParam) {
-
 		case 'q':
-				PostQuitMessage(0);
-				break;
+		case 'Q':
+			PostQuitMessage(0);
+			break;
 		}
-
 		break;
 
-
-
-	case WM_KEYDOWN:
-
-
-
-
-
-		break;
 	case WM_TIMER:
+	{
+		hDC = GetDC(hWnd);
+		mDC1 = CreateCompatibleDC(hDC);
+		mDC2 = CreateCompatibleDC(mDC1);
 
-		//플레이어 이동처리
-		player.decel();				
-		player.update();			
-		player.move(wParam,maxSpeed);
+		// 1. 메모리 누수 방지를 위해 이전 비트맵을 저장해둡니다.
+		HBITMAP oldMDC1Bit = (HBITMAP)SelectObject(mDC1, hBitmap);
 
-
-
-		// 카메라 임계점 5.18
-		bg.Camera_Update(player.getPos().y);
-		cameraY = bg.GetCameraY();
-
-		InvalidateRect(hWnd, NULL, FALSE);
-		break;
-
-	case WM_PAINT: {
-
-		hDC = BeginPaint(hWnd, &ps);
-
-		
-		mDC = CreateCompatibleDC(hDC);
-		hBitmap = CreateCompatibleBitmap(hDC, win.right, win.bottom);
-		SelectObject(mDC, hBitmap);
-
-		bg.Render(mDC, win);
-
-
+		PatBlt(mDC1, 0, 0, win.right, win.bottom, WHITENESS);
+		bg.Render(mDC1, mDC2, win); // mDC1으로 쏨
 
 		playerX = player.getPos().x;
 		playerY = player.getPos().y;
 
-		
-		
-
-		// ***********유하영이 " - cameraY " 추가했다***********
-		Rectangle(mDC, playerX - 10, playerY - cameraY - 10, playerX + 10, playerY - cameraY + 10);   //플레이어 그리기(임시 사각형)
-
+		Rectangle(mDC1, playerX - 10, playerY - cameraY - 10, playerX + 10, playerY - cameraY + 10); // 플레이어 그리기
 
 		//----------------------임시 테스트용 장애물 그리기
 		obsX = tempObs.getPos().x;
 		obsY = tempObs.getPos().y;
-		Rectangle(mDC, obsX - obsSize / 2, obsY - cameraY - obsSize / 2, obsX + obsSize / 2, obsY - cameraY + obsSize / 2);   //장애물 그리기(임시 사각형)
-		TCHAR str[10];
-		wsprintf(str, L"장애물", playerY);
-		TextOut(mDC, obsX - 50, obsY - cameraY, str, lstrlen(str));
+		Rectangle(mDC1, obsX - obsSize / 2, obsY - cameraY - obsSize / 2, obsX + obsSize / 2, obsY - cameraY + obsSize / 2);
+		TCHAR str[20];
+		wsprintf(str, L"플레이어 Y: %d", playerY); 
+		TextOut(mDC1, obsX - 50, obsY - cameraY, str, lstrlen(str));
 		//----------------------
 
+		bg.Camera_Update(player.getPos().y);
+		cameraY = bg.GetCameraY();
 
+	
+		player.decel();
+		player.update();
+		player.move(wParam, maxSpeed); 
 
+		// 3. DC 원상복구 및 해제
+		SelectObject(mDC1, oldMDC1Bit);
+		DeleteDC(mDC2);
+		DeleteDC(mDC1);
+		ReleaseDC(hWnd, hDC);
 
+		// WM_PAINT 호출 (백그라운드 지우기를 막기 위해 FALSE 유지)
+		InvalidateRect(hWnd, NULL, FALSE);
+		break;
+	}
 
+	case WM_PAINT: {
+		hDC = BeginPaint(hWnd, &ps);
+		mDC1 = CreateCompatibleDC(hDC);
 
-		BitBlt(hDC, 0, 0, win.right, win.bottom, mDC, 0, 0, SRCCOPY);
+		OldBit[0] = (HBITMAP)SelectObject(mDC1, hBitmap);
 
+		BitBlt(hDC, 0, 0, win.right, win.bottom, mDC1, 0, 0, SRCCOPY);
 
-		DeleteObject(hBitmap);
-		DeleteDC(mDC);
+		SelectObject(mDC1, OldBit[0]);
+
+		DeleteDC(mDC1);
 		EndPaint(hWnd, &ps);
 		break;
 	}
 
-
-
 	case WM_DESTROY:
+		KillTimer(hWnd, 1);       // 타이머 해제
+		DeleteObject(hBitmap);    // 프로그램이 끝날 때 도화지(hBitmap)를 파괴합니다.
 		PostQuitMessage(0);
 		break;
-
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }

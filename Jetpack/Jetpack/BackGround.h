@@ -6,7 +6,6 @@ private :
 	HBITMAP hBitmap;
 	HDC hMemDC;
 	HWND hWnd;
-	BITMAP bmp;
 
 	float cameraY; // 카메라의 Y 위치
 	float newcameraY;
@@ -15,11 +14,13 @@ private :
 	float critical_point; // 임계점 y위치
 
 public :
+	BITMAP bmp;
+
 	BackGround();
 	~BackGround();
 
 	void Load(HINSTANCE hInstance);
-	void Render(HDC hDC, RECT win);
+	void Render(HDC mDC1, HDC mDC2, RECT win);
 
 	// 카메라 관련 함수 05.18
 	void Camera_Init(int winBottom);
