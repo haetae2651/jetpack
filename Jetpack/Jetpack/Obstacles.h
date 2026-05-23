@@ -9,6 +9,7 @@ public:
 		this->pos = pos;
 		this->size = size;
 
+
 		this->hBitmap = NULL;
 		this->pixelData = nullptr;
 		this->width = 0;
@@ -30,7 +31,19 @@ public:
 		//장애물 이미지에 ''따라 이미지 설정.
 		//픽셀 데이터를 함께 추출해야함.
 	}
+	
+	// ********** ObstacleNode.h에서 쓰일 함수 **********
+	void Update() {
+		pos.y += speed;  // 장애물이 아래로 이동
+		// type에 따라 움직임 다르게 처리 가능
+	}
 
+	void Render(HDC hdc, float cameraY) {
+		// 일단 테스트용으로 사각형 그리기
+		int screenY = (int)(pos.y - cameraY);
+		Rectangle(hdc, pos.x - size, screenY - size,
+			pos.x + size, screenY + size);
+	}
 
 	~Obstacles()
 	{

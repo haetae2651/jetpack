@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "x64\\Debug\\Obstacles.obj",
+            "outputs": [
+                "x64\\Debug\\Obstacles.h_898885113C5B6F82.ifc.dt.module.json",
+                "x64\\Debug\\Obstacles.h_898885113C5B6F82.ifc.dt.d.json",
+                "x64\\Debug\\Obstacles.h.ifc"
+            ],
+            "provides": [
+                {
+                    "logical-name": "C:\\jetpack\\Jetpack\\Jetpack\\Obstacles.h",
+                    "source-path": "c:\\jetpack\\jetpack\\jetpack\\obstacles.h",
+                    "lookup-method": "absolute"
+                }
+            ],
+            "requires": []
+        }
+    ]
+}

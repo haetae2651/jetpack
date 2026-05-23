@@ -1,37 +1,41 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\",
+  "WorkspaceRootPath": "C:\\jetpack\\Jetpack\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|solutionrelative:Jetpack\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|C:\\jetpack\\Jetpack\\Jetpack\\ObstacleNode.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|solutionrelative:Jetpack\\ObstacleNode.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\BackGround.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|solutionrelative:Jetpack\\BackGround.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|C:\\jetpack\\Jetpack\\Jetpack\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|solutionrelative:Jetpack\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\resource.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|solutionrelative:Jetpack\\resource.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\PlayerCon.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|solutionrelative:Jetpack\\PlayerCon.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\BackGround.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|solutionrelative:Jetpack\\BackGround.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\Obstacles.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|C:\\jetpack\\Jetpack\\Jetpack\\Obstacles.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|solutionrelative:Jetpack\\Obstacles.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\Resources\\BackGround.bmp||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "AbsoluteMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|C:\\jetpack\\Jetpack\\Jetpack\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|solutionrelative:Jetpack\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|C:\\jetpack\\Jetpack\\Jetpack\\BackGround.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|solutionrelative:Jetpack\\BackGround.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|C:\\jetpack\\Jetpack\\Jetpack\\resource.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|solutionrelative:Jetpack\\resource.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|C:\\jetpack\\Jetpack\\Jetpack\\BackGround.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|solutionrelative:Jetpack\\BackGround.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|C:\\jetpack\\Jetpack\\Jetpack\\PlayerCon.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{81031B2E-C4DE-4811-B1EF-EB5B0CDF22E7}|Jetpack\\Jetpack.vcxproj|solutionrelative:Jetpack\\PlayerCon.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\jetpack\\Jetpack\\Jetpack\\Resources\\BackGround.bmp||{177559E0-D141-11D0-92DF-00A0C9138C45}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Jetpack\\Resources\\BackGround.bmp||{177559E0-D141-11D0-92DF-00A0C9138C45}"
     }
   ],
@@ -42,15 +46,84 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ObstacleNode.h",
+              "DocumentMoniker": "C:\\jetpack\\Jetpack\\Jetpack\\ObstacleNode.h",
+              "RelativeDocumentMoniker": "Jetpack\\ObstacleNode.h",
+              "ToolTip": "C:\\jetpack\\Jetpack\\Jetpack\\ObstacleNode.h",
+              "RelativeToolTip": "Jetpack\\ObstacleNode.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-05-23T17:48:33.411Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{e8b06f52-6d01-11d2-aa7d-00c04f990343}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Player.h",
+              "DocumentMoniker": "C:\\jetpack\\Jetpack\\Jetpack\\Player.h",
+              "RelativeDocumentMoniker": "Jetpack\\Player.h",
+              "ToolTip": "C:\\jetpack\\Jetpack\\Jetpack\\Player.h",
+              "RelativeToolTip": "Jetpack\\Player.h",
+              "ViewState": "AgIAADAAAAAAAAAAAAAAAEYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-05-10T14:08:53.694Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Obstacles.h",
+              "DocumentMoniker": "C:\\jetpack\\Jetpack\\Jetpack\\Obstacles.h",
+              "RelativeDocumentMoniker": "Jetpack\\Obstacles.h",
+              "ToolTip": "C:\\jetpack\\Jetpack\\Jetpack\\Obstacles.h",
+              "RelativeToolTip": "Jetpack\\Obstacles.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-05-18T17:41:08.357Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "BackGround.h",
+              "DocumentMoniker": "C:\\jetpack\\Jetpack\\Jetpack\\BackGround.h",
+              "RelativeDocumentMoniker": "Jetpack\\BackGround.h",
+              "ToolTip": "C:\\jetpack\\Jetpack\\Jetpack\\BackGround.h",
+              "RelativeToolTip": "Jetpack\\BackGround.h",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-05-13T13:43:12.326Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "Main.cpp",
+              "DocumentMoniker": "C:\\jetpack\\Jetpack\\Jetpack\\Main.cpp",
+              "RelativeDocumentMoniker": "Jetpack\\Main.cpp",
+              "ToolTip": "C:\\jetpack\\Jetpack\\Jetpack\\Main.cpp",
+              "RelativeToolTip": "Jetpack\\Main.cpp",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-05-17T18:38:43.266Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "resource.h",
-              "DocumentMoniker": "C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\resource.h",
+              "DocumentMoniker": "C:\\jetpack\\Jetpack\\Jetpack\\resource.h",
               "RelativeDocumentMoniker": "Jetpack\\resource.h",
-              "ToolTip": "C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\resource.h",
+              "ToolTip": "C:\\jetpack\\Jetpack\\Jetpack\\resource.h",
               "RelativeToolTip": "Jetpack\\resource.h",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvxAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
@@ -59,11 +132,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "BackGround.bmp - Bitmap [1200x675, 32\uBE44\uD2B8, BMP]",
-              "DocumentMoniker": "C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\Resources\\BackGround.bmp",
+              "DocumentMoniker": "C:\\jetpack\\Jetpack\\Jetpack\\Resources\\BackGround.bmp",
               "RelativeDocumentMoniker": "Jetpack\\Resources\\BackGround.bmp",
-              "ToolTip": "C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\Resources\\BackGround.bmp - Bitmap [1200x675, 32\uBE44\uD2B8, BMP]",
+              "ToolTip": "C:\\jetpack\\Jetpack\\Jetpack\\Resources\\BackGround.bmp - Bitmap [1200x675, 32\uBE44\uD2B8, BMP]",
               "RelativeToolTip": "Jetpack\\Resources\\BackGround.bmp - Bitmap [1200x675, 32\uBE44\uD2B8, BMP]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
               "WhenOpened": "2026-05-19T03:17:22.811Z",
@@ -71,81 +144,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "BackGround.cpp",
-              "DocumentMoniker": "C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\BackGround.cpp",
+              "DocumentMoniker": "C:\\jetpack\\Jetpack\\Jetpack\\BackGround.cpp",
               "RelativeDocumentMoniker": "Jetpack\\BackGround.cpp",
-              "ToolTip": "C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\BackGround.cpp",
+              "ToolTip": "C:\\jetpack\\Jetpack\\Jetpack\\BackGround.cpp",
               "RelativeToolTip": "Jetpack\\BackGround.cpp",
-              "ViewState": "AgIAABAAAAAAAAAAAAAAAB8AAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAAAB8AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-05-13T08:04:04.163Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Obstacles.h",
-              "DocumentMoniker": "C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\Obstacles.h",
-              "RelativeDocumentMoniker": "Jetpack\\Obstacles.h",
-              "ToolTip": "C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\Obstacles.h",
-              "RelativeToolTip": "Jetpack\\Obstacles.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-05-18T17:41:08.357Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Player.h",
-              "DocumentMoniker": "C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\Player.h",
-              "RelativeDocumentMoniker": "Jetpack\\Player.h",
-              "ToolTip": "C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\Player.h",
-              "RelativeToolTip": "Jetpack\\Player.h",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAABEAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-05-10T14:08:53.694Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "BackGround.h",
-              "DocumentMoniker": "C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\BackGround.h",
-              "RelativeDocumentMoniker": "Jetpack\\BackGround.h",
-              "ToolTip": "C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\BackGround.h",
-              "RelativeToolTip": "Jetpack\\BackGround.h",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-05-13T13:43:12.326Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Main.cpp",
-              "DocumentMoniker": "C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\Main.cpp",
-              "RelativeDocumentMoniker": "Jetpack\\Main.cpp",
-              "ToolTip": "C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\Main.cpp",
-              "RelativeToolTip": "Jetpack\\Main.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-05-17T18:38:43.266Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "PlayerCon.cpp",
-              "DocumentMoniker": "C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\PlayerCon.cpp",
+              "DocumentMoniker": "C:\\jetpack\\Jetpack\\Jetpack\\PlayerCon.cpp",
               "RelativeDocumentMoniker": "Jetpack\\PlayerCon.cpp",
-              "ToolTip": "C:\\Users\\user\\Documents\\GitHub\\jetpack\\Jetpack\\Jetpack\\PlayerCon.cpp",
+              "ToolTip": "C:\\jetpack\\Jetpack\\Jetpack\\PlayerCon.cpp",
               "RelativeToolTip": "Jetpack\\PlayerCon.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-05-10T14:22:35.666Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-10T14:22:35.666Z"
             }
           ]
         }
