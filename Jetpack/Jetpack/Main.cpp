@@ -101,16 +101,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		bg.Load(g_hInst);
 		bg.Camera_Init(win.bottom);
 		cameraY = bg.GetCameraY();
-
 		bWidth = bg.bmp.bmWidth;
 		bHeight = bg.bmp.bmHeight;
 
-		ReleaseDC(hWnd, hDC); // GetDC를 했으므로 반드시 ReleaseDC 해주어야 합니다.
+		player.setImage(g_hInst);
+
+
+
+		ReleaseDC(hWnd, hDC); 
 		break;
 
 	case WM_CHAR:
 		switch (wParam) {
 		case 'q':
+		{
+			PostQuitMessage(0);
+			break;
+		}
 		case 'Q':
 			PostQuitMessage(0);
 			break;
@@ -123,16 +130,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		mDC1 = CreateCompatibleDC(hDC);
 		mDC2 = CreateCompatibleDC(mDC1);
 
-		// 1. 메모리 누수 방지를 위해 이전 비트맵을 저장해둡니다.
+
+		//렌더링 파트
+
 		HBITMAP oldMDC1Bit = (HBITMAP)SelectObject(mDC1, hBitmap);
 
-		PatBlt(mDC1, 0, 0, win.right, win.bottom, WHITENESS);
+		//배경 렌더링
 		bg.Render(mDC1, mDC2, win); // mDC1으로 쏨
+
+		//플레이어 렌더링
+
 
 		playerX = player.getPos().x;
 		playerY = player.getPos().y;
 
-		Rectangle(mDC1, playerX - 10, playerY - cameraY - 10, playerX + 10, playerY - cameraY + 10); // 플레이어 그리기
+
+		player.Render(mDC1, mDC2, playerX,playerY - cameraY);
+
+		//Rectangle(mDC1, playerX - 10, playerY - cameraY - 10, playerX + 10, playerY - cameraY + 10); // 플레이어 그리기
 
 		//----------------------임시 테스트용 장애물 그리기
 		obsX = tempObs.getPos().x;
@@ -142,6 +157,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		wsprintf(str, L"플레이어 Y: %d", playerY); 
 		TextOut(mDC1, obsX - 50, obsY - cameraY, str, lstrlen(str));
 		//----------------------
+
+
+
 
 		bg.Camera_Update(player.getPos().y);
 		cameraY = bg.GetCameraY();

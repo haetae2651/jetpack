@@ -59,4 +59,12 @@
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\..\Downloads\TestImage_AiGenerated.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resources\BackGround.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
