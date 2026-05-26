@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "BackGround.h"
 #include "Obstacles.h"
+#include "IngameUI.h"
+
 
 HINSTANCE g_hInst;
 LPCTSTR lpszClass = L"My Window Class";
@@ -76,8 +78,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	static BackGround bg;
 	static float cameraY;
 
+
+
+	//UI 관련 변수
+	static bool IngameUI_Render = false;
+
 	switch (uMsg) {
 	case WM_CREATE:
+
+		IngameUI_Render = true;
+
+
+
+
 		hDC = GetDC(hWnd);
 		GetClientRect(hWnd, &win);
 		SetTimer(hWnd, 1, 1, NULL);
@@ -134,6 +147,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		cameraY = bg.GetCameraY();
 
 	
+
+
+		//UI 파트
+
+		scoreRender(mDC1, cameraY, win);
+		fuelRender(mDC1, player.getFuel(), win);
+
+
+
 		player.decel();
 		player.update();
 		player.move(wParam, maxSpeed); 

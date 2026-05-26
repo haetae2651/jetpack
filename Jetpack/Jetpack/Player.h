@@ -24,11 +24,15 @@ public:
 
 			if(GetAsyncKeyState(VK_RIGHT) & 0x8000) {
 				Xspeed -= 0.5;
-				if (Yspeed > -10.0) Yspeed -= 0.4;  // -5.0 이하로 안 내려가게 제한  // ***********유하영이 추가했다*********** //잘했다 -_-b
+				if (Yspeed > -10.0) Yspeed -= 0.4;
+
+				fuel -= 0.1f;
 			}
 			if( GetAsyncKeyState(VK_LEFT) & 0x8000) {
 				Xspeed += 0.5;
-				if (Yspeed > -10.0) Yspeed -= 0.4;  // -5.0 이하로 안 내려가게 제한  // ***********유하영이 추가했다*********** //잘했다 -_-b
+				if (Yspeed > -10.0) Yspeed -= 0.4;
+
+				fuel -= 0.1f;
 			}
 
 		}
@@ -55,7 +59,6 @@ public:
 
 	void update() {						
 		Yspeed += 0.2; // 중력 - ***********유하영이 추가했다***********
-		
 		pos.x += static_cast<int>(Xspeed);
 		pos.y += static_cast<int>(Yspeed);
 	}
@@ -66,7 +69,7 @@ public:
 private:
 
 	int hp = 1;
-	int fuel = 100;
+	float fuel = 100;
 	POINT pos;
 
 
