@@ -146,7 +146,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 
 		player.Render(mDC1, mDC2, playerX,playerY - cameraY);
-
+		
 		//Rectangle(mDC1, playerX - 10, playerY - cameraY - 10, playerX + 10, playerY - cameraY + 10); // 플레이어 그리기
 
 		//----------------------임시 테스트용 장애물 그리기

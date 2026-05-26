@@ -1,25 +1,2 @@
 ﻿  모듈 종속성의 소스를 검사하는 중...
-  Main.cpp
-C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Player.h(16,25): warning C4244: 'return': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  (소스 파일 'Main.cpp'을(를) 컴파일하는 중)
-  
-C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Player.h(21,37): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  (소스 파일 'Main.cpp'을(를) 컴파일하는 중)
-  
-C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(50,16): warning C4244: 'return': 'WPARAM'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(148,45): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(155,104): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(155,54): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(158,33): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(164,35): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(172,21): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Main.cpp(173,34): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  PlayerCon.cpp
-C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Player.h(16,25): warning C4244: 'return': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  (소스 파일 'PlayerCon.cpp'을(를) 컴파일하는 중)
-  
-C:\Users\user\Documents\GitHub\jetpack\Jetpack\Jetpack\Player.h(21,37): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  (소스 파일 'PlayerCon.cpp'을(를) 컴파일하는 중)
-  
-  코드를 생성하고 있습니다...
   Jetpack.vcxproj -> C:\Users\user\Documents\GitHub\jetpack\Jetpack\x64\Debug\Jetpack.exe

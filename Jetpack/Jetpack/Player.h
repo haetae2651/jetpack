@@ -27,20 +27,20 @@ public:
 
 		if (Xspeed <= maxSpeed && Xspeed >= -maxSpeed)
 		{
+			if (fuel > 0) {
+				if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
+					Xspeed -= 0.5;
+					if (Yspeed > -10.0) Yspeed -= 0.4;
 
-			if(GetAsyncKeyState(VK_RIGHT) & 0x8000) {
-				Xspeed -= 0.5;
-				if (Yspeed > -10.0) Yspeed -= 0.4;
+					fuel -= 0.1f;
+				}
+				if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
+					Xspeed += 0.5;
+					if (Yspeed > -10.0) Yspeed -= 0.4;
 
-				fuel -= 0.1f;
+					fuel -= 0.1f;
+				}
 			}
-			if( GetAsyncKeyState(VK_LEFT) & 0x8000) {
-				Xspeed += 0.5;
-				if (Yspeed > -10.0) Yspeed -= 0.4;
-
-				fuel -= 0.1f;
-			}
-
 		}
 
 	}
@@ -73,8 +73,7 @@ public:
 	void Render(HDC mDC1, HDC mDC2 , int x, int y) {
 
 		HBITMAP OldBit = (HBITMAP)SelectObject(mDC2, hBitmap); // 비트맵과 메모리 DC 연결
-		TransparentBlt(mDC1, x - size / 2, y - size / 2, size, size,
-			mDC2, 0, 0, width, height, RGB(0, 255,0));
+		TransparentBlt(mDC1, x - size / 2, y - size / 2, size, size, mDC2, 0, 0, width, height, RGB(0, 255, 0));  // 이런식으로 충돌판정은 x - size/2, y - size/2로 해서 플레이어의 중심을 기준으로 충돌판정하게끔
 		SelectObject(mDC2, OldBit);
 
 	}
