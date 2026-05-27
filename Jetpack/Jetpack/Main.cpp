@@ -3,7 +3,9 @@
 #include "Player.h"
 #include "BackGround.h"
 #include "Obstacles.h"
+#include "ObstacleNode.h"
 #include "IngameUI.h"
+#include "OBS_Random.cpp"
 
 
 HINSTANCE g_hInst;
@@ -74,7 +76,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	static int obsX, obsY;
 	static int obsSize = tempObs.getSize();
 
-
+	static ObstacleManager obsManager; // 5.27
 	static BackGround bg;
 	static float cameraY;
 
@@ -93,18 +95,30 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		hDC = GetDC(hWnd);
 		GetClientRect(hWnd, &win);
-		SetTimer(hWnd, 1, 1, NULL);
+		SetTimer(hWnd, 1, 16, NULL);
 		player.setPos({ win.right / 2, win.bottom / 2 });
 
 		hBitmap = CreateCompatibleBitmap(hDC, win.right, win.bottom);
 
+		//배경 초기화
 		bg.Load(g_hInst);
 		bg.Camera_Init(win.bottom);
+
+		// 카메라 초기화
 		cameraY = bg.GetCameraY();
 		bWidth = bg.bmp.bmWidth;
 		bHeight = bg.bmp.bmHeight;
 
+		// 플레이어 초기화
 		player.setImage(g_hInst);
+
+
+
+		// 5.27 장애물 초기화
+		for (int i = 0; i < 5; i++) {
+			POINT p = { rand() % 600 + 100, -(i * 200) };
+			obsManager.Add_Obstacle(new OBS_Random(p, g_hInst));
+		}
 
 
 
@@ -138,15 +152,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		//배경 렌더링
 		bg.Render(mDC1, mDC2, win); // mDC1으로 쏨
 
+
+	
+
+		// 장애물 5.27
+		obsManager.Render_Obstacles(mDC1, cameraY);
+
+
 		//플레이어 렌더링
-
-
 		playerX = player.getPos().x;
 		playerY = player.getPos().y;
 
 
 		player.Render(mDC1, mDC2, playerX,playerY - cameraY);
 		
+		//UI 파트
+		scoreRender(mDC1, cameraY, win);
+		fuelRender(mDC1, player.getFuel(), win);
 		//Rectangle(mDC1, playerX - 10, playerY - cameraY - 10, playerX + 10, playerY - cameraY + 10); // 플레이어 그리기
 
 		//----------------------임시 테스트용 장애물 그리기
@@ -158,19 +180,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		TextOut(mDC1, obsX - 50, obsY - cameraY, str, lstrlen(str));
 		//----------------------
 
-
-
-
 		bg.Camera_Update(player.getPos().y);
+
 		cameraY = bg.GetCameraY();
 
-	
+		obsManager.Update_Obstacles(bg.GetCameraDelta());
+		obsManager.Delete_Obstacles(player.getPos().y);
 
-
-		//UI 파트
-
-		scoreRender(mDC1, cameraY, win);
-		fuelRender(mDC1, player.getFuel(), win);
 
 
 

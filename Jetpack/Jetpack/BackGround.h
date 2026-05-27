@@ -7,14 +7,16 @@ private :
 	HDC hMemDC;
 	HWND hWnd;
 
-	float cameraY; // 카메라의 Y 위치
-	float newcameraY;
-	float enemyY;  // 적의 Y 위치
+	float cameraDelta = 0.0f; // 프레임 카메라
+	float cameraY = 0.0f; // 카메라의 Y 위치
+	float newcameraY = 0.0f;
+	float enemyY = 0.0f;  // 적의 Y 위치
 
 	float critical_point; // 임계점 y위치
 
 public :
 	BITMAP bmp;
+	float GetCameraDelta() const;
 
 	BackGround();
 	~BackGround();

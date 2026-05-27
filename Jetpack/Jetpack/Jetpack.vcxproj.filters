@@ -19,6 +19,12 @@
     <Filter Include="헤더 파일\UI">
       <UniqueIdentifier>{512a4c04-0e21-41dd-9808-c86a868a1e20}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\OBSTACLES">
+      <UniqueIdentifier>{250e5c85-fd76-4a8f-91d8-00d275641636}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\Obstacles">
+      <UniqueIdentifier>{886fa020-375c-430c-9fa8-89c9e8a5e0a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -53,6 +59,18 @@
     <ClInclude Include="IngameUI.h">
       <Filter>헤더 파일\UI</Filter>
     </ClInclude>
+    <ClInclude Include="OBS_LeftRight.cpp">
+      <Filter>소스 파일\OBSTACLES</Filter>
+    </ClInclude>
+    <ClInclude Include="OBS_FollowPlayer.cpp">
+      <Filter>소스 파일\OBSTACLES</Filter>
+    </ClInclude>
+    <ClInclude Include="OBS_Random.cpp">
+      <Filter>소스 파일\OBSTACLES</Filter>
+    </ClInclude>
+    <ClInclude Include="OBS_Path.cpp">
+      <Filter>소스 파일\OBSTACLES</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
@@ -64,6 +82,18 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="Resources\BackGround.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resources\cloud1.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\cloud11.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\cloud22.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\TestImage_AiGenerated.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

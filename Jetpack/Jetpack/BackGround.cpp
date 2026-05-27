@@ -11,6 +11,11 @@ BackGround::BackGround()
     hMemDC = NULL;
     hWnd = NULL;
     bmp = {}; // BITMAP의 구조체
+    cameraY = 0.0f;
+    newcameraY = 0.0f;
+    enemyY = 0.0f;
+    critical_point = 0.0f;
+    cameraDelta = 0.0f;
 }
 
 BackGround::~BackGround() {}
@@ -35,11 +40,12 @@ void BackGround::Render(HDC mDC1,HDC mDC2, RECT win)
 void BackGround::Camera_Init(int winBottom)
 {
     cameraY = winBottom / 2; // 카메라 초기값
-	critical_point = winBottom * 0.3; // 임계점 초기화
+	critical_point = winBottom * 0.4; // 임계점 초기화
 }
 
 void BackGround::Camera_Update(float playerY) 
 {
+	float prevCameraY = cameraY; // 이전 프레임의 카메라 Y 위치 저장
 	float screenY = playerY - cameraY;
 
     if (screenY < critical_point) {
@@ -52,6 +58,12 @@ void BackGround::Camera_Update(float playerY)
     if (critical_point == playerY) {
         cameraY = newcameraY;
     }
+    cameraDelta = cameraY - prevCameraY;
+}
+
+float BackGround::GetCameraDelta() const // ← 추가
+{
+    return cameraDelta;
 }
 
 void BackGround::Render_Objects(HDC hDC) 

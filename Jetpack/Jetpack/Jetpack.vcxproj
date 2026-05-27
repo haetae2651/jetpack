@@ -137,6 +137,10 @@
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="IngameUI.h" />
     <ClInclude Include="ObstacleNode.h" />
+    <ClInclude Include="OBS_FollowPlayer.cpp" />
+    <ClInclude Include="OBS_LeftRight.cpp" />
+    <ClInclude Include="OBS_Path.cpp" />
+    <ClInclude Include="OBS_Random.cpp" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
@@ -146,6 +150,10 @@
   <ItemGroup>
     <Image Include="..\..\..\..\..\Downloads\TestImage_AiGenerated.bmp" />
     <Image Include="Resources\BackGround.bmp" />
+    <Image Include="Resources\cloud1.bmp" />
+    <Image Include="Resources\cloud11.bmp" />
+    <Image Include="Resources\cloud22.bmp" />
+    <Image Include="Resources\TestImage_AiGenerated.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
