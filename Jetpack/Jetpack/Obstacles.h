@@ -30,7 +30,7 @@ public:
 	
 	// ********** ObstacleNode.h에서 쓰일 함수 **********
 	virtual void Update(float cameraDelta) {
-		pos.y += speed;  // 장애물이 아래로 이동
+		//pos.y += speed;  // 장애물이 아래로 이동
 		// type에 따라 움직임 다르게 처리 가능
 	}
 
@@ -50,7 +50,7 @@ public:
 		int size;
 		int type; // 장애물 종류 (예: 0 = 작은 돌, 1 = 큰 돌, 2 = 움직이는 장애물. 3 = 통로장애물)
 		float speed;
-
+		BITMAP bmp;
 
 
 

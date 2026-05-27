@@ -27,19 +27,16 @@ public :
     }
 
     void setImage(HINSTANCE hInstance) override {
-        BITMAP bmp;
         hBitAnim[0] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP2));
         hBitAnim[1] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP3));
         hBitAnim[2] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP4));
 
         // 이미지 크기 가져오기
-        GetObject(hBitAnim[0], sizeof(BITMAP), &bmp);
-        chaWidth = bmp.bmWidth;
-        chaHeight = bmp.bmHeight;
+
     }
 
     void Update(float cameraDelta) override {
-        pos.y += speed + cameraDelta; 
+        //pos.y += speed + cameraDelta; 
 
         frameTimer++;
         if (frameTimer >= 10)
@@ -55,20 +52,14 @@ public :
 
         HDC hMemDC = CreateCompatibleDC(hdc);
         HBITMAP oldBit = (HBITMAP)SelectObject(hMemDC, hBitAnim[animCount]); // 현재 프레임
+        GetObject(hBitAnim[animCount], sizeof(BITMAP), &bmp);
+        chaWidth = bmp.bmWidth;
+        chaHeight = bmp.bmHeight;
 
-        //TransparentBlt(hdc, pos.x - size / 2, screenY - size / 2, size, size,
-        //    hMemDC, 0, 0, chaWidth, chaHeight, RGB(0, 255, 0)); // 초록색 제거
 
-        BitBlt(
-            hdc,
-            pos.x - size / 2,
-            screenY - size / 2,
-            chaWidth,
-            chaHeight,
-            hMemDC,
-            0, 0,
-            SRCCOPY
-        );
+        TransparentBlt(hdc, pos.x - size / 2, screenY - size / 2, size + chaWidth, size + chaHeight,
+            hMemDC, 0, 0, chaWidth, chaHeight, RGB(0, 255, 0)); // 초록색 제거
+
 
         SelectObject(hMemDC, oldBit);
         DeleteDC(hMemDC);

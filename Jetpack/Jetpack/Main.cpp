@@ -95,7 +95,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		hDC = GetDC(hWnd);
 		GetClientRect(hWnd, &win);
-		SetTimer(hWnd, 1, 16, NULL);
+
+		SetTimer(hWnd, 1, 1, NULL);
+
 		player.setPos({ win.right / 2, win.bottom / 2 });
 
 		hBitmap = CreateCompatibleBitmap(hDC, win.right, win.bottom);
@@ -117,6 +119,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		// 5.27 장애물 초기화
 		for (int i = 0; i < 5; i++) {
 			POINT p = { rand() % 600 + 100, -(i * 200) };
+
 			obsManager.Add_Obstacle(new OBS_Random(p, g_hInst));
 		}
 
@@ -169,16 +172,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		//UI 파트
 		scoreRender(mDC1, cameraY, win);
 		fuelRender(mDC1, player.getFuel(), win);
-		//Rectangle(mDC1, playerX - 10, playerY - cameraY - 10, playerX + 10, playerY - cameraY + 10); // 플레이어 그리기
-
-		//----------------------임시 테스트용 장애물 그리기
-		obsX = tempObs.getPos().x;
-		obsY = tempObs.getPos().y;
-		Rectangle(mDC1, obsX - obsSize / 2, obsY - cameraY - obsSize / 2, obsX + obsSize / 2, obsY - cameraY + obsSize / 2);
-		TCHAR str[20];
-		wsprintf(str, L"플레이어 Y: %d", playerY); 
-		TextOut(mDC1, obsX - 50, obsY - cameraY, str, lstrlen(str));
-		//----------------------
 
 		bg.Camera_Update(player.getPos().y);
 
