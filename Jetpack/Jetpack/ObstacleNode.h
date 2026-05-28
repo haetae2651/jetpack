@@ -3,16 +3,22 @@
 #include "Player.h"
 #include <windows.h>
 
-#define DELETE_DISTANCE 300 // 플레이어보다 아래로 DELETE_DIST 이상 떨어진 장애물 제거
+#define DELETE_DISTANCE 500 // 플레이어보다 아래로 DELETE_DIST 이상 떨어진 장애물 제거
 
 struct ObsNode {
 	Obstacles* obs;
 	ObsNode* next;
+	ObsNode* prev;
+
+	ObsNode(Obstacles* newObs) : obs(newObs), next(nullptr), prev(nullptr) {}
 };
 
 class ObstacleManager {
 private :
 	ObsNode* head;
+	int playerY;
+	unsigned char type;
+	int offsetY;
 
 public :
     // 게임 오버 등 모든 장애물 초기화 시 사용
@@ -27,15 +33,21 @@ public :
         head = nullptr;
     }
 	
+
+
     ObstacleManager() : head(nullptr) {}
     ~ObstacleManager() {
         Clear();
     };
 
 	void Add_Obstacle(Obstacles* newObs) {
-		ObsNode* newNode = new ObsNode;
-		newNode->obs = newObs;
+		ObsNode* newNode = new ObsNode(newObs);
 		newNode->next = head;
+		newNode->prev = nullptr;
+
+		if (head != nullptr) {
+			head->prev = newNode;
+		}
 		head = newNode;
 	}
     
@@ -55,26 +67,57 @@ public :
 		}
 	}
 
-	// 플레이어Y의 위치에 따라 장애물 제거하는 함수
 	void Delete_Obstacles(float playerY) {
 		ObsNode* current = head;
-		ObsNode* prev = nullptr;
 		while (current != nullptr) {
-			if (current->obs->getPos().y > playerY + DELETE_DISTANCE) { // 플레이어보다 아래로 200 이상 떨어진 장애물 제거
-				if (prev == nullptr) {
+			if (current->obs->getPos().y > playerY + DELETE_DISTANCE) {
+				
+				ObsNode* toDelete = current;
+				
+				if (current->prev == nullptr) {
 					head = current->next;
 				}
 				else {
-					prev->next = current->next;
+					current->prev->next = current->next;
+
 				}
-				delete current->obs;
-				delete current;
-				current = (prev == nullptr) ? head : prev->next;
+				if (current->next != nullptr) {
+					current->next->prev = current->prev;
+				}	
+
+				current = current->next;
+
+				delete toDelete->obs;
+				delete toDelete;
 			}
 			else {
-				prev = current;
 				current = current->next;
 			}
+		}
+	}
+
+
+	void AutoAdd(int type, int playerY)
+	{
+		Obstacles* topObs = head->obs;
+
+		switch (type) {
+
+		case 0:											// OBS_Random
+		{
+			if (playerY > topObs->getPos().y + topObs->getSize() + offsetY)
+			{
+
+			}
+
+
+
+			break;
+		}
+
+
+
+
 		}
 	}
 

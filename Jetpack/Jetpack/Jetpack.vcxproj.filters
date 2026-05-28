@@ -25,6 +25,9 @@
     <Filter Include="리소스 파일\Obstacles">
       <UniqueIdentifier>{886fa020-375c-430c-9fa8-89c9e8a5e0a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Obstacles">
+      <UniqueIdentifier>{63ae5a7e-8055-4352-be32-eedc2f53bcaa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -36,11 +39,11 @@
     <ClCompile Include="BackGround.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Obstacles.h">
-      <Filter>헤더 파일</Filter>
-    </ClCompile>
     <ClCompile Include="IngameUI.cpp">
       <Filter>소스 파일\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacles.h">
+      <Filter>헤더 파일\Obstacles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -51,9 +54,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ObstacleNode.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="IngameUI.h">
@@ -70,6 +70,9 @@
     </ClInclude>
     <ClInclude Include="OBS_Path.cpp">
       <Filter>소스 파일\OBSTACLES</Filter>
+    </ClInclude>
+    <ClInclude Include="ObstacleNode.h">
+      <Filter>헤더 파일\Obstacles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

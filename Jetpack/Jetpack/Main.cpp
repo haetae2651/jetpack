@@ -6,6 +6,13 @@
 #include "ObstacleNode.h"
 #include "IngameUI.h"
 #include "OBS_Random.cpp"
+using namespace std;
+
+
+
+
+
+
 
 
 HINSTANCE g_hInst;
@@ -114,8 +121,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		// 플레이어 초기화
 		player.setImage(g_hInst);
 
-
-
 		// 5.27 장애물 초기화
 		for (int i = 0; i < 5; i++) {
 			POINT p = { rand() % 600 + 100, -(i * 200) };
@@ -149,26 +154,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 
 		//렌더링 파트
-
 		HBITMAP oldMDC1Bit = (HBITMAP)SelectObject(mDC1, hBitmap);
 
-		//배경 렌더링
-		bg.Render(mDC1, mDC2, win); // mDC1으로 쏨
+		bg.Render(mDC1, mDC2, win);												//배경 렌더링
 
 
-	
-
-		// 장애물 5.27
-		obsManager.Render_Obstacles(mDC1, cameraY);
+		obsManager.Render_Obstacles(mDC1, cameraY);						// 장애물 렌더링
 
 
-		//플레이어 렌더링
 		playerX = player.getPos().x;
 		playerY = player.getPos().y;
+		player.Render(mDC1, mDC2, playerX,playerY - cameraY);			//플레이어 렌더링
 
-
-		player.Render(mDC1, mDC2, playerX,playerY - cameraY);
 		
+
+
+
+
 		//UI 파트
 		scoreRender(mDC1, cameraY, win);
 		fuelRender(mDC1, player.getFuel(), win);
@@ -177,23 +179,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		cameraY = bg.GetCameraY();
 
+
+
+
+
+
+		//게임 업데이트 파트
+
 		obsManager.Update_Obstacles(bg.GetCameraDelta());
 		obsManager.Delete_Obstacles(player.getPos().y);
-
-
-
-
 		player.decel();
 		player.update();
 		player.move(wParam, maxSpeed); 
 
-		// 3. DC 원상복구 및 해제
 		SelectObject(mDC1, oldMDC1Bit);
 		DeleteDC(mDC2);
 		DeleteDC(mDC1);
 		ReleaseDC(hWnd, hDC);
 
-		// WM_PAINT 호출 (백그라운드 지우기를 막기 위해 FALSE 유지)
 		InvalidateRect(hWnd, NULL, FALSE);
 		break;
 	}
@@ -214,8 +217,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	}
 
 	case WM_DESTROY:
-		KillTimer(hWnd, 1);       // 타이머 해제
-		DeleteObject(hBitmap);    // 프로그램이 끝날 때 도화지(hBitmap)를 파괴합니다.
+		KillTimer(hWnd, 1);			 
+		DeleteObject(hBitmap); 
 		PostQuitMessage(0);
 		break;
 	}
