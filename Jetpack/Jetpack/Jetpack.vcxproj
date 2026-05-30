@@ -140,7 +140,7 @@
     <ClInclude Include="OBS_FollowPlayer.cpp" />
     <ClInclude Include="OBS_LeftRight.cpp" />
     <ClInclude Include="OBS_Path.cpp" />
-    <ClInclude Include="OBS_Random.cpp" />
+    <ClInclude Include="OBS_Random.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

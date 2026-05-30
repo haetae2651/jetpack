@@ -4,11 +4,13 @@
 #include "Obstacles.h"
 #include <string>
 
+
+
 class OBS_Random : public Obstacles {
 private:
     HBITMAP hBitAnim[3];
     int animCount = 0;
-    int chaWidth, chaHeight;
+    //int chaWidth, chaHeight;
    // int size = 40;                    <- 상위클래스의 변수에 있다.
     int frameTimer = 10;
 
@@ -17,7 +19,7 @@ public :
 	{
 		speed = 2;
         hBitAnim[0] = hBitAnim[1] = hBitAnim[2] = NULL;
-        chaWidth = chaHeight = 0;
+        Width = Height = 0;
         setImage(hInstance);
         size = 40;
         //여기다가 히트박스 크기 초기화 하면 될듯. 아니면 다른데다가.
@@ -55,12 +57,12 @@ public :
         HDC hMemDC = CreateCompatibleDC(hdc);
         HBITMAP oldBit = (HBITMAP)SelectObject(hMemDC, hBitAnim[animCount]); 
         GetObject(hBitAnim[animCount], sizeof(BITMAP), &bmp);
-        chaWidth = bmp.bmWidth;
-        chaHeight = bmp.bmHeight;
+        Width = bmp.bmWidth;
+        Height = bmp.bmHeight;
 
 
-        TransparentBlt(hdc, pos.x - size / 2, screenY - size / 2, size + chaWidth, size + chaHeight,
-            hMemDC, 0, 0, chaWidth, chaHeight, RGB(0, 255, 0));
+        TransparentBlt(hdc, pos.x - size / 2, screenY - size / 2, size + Width, size + Height,
+            hMemDC, 0, 0, Width, Height, RGB(0, 255, 0));
 
 
         SelectObject(hMemDC, oldBit);

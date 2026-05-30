@@ -17,6 +17,8 @@ public:
 	int getType() { return type; }
 	POINT getPos() { return pos; }
 	int getSize() { return size; }
+	int getWidth() { return Width; }
+	int getHeight() { return Height; }
 
 	//set함수
 	
@@ -48,7 +50,7 @@ public:
 		int type; // 장애물 종류 (예: 0 = 작은 돌, 1 = 큰 돌, 2 = 움직이는 장애물. 3 = 통로장애물)
 		float speed;
 		BITMAP bmp;
-
+		int Width, Height;
 
 
 		RECT hitbox; // 충돌 판정용 히트박스

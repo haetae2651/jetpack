@@ -1,13 +1,17 @@
 ﻿#include <windows.h>
 #include <tchar.h>
+#include <random>
+
 #include "Player.h"
 #include "BackGround.h"
-#include "Obstacles.h"
-#include "ObstacleNode.h"
-#include "IngameUI.h"
-#include "OBS_Random.cpp"
-using namespace std;
 
+#include "Obstacles.h"
+#include "OBS_Random.h"
+#include "ObstacleNode.h"
+
+#include "IngameUI.h"
+
+using namespace std;
 
 
 
@@ -122,6 +126,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		player.setImage(g_hInst);
 
 		// 5.27 장애물 초기화
+		obsManager.setWin(win);
 		for (int i = 0; i < 5; i++) {
 			POINT p = { rand() % 600 + 100, -(i * 200) };
 
@@ -186,8 +191,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		//게임 업데이트 파트
 
+
+		//obsManager.AutoAdd(0, player.getPos().y); //				AutoAdd(type, playerY)
 		obsManager.Update_Obstacles(bg.GetCameraDelta());
 		obsManager.Delete_Obstacles(player.getPos().y);
+
+
+
 		player.decel();
 		player.update();
 		player.move(wParam, maxSpeed); 

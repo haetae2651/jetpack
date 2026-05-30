@@ -65,13 +65,13 @@
     <ClInclude Include="OBS_FollowPlayer.cpp">
       <Filter>소스 파일\OBSTACLES</Filter>
     </ClInclude>
-    <ClInclude Include="OBS_Random.cpp">
-      <Filter>소스 파일\OBSTACLES</Filter>
-    </ClInclude>
     <ClInclude Include="OBS_Path.cpp">
       <Filter>소스 파일\OBSTACLES</Filter>
     </ClInclude>
     <ClInclude Include="ObstacleNode.h">
+      <Filter>헤더 파일\Obstacles</Filter>
+    </ClInclude>
+    <ClInclude Include="OBS_Random.h">
       <Filter>헤더 파일\Obstacles</Filter>
     </ClInclude>
   </ItemGroup>

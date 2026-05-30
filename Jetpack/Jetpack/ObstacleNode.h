@@ -1,9 +1,12 @@
 #pragma once
 #include "Obstacles.h"
 #include "Player.h"
+#include "OBS_Random.h"
 #include <windows.h>
+#include <random>
 
 #define DELETE_DISTANCE 500 // 플레이어보다 아래로 DELETE_DIST 이상 떨어진 장애물 제거
+extern HINSTANCE g_hInst;
 
 struct ObsNode {
 	Obstacles* obs;
@@ -18,7 +21,13 @@ private :
 	ObsNode* head;
 	int playerY;
 	unsigned char type;
-	int offsetY;
+	int offsetY = 100;
+	RECT win;
+
+
+	std::uniform_int_distribution<int> randomX;
+
+	std::default_random_engine dre{ std::random_device{}() };
 
 public :
     // 게임 오버 등 모든 장애물 초기화 시 사용
@@ -39,6 +48,12 @@ public :
     ~ObstacleManager() {
         Clear();
     };
+
+	void setWin(RECT win) {
+		this->win = win; 
+		randomX.param(std::uniform_int_distribution<int>::param_type(win.left, win.right));
+	
+	}
 
 	void Add_Obstacle(Obstacles* newObs) {
 		ObsNode* newNode = new ObsNode(newObs);
@@ -100,13 +115,19 @@ public :
 	void AutoAdd(int type, int playerY)
 	{
 		Obstacles* topObs = head->obs;
+		int tObsY = topObs->getPos().y;		
+		int tObsSize = topObs->getSize();
+		//int tObsWidth = topObs->getWidth();
+		int tObsHeight = topObs->getHeight();
 
 		switch (type) {
 
 		case 0:											// OBS_Random
 		{
-			if (playerY > topObs->getPos().y + topObs->getSize() + offsetY)
+			if (playerY > tObsY + tObsSize + tObsHeight)
 			{
+
+				Add_Obstacle(new OBS_Random(POINT{ randomX(dre),tObsY + tObsSize + tObsHeight + offsetY}, g_hInst));
 
 			}
 
