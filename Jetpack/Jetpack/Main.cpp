@@ -5,9 +5,12 @@
 #include "Player.h"
 #include "BackGround.h"
 
+
 #include "Obstacles.h"
+#include "ObstacleManager.h"
+
 #include "OBS_Random.h"
-#include "ObstacleNode.h"
+#include "OBS_Path.h"
 
 #include "IngameUI.h"
 
@@ -91,10 +94,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	static BackGround bg;
 	static float cameraY;
 
-
+	//6.2 충돌 히트박스
+	static RECT playerRect;
 
 	//UI 관련 변수
 	static bool IngameUI_Render = false;
+
+	//6.2 게임설정
+	static bool isStop = false; // 게임 멈추기
 
 	switch (uMsg) {
 	case WM_CREATE:
@@ -102,8 +109,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		IngameUI_Render = true;
 
 
-
-
+	
 		hDC = GetDC(hWnd);
 		GetClientRect(hWnd, &win);
 
@@ -125,7 +131,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		// 플레이어 초기화
 		player.setImage(g_hInst);
 
-		// 5.27 장애물 초기화
+		// 5.27 랜덤장애물 초기화
 		obsManager.setWin(win);
 		for (int i = 0; i < 5; i++) {
 			POINT p = { rand() % 600 + 100, -(i * 200) };
@@ -134,18 +140,33 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 
 
+		obsManager.Add_Obstacle(new OBS_Path({ 0, -1000 }, g_hInst, win.right));
+
+
 
 		ReleaseDC(hWnd, hDC); 
 		break;
+	case WM_LBUTTONDOWN: {
+		int mouseX = LOWORD(lParam);
+		int mouseY = HIWORD(lParam);
 
+		// 왼쪽 상단 버튼 영역 (버튼 크기에 맞게 조절)
+		if (mouseX >= 10 && mouseX <= 10 + 50 &&
+			mouseY >= 10 && mouseY <= 10 + 50) {
+			isStop = !isStop;
+		}
+		break;
+	}
+	case WM_KEYDOWN:
+		if (wParam == '1') player.setType(1);
+		if (wParam == '2') player.setType(2);
+		if (wParam == VK_ESCAPE) {
+			isStop = !isStop; // 토글
+		}
+		break;
 	case WM_CHAR:
 		switch (wParam) {
-		case 'q':
-		{
-			PostQuitMessage(0);
-			break;
-		}
-		case 'Q':
+		case 'q': case 'Q':
 			PostQuitMessage(0);
 			break;
 		}
@@ -179,6 +200,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		//UI 파트
 		scoreRender(mDC1, cameraY, win);
 		fuelRender(mDC1, player.getFuel(), win);
+		escRender(mDC1, g_hInst, win);
 
 		bg.Camera_Update(player.getPos().y);
 
@@ -193,19 +215,49 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 
 		//obsManager.AutoAdd(0, player.getPos().y); //				AutoAdd(type, playerY)
-		obsManager.Update_Obstacles(bg.GetCameraDelta());
+		obsManager.Update_Obstacles(bg.GetCameraDelta(), cameraY);
 		obsManager.Delete_Obstacles(player.getPos().y);
 
 
 
 		player.decel();
 		player.update();
-		player.move(wParam, maxSpeed); 
+		player.move(wParam, maxSpeed);
+
+		// 플레이어 히트박스 갱신
+		playerRect.left = playerX - player.getSize() / 2;
+		playerRect.top = (playerY - cameraY) - player.getSize() / 2;
+		playerRect.right = playerX + player.getSize() / 2;
+		playerRect.bottom = (playerY - cameraY) + player.getSize() / 2;
+
+		// 충돌 체크
+		if (obsManager.Check_PlayerCollision(playerRect)) {
+			// 게임오버 처리
+			PostQuitMessage(0);
+		}
+
+
+
+		// ***************************************************************
+		// 플레이어 히트박스 시각화 (파란 사각형) 
+		HBRUSH oldBrush = (HBRUSH)SelectObject(mDC1, GetStockObject(NULL_BRUSH));
+		HPEN hPen = CreatePen(PS_SOLID, 2, RGB(0, 0, 255));
+		HPEN oldPen = (HPEN)SelectObject(mDC1, hPen);
+
+		Rectangle(mDC1, playerRect.left, playerRect.top, playerRect.right, playerRect.bottom);
+
+		SelectObject(mDC1, oldPen);
+		SelectObject(mDC1, oldBrush);
+		DeleteObject(hPen);
+		// ***************************************************************
+
+
 
 		SelectObject(mDC1, oldMDC1Bit);
 		DeleteDC(mDC2);
 		DeleteDC(mDC1);
 		ReleaseDC(hWnd, hDC);
+
 
 		InvalidateRect(hWnd, NULL, FALSE);
 		break;

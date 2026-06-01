@@ -5,11 +5,11 @@
 #include <windows.h>
 #include <random>
 
-#define DELETE_DISTANCE 500 // 플레이어보다 아래로 DELETE_DIST 이상 떨어진 장애물 제거
+#define DELETE_DISTANCE 1000 // 플레이어보다 아래로 DELETE_DIST 이상 떨어진 장애물 제거
 extern HINSTANCE g_hInst;
 
 struct ObsNode {
-	Obstacles* obs;
+	Obstacles* obs; // 장애물
 	ObsNode* next;
 	ObsNode* prev;
 
@@ -74,10 +74,10 @@ public :
 		}
 	}
 
-	void Update_Obstacles(float cameraDelta) {
+	void Update_Obstacles(float cameraDelta, float cameraY) {
 		ObsNode* current = head;
 		while (current != nullptr) {
-			current->obs->Update(cameraDelta);
+			current->obs->Update(cameraDelta, cameraY);
 			current = current->next;
 		}
 	}
@@ -142,4 +142,23 @@ public :
 		}
 	}
 
+	bool Check_Collision(const RECT& rect1, const RECT& rect2) {
+		if (rect1.right <= rect2.left || rect1.left >= rect2.right ||
+			rect1.bottom <= rect2.top || rect1.top >= rect2.bottom) {
+			return false; // 충돌X
+		}
+		return true; // 충돌O
+	}
+
+	// 직접 메인에서 쓸 함수
+	bool Check_PlayerCollision(const RECT& playerHitbox) {
+		ObsNode* current = head;
+		while (current != nullptr) {
+			if (Check_Collision(playerHitbox, current->obs->getHitBox())) {
+				return true; // 충돌O
+			}
+			current = current->next;
+		}
+		return false; // 충돌X
+	}
 };

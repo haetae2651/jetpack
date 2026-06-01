@@ -15,6 +15,8 @@ public:
 	int getHp() { return hp; }
 	int getFuel() { return fuel; }
 
+	int getSize() { return size; }
+
 	//set함수
 	void setPos(POINT newPos) { pos = newPos; }
 	void setHp(int newHp) { hp = newHp; }
@@ -57,25 +59,93 @@ public:
 	}
 
 	void setImage(HINSTANCE hInstance) {
+		// Cat (타입1)
+		hCat[0] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP7));
+		hCat[1] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP8));
+		hCat[2] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP9));
+		hCat[3] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP10));
+		hCat[4] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP11));
+		hCat[5] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP12));
+		hCat[6] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP13));
+		hCat[7] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP14));
+		hCat[8] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP15));
+		hCat[9] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP16));
+
+		// Panda (타입2)
+		hPanda[0] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP17));
+		hPanda[1] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP18));
+		hPanda[2] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP19));
+		hPanda[3] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP20));
+		hPanda[4] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP21));
+		hPanda[5] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP22));
+		hPanda[6] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP23));
+		hPanda[7] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP24));
+		hPanda[8] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP25));
+		hPanda[9] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP26));
+		hPanda[10] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP27));
+		hPanda[11] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP28));
+
+		// 기본 크기 설정
+		BITMAP tempBmp;
+		GetObject(hCat[0], sizeof(BITMAP), &tempBmp);
+		width = tempBmp.bmWidth;
+		height = tempBmp.bmHeight;
+
 
 		//플레이어 이미지 설정
 		//플레이어 속도에 따라 각도가 다른 이미지 로드
 
-		hBitmap = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(TestImage));
-		GetObject(hBitmap, sizeof(bmp), &bmp);
-		width = bmp.bmWidth;
-		height = bmp.bmHeight;
 
+		// ************************* 이게 무슨 말인지 잘 모르겠사옵니다
 		size = static_cast<int>(max(width, height) * 0.2); //렌더링 및 충돌판정	에 사용할 크기
 
 	}
 
-	void Render(HDC mDC1, HDC mDC2 , int x, int y) {
+	// 1번 키를 누르면 고양이, 2번 키를 누르면 판다 (임시코드)
+	void setType(int type) {
+		playerType = type;
+		animCount = 0;
+		if (type == 1) 
+			maxFrame = 10;
+		if (type == 2) 
+			maxFrame = 12;
+	}
 
-		HBITMAP OldBit = (HBITMAP)SelectObject(mDC2, hBitmap); // 비트맵과 메모리 DC 연결
-		TransparentBlt(mDC1, x - size / 2, y - size / 2, size, size, mDC2, 0, 0, width, height, RGB(0, 255, 0));  // 이런식으로 충돌판정은 x - size/2, y - size/2로 해서 플레이어의 중심을 기준으로 충돌판정하게끔
+
+
+
+
+
+	void Render(HDC mDC1, HDC mDC2, int x, int y) {
+		HBITMAP OldBit;
+
+		animTimer++;
+		if (animTimer >= 10) {
+			animTimer = 0;
+			animCount = (animCount + 1) % maxFrame;
+		}
+
+		if (playerType == 1) {
+			OldBit = (HBITMAP)SelectObject(mDC2, hCat[animCount]);
+			BITMAP tempBmp;
+			GetObject(hCat[animCount], sizeof(BITMAP), &tempBmp);
+			width = tempBmp.bmWidth;
+			height = tempBmp.bmHeight;
+			size = 64;
+		}
+		else {
+			OldBit = (HBITMAP)SelectObject(mDC2, hPanda[animCount]);
+			BITMAP tempBmp;
+			GetObject(hPanda[animCount], sizeof(BITMAP), &tempBmp);
+			width = tempBmp.bmWidth;
+			height = tempBmp.bmHeight;
+			size = 64; 
+		}
+
+		TransparentBlt(mDC1, x - size / 2, y - size / 2, size, size,
+			mDC2, 0, 0, width, height, RGB(0, 255, 0));
+
 		SelectObject(mDC2, OldBit);
-
 	}
 
 	void update() {						
@@ -101,4 +171,15 @@ private:
 	BITMAP bmp;
 	int width, height;
 	int size;
+
+	// 플레이어 타입
+	int playerType = 1; // 1 = 기본, 2 = 판다
+
+	// 플레이어 외형
+	HBITMAP hCat[10];
+	HBITMAP hPanda[12];
+
+	int animCount = 0;
+	int animTimer = 0;
+	int maxFrame = 10;
 };

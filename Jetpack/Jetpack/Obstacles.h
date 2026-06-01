@@ -20,6 +20,8 @@ public:
 	int getWidth() { return Width; }
 	int getHeight() { return Height; }
 
+	RECT getHitBox() { return hitbox; }
+
 	//set함수
 	
 
@@ -29,8 +31,20 @@ public:
 		//픽셀 데이터를 함께 추출해야함. ( 통로 이미지인 경우 )
 	}
 	
-	virtual void Update(float cameraDelta) {
-		// type에 따라 움직임 다르게 처리 가능
+	// 6.2 장애물의 크기에 따라 히트박스 크기 조절해주는 함수 -------------------------------- 근데 위에 setImage 함수가 이 함수임?
+	virtual void Set_HitBox(RECT& rect, int bitmapWidth, int bitmapHeight) {
+		rect.left = pos.x - bitmapWidth / 2;
+		rect.top = pos.y - bitmapHeight / 2;
+		rect.right = pos.x + bitmapWidth / 2;
+		rect.bottom = pos.y + bitmapHeight / 2;
+	}
+	
+	// 6.2 히트 박스 위치 갱신 함수
+	virtual void Update(float cameraDelta, float cameraY) {
+		hitbox.left = pos.x - Width / 2;
+		hitbox.top = (pos.y - cameraY) - Height / 2;
+		hitbox.right = pos.x + Width / 2;
+		hitbox.bottom = (pos.y - cameraY) + Height / 2;
 	}
 
 	virtual void Render(HDC hdc, float cameraY) {

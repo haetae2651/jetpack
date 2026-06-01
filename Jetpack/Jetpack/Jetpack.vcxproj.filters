@@ -28,6 +28,12 @@
     <Filter Include="헤더 파일\Obstacles">
       <UniqueIdentifier>{63ae5a7e-8055-4352-be32-eedc2f53bcaa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="리소스 파일\Cat">
+      <UniqueIdentifier>{fffdad2f-e821-4db0-b389-915b8b4df0d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\Panda">
+      <UniqueIdentifier>{846ef335-06f8-4c3b-bb3f-f53084b1ff0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -68,10 +74,13 @@
     <ClInclude Include="OBS_Path.cpp">
       <Filter>소스 파일\OBSTACLES</Filter>
     </ClInclude>
-    <ClInclude Include="ObstacleNode.h">
+    <ClInclude Include="ObstacleManager.h">
       <Filter>헤더 파일\Obstacles</Filter>
     </ClInclude>
     <ClInclude Include="OBS_Random.h">
+      <Filter>헤더 파일\Obstacles</Filter>
+    </ClInclude>
+    <ClInclude Include="OBS_Path.h">
       <Filter>헤더 파일\Obstacles</Filter>
     </ClInclude>
   </ItemGroup>
@@ -98,6 +107,81 @@
     </Image>
     <Image Include="Resources\TestImage_AiGenerated.bmp">
       <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Bitmap.bmp">
+      <Filter>소스 파일</Filter>
+    </Image>
+    <Image Include="Resources\설정1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resources\구름통로1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resources\cat\Idle_1.bmp">
+      <Filter>리소스 파일\Cat</Filter>
+    </Image>
+    <Image Include="Resources\cat\Idle_2.bmp">
+      <Filter>리소스 파일\Cat</Filter>
+    </Image>
+    <Image Include="Resources\cat\Idle_3.bmp">
+      <Filter>리소스 파일\Cat</Filter>
+    </Image>
+    <Image Include="Resources\cat\Idle_4.bmp">
+      <Filter>리소스 파일\Cat</Filter>
+    </Image>
+    <Image Include="Resources\cat\Idle_5.bmp">
+      <Filter>리소스 파일\Cat</Filter>
+    </Image>
+    <Image Include="Resources\cat\Idle_6.bmp">
+      <Filter>리소스 파일\Cat</Filter>
+    </Image>
+    <Image Include="Resources\cat\Idle_7.bmp">
+      <Filter>리소스 파일\Cat</Filter>
+    </Image>
+    <Image Include="Resources\cat\Idle_8.bmp">
+      <Filter>리소스 파일\Cat</Filter>
+    </Image>
+    <Image Include="Resources\cat\Idle_9.bmp">
+      <Filter>리소스 파일\Cat</Filter>
+    </Image>
+    <Image Include="Resources\cat\Idle_10.bmp">
+      <Filter>리소스 파일\Cat</Filter>
+    </Image>
+    <Image Include="Resources\panda\PandaWave_1.bmp">
+      <Filter>리소스 파일\Panda</Filter>
+    </Image>
+    <Image Include="Resources\panda\PandaWave_2.bmp">
+      <Filter>리소스 파일\Panda</Filter>
+    </Image>
+    <Image Include="Resources\panda\PandaWave_3.bmp">
+      <Filter>리소스 파일\Panda</Filter>
+    </Image>
+    <Image Include="Resources\panda\PandaWave_4.bmp">
+      <Filter>리소스 파일\Panda</Filter>
+    </Image>
+    <Image Include="Resources\panda\PandaWave_5.bmp">
+      <Filter>리소스 파일\Panda</Filter>
+    </Image>
+    <Image Include="Resources\panda\PandaWave_6.bmp">
+      <Filter>리소스 파일\Panda</Filter>
+    </Image>
+    <Image Include="Resources\panda\PandaWave_7.bmp">
+      <Filter>리소스 파일\Panda</Filter>
+    </Image>
+    <Image Include="Resources\panda\PandaWave_8.bmp">
+      <Filter>리소스 파일\Panda</Filter>
+    </Image>
+    <Image Include="Resources\panda\PandaWave_9.bmp">
+      <Filter>리소스 파일\Panda</Filter>
+    </Image>
+    <Image Include="Resources\panda\PandaWave_10.bmp">
+      <Filter>리소스 파일\Panda</Filter>
+    </Image>
+    <Image Include="Resources\panda\PandaWave_11.bmp">
+      <Filter>리소스 파일\Panda</Filter>
+    </Image>
+    <Image Include="Resources\panda\PandaWave_12.bmp">
+      <Filter>리소스 파일\Panda</Filter>
     </Image>
   </ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
 #include "IngameUI.h"
+#include "resource.h"
 
 void scoreRender(HDC mDC1, int cameraY,RECT win) {
 	//카메라 y좌표 = 점수
@@ -11,7 +12,7 @@ void scoreRender(HDC mDC1, int cameraY,RECT win) {
 	int score = static_cast<int>((-cameraY + 172) / 10);
 	TCHAR scoreText[50];
 	wsprintf(scoreText, L"Score: %d", score);
-	TextOut(mDC1, 10, 10, scoreText, wcslen(scoreText));
+	TextOut(mDC1, 600, 10, scoreText, wcslen(scoreText));
 
 
 	SelectObject(mDC1, oldFont);
@@ -34,4 +35,23 @@ void fuelRender(HDC mDC1, float fuel,RECT win)
 
 	SelectObject(mDC1, oldFont);
 	DeleteObject(hFont);
+}
+
+void escRender(HDC mDC1, HINSTANCE hInstance, RECT win) {
+	// 비트맵 로드
+	int size = 40;
+	HBITMAP hEscBtn = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP5));
+	BITMAP bmp;
+	GetObject(hEscBtn, sizeof(BITMAP), &bmp);
+
+	HDC hMemDC = CreateCompatibleDC(mDC1);
+	HBITMAP oldBit = (HBITMAP)SelectObject(hMemDC, hEscBtn);
+
+	// 왼쪽 상단에 렌더링
+	TransparentBlt(mDC1, 10, 10, 40, 40,
+		hMemDC, 0, 0, bmp.bmWidth, bmp.bmHeight, RGB(0, 255, 0));
+
+	SelectObject(hMemDC, oldBit);
+	DeleteDC(hMemDC);
+	DeleteObject(hEscBtn);
 }
