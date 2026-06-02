@@ -85,12 +85,25 @@ public:
 		hPanda[10] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP27));
 		hPanda[11] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP28));
 
+		// Jetpack 
+		hjetpack[0] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP29));
+		hjetpack[1] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP30));
+		hjetpack[2] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP31));
+		hjetpack[3] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP32));
+		hjetpack[4] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP33));
+		hjetpack[5] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP34));
+
 		// 기본 크기 설정
 		BITMAP tempBmp;
 		GetObject(hCat[0], sizeof(BITMAP), &tempBmp);
 		width = tempBmp.bmWidth;
 		height = tempBmp.bmHeight;
 
+		// 제트팩
+		BITMAP jetBmp;
+		GetObject(hjetpack[0], sizeof(BITMAP), &jetBmp);
+		jetWidth = jetBmp.bmWidth;
+		jetHeight = jetBmp.bmHeight;
 
 		//플레이어 이미지 설정
 		//플레이어 속도에 따라 각도가 다른 이미지 로드
@@ -105,6 +118,7 @@ public:
 	void setType(int type) {
 		playerType = type;
 		animCount = 0;
+
 		if (type == 1) 
 			maxFrame = 10;
 		if (type == 2) 
@@ -125,6 +139,8 @@ public:
 			animCount = (animCount + 1) % maxFrame;
 		}
 
+
+
 		if (playerType == 1) {
 			OldBit = (HBITMAP)SelectObject(mDC2, hCat[animCount]);
 			BITMAP tempBmp;
@@ -144,17 +160,71 @@ public:
 
 		TransparentBlt(mDC1, x - size / 2, y - size / 2, size, size,
 			mDC2, 0, 0, width, height, RGB(0, 255, 0));
-
 		SelectObject(mDC2, OldBit);
+
+
+
+
+		if (jetState != 0) {
+			HBITMAP OldJet = (HBITMAP)SelectObject(mDC2, hjetpack[jetFrame]);
+			TransparentBlt(mDC1, x - jetWidth / 2 - 30, y - jetHeight / 2-30, jetWidth + 10, jetHeight+10, 
+				mDC2, 0, 0, jetWidth, jetHeight, RGB(0, 255, 0));
+			SelectObject(mDC2, OldJet);
+		}
+
 	}
+
+
 
 	void update() {						
 		Yspeed += 0.2; // 중력 - ***********유하영이 추가했다***********
 		pos.x += static_cast<int>(Xspeed);
 		pos.y += static_cast<int>(Yspeed);
+
+		updateJet(); // 제트팩 애니메이션 업데이트
 	}
 
 
+
+	// 좌우 키에 따라 달라지는 애니메이션
+	void updateJet() {
+		bool isPressed = (GetAsyncKeyState(VK_LEFT) & 0x8000) || (GetAsyncKeyState(VK_RIGHT) & 0x8000);
+
+		// 키 아무것도 안 눌렀을 때
+		if (!isPressed) {
+			jetState = 0;
+			jetFrame = 0;
+			jetTimer = 0;
+		}
+		// 처음 누름
+		else if (jetState == 0) {
+			jetState = 1;
+			jetFrame = 0;
+			jetTimer = 0;
+		}
+		// 발사 중 (1~4프레임)
+		else if (jetState == 1) {
+			jetTimer++;
+			if (jetTimer >= 10) {
+				jetTimer = 0;
+				jetFrame++;
+				if (jetFrame >= 4) {
+					jetState = 2;
+					jetFrame = 4;
+				}
+			}
+		}
+		// 유지 중 (5~6프레임 반복)
+		else if (jetState == 2) {
+			jetTimer++;
+			if (jetTimer >= 10) {
+				jetTimer = 0;
+				jetFrame++;
+				if (jetFrame >= 6) 
+					jetFrame = 4;
+			}
+		}
+	}
 
 
 private:
@@ -178,6 +248,15 @@ private:
 	// 플레이어 외형
 	HBITMAP hCat[10];
 	HBITMAP hPanda[12];
+
+	// 제트팩
+	HBITMAP hjetpack[6];
+
+	int jetWidth, jetHeight;
+
+	int jetState = 0; // 0 = 안누름, 1 = 발사중(1~4), 2 = 유지중(5~6)
+	int jetFrame = 0;
+	int jetTimer = 0;
 
 	int animCount = 0;
 	int animTimer = 0;

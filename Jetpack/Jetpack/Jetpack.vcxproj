@@ -165,6 +165,12 @@
     <Image Include="Resources\cloud1.bmp" />
     <Image Include="Resources\cloud11.bmp" />
     <Image Include="Resources\cloud22.bmp" />
+    <Image Include="Resources\jetpack\rocket1.bmp" />
+    <Image Include="Resources\jetpack\rocket2.bmp" />
+    <Image Include="Resources\jetpack\rocket3.bmp" />
+    <Image Include="Resources\jetpack\rocket4.bmp" />
+    <Image Include="Resources\jetpack\rocket5.bmp" />
+    <Image Include="Resources\jetpack\rocket6.bmp" />
     <Image Include="Resources\panda\PandaWave_1.bmp" />
     <Image Include="Resources\panda\PandaWave_10.bmp" />
     <Image Include="Resources\panda\PandaWave_11.bmp" />

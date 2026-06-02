@@ -34,6 +34,15 @@
     <Filter Include="리소스 파일\Panda">
       <UniqueIdentifier>{846ef335-06f8-4c3b-bb3f-f53084b1ff0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="리소스 파일\Jetpack">
+      <UniqueIdentifier>{c23a6f85-7222-4a24-a337-e8b0b547981a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\UI">
+      <UniqueIdentifier>{0eddeb4e-60da-4781-b657-c7b68d0c6171}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\Background">
+      <UniqueIdentifier>{c384beaf-23c5-4aaf-9f7b-eb53b7cc3df0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -93,9 +102,6 @@
     <Image Include="..\..\..\..\..\Downloads\TestImage_AiGenerated.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="Resources\BackGround.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
     <Image Include="Resources\cloud1.bmp">
       <Filter>리소스 파일\Obstacles</Filter>
     </Image>
@@ -110,12 +116,6 @@
     </Image>
     <Image Include="Bitmap.bmp">
       <Filter>소스 파일</Filter>
-    </Image>
-    <Image Include="Resources\설정1.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="Resources\구름통로1.bmp">
-      <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="Resources\cat\Idle_1.bmp">
       <Filter>리소스 파일\Cat</Filter>
@@ -182,6 +182,33 @@
     </Image>
     <Image Include="Resources\panda\PandaWave_12.bmp">
       <Filter>리소스 파일\Panda</Filter>
+    </Image>
+    <Image Include="Resources\jetpack\rocket1.bmp">
+      <Filter>리소스 파일\Jetpack</Filter>
+    </Image>
+    <Image Include="Resources\jetpack\rocket2.bmp">
+      <Filter>리소스 파일\Jetpack</Filter>
+    </Image>
+    <Image Include="Resources\jetpack\rocket3.bmp">
+      <Filter>리소스 파일\Jetpack</Filter>
+    </Image>
+    <Image Include="Resources\jetpack\rocket4.bmp">
+      <Filter>리소스 파일\Jetpack</Filter>
+    </Image>
+    <Image Include="Resources\jetpack\rocket5.bmp">
+      <Filter>리소스 파일\Jetpack</Filter>
+    </Image>
+    <Image Include="Resources\jetpack\rocket6.bmp">
+      <Filter>리소스 파일\Jetpack</Filter>
+    </Image>
+    <Image Include="Resources\설정1.bmp">
+      <Filter>리소스 파일\UI</Filter>
+    </Image>
+    <Image Include="Resources\구름통로1.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\BackGround.bmp">
+      <Filter>리소스 파일\Background</Filter>
     </Image>
   </ItemGroup>
 </Project>
