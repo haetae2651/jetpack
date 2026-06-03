@@ -16,8 +16,9 @@
 
 using namespace std;
 
+default_random_engine dre{ random_device{}() };
 
-
+uniform_int_distribution<int> randtype(0, 1);
 
 
 
@@ -214,7 +215,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		//게임 업데이트 파트
 
 
-		//obsManager.AutoAdd(0, player.getPos().y); //				AutoAdd(type, playerY)
+		obsManager.AutoAdd(0, player.getPos().y); //				AutoAdd(type, playerY)
 		obsManager.Update_Obstacles(bg.GetCameraDelta(), cameraY);
 		obsManager.Delete_Obstacles(player.getPos().y);
 

@@ -2,6 +2,7 @@
 #include "Obstacles.h"
 #include "Player.h"
 #include "OBS_Random.h"
+#include "OBS_Path.h"
 #include <windows.h>
 #include <random>
 
@@ -114,8 +115,13 @@ public :
 
 	void AutoAdd(int type, int playerY)
 	{
+		if (head == nullptr)
+		{
+			return;
+		}
+
 		Obstacles* topObs = head->obs;
-		int tObsY = topObs->getPos().y;		
+		int tObsY = topObs->getPos().y;
 		int tObsSize = topObs->getSize();
 		//int tObsWidth = topObs->getWidth();
 		int tObsHeight = topObs->getHeight();
@@ -124,20 +130,24 @@ public :
 
 		case 0:											// OBS_Random
 		{
-			if (playerY > tObsY + tObsSize + tObsHeight)
+			if (playerY - 800 < tObsY)
 			{
 
-				Add_Obstacle(new OBS_Random(POINT{ randomX(dre),tObsY + tObsSize + tObsHeight + offsetY}, g_hInst));
+				Add_Obstacle(new OBS_Random(POINT{ randomX(dre),tObsY - tObsSize - tObsHeight - offsetY }, g_hInst));
 
 			}
 
-
-
 			break;
 		}
+		case 1:											// OBS_Path
+		{
+			if (playerY - 800 < tObsY)
+			{
+				Add_Obstacle(new OBS_Path(POINT{ 0,tObsY - tObsSize - tObsHeight - offsetY }, g_hInst, win.right));
+			}
+			break;
 
-
-
+		}
 
 		}
 	}

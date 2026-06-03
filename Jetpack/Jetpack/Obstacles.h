@@ -24,7 +24,7 @@ public:
 
 	//set함수
 	
-
+	void setPos(POINT newPos) { this->pos = newPos; }
 
 	virtual void setImage(HINSTANCE hInstance) {
 		//장애물 이미지에 ''따라 이미지 설정.
