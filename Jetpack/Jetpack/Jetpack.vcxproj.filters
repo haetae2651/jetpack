@@ -183,15 +183,6 @@
     <Image Include="Resources\panda\PandaWave_12.bmp">
       <Filter>리소스 파일\Panda</Filter>
     </Image>
-    <Image Include="Resources\jetpack\rocket1.bmp">
-      <Filter>리소스 파일\Jetpack</Filter>
-    </Image>
-    <Image Include="Resources\jetpack\rocket2.bmp">
-      <Filter>리소스 파일\Jetpack</Filter>
-    </Image>
-    <Image Include="Resources\jetpack\rocket3.bmp">
-      <Filter>리소스 파일\Jetpack</Filter>
-    </Image>
     <Image Include="Resources\jetpack\rocket4.bmp">
       <Filter>리소스 파일\Jetpack</Filter>
     </Image>
@@ -209,6 +200,45 @@
     </Image>
     <Image Include="Resources\BackGround.bmp">
       <Filter>리소스 파일\Background</Filter>
+    </Image>
+    <Image Include="Resources\jetpack\rocket2Left.bmp">
+      <Filter>리소스 파일\Jetpack</Filter>
+    </Image>
+    <Image Include="Resources\jetpack\rocket2Right.bmp">
+      <Filter>리소스 파일\Jetpack</Filter>
+    </Image>
+    <Image Include="Resources\jetpack\rocket3Left.bmp">
+      <Filter>리소스 파일\Jetpack</Filter>
+    </Image>
+    <Image Include="Resources\jetpack\rocket3Right.bmp">
+      <Filter>리소스 파일\Jetpack</Filter>
+    </Image>
+    <Image Include="Resources\jetpack\rocket4Left.bmp">
+      <Filter>리소스 파일\Jetpack</Filter>
+    </Image>
+    <Image Include="Resources\jetpack\rocket4Right.bmp">
+      <Filter>리소스 파일\Jetpack</Filter>
+    </Image>
+    <Image Include="Resources\jetpack\rocket5Left.bmp">
+      <Filter>리소스 파일\Jetpack</Filter>
+    </Image>
+    <Image Include="Resources\jetpack\rocket5Right.bmp">
+      <Filter>리소스 파일\Jetpack</Filter>
+    </Image>
+    <Image Include="Resources\jetpack\rocket6Left.bmp">
+      <Filter>리소스 파일\Jetpack</Filter>
+    </Image>
+    <Image Include="Resources\jetpack\rocket6Right.bmp">
+      <Filter>리소스 파일\Jetpack</Filter>
+    </Image>
+    <Image Include="Resources\jetpack\rocket1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resources\jetpack\rocket2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resources\jetpack\rocket3.bmp">
+      <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>
 </Project>

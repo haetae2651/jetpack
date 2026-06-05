@@ -1,6 +1,7 @@
 #pragma once
 #include <windows.h>
 #include "resource.h"
+#include <cmath>
 #pragma comment(lib, "msimg32.lib")
 
 
@@ -87,11 +88,22 @@ public:
 
 		// Jetpack 
 		hjetpack[0] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP29));
-		hjetpack[1] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP30));
-		hjetpack[2] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP31));
-		hjetpack[3] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP32));
-		hjetpack[4] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP33));
-		hjetpack[5] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP34));
+		hjetpack[1] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP33));
+		hjetpack[2] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP34));
+
+		// Jetpack Left
+		hjetpack[3] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP35));
+		hjetpack[4] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP36));
+		hjetpack[5] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP37));
+		hjetpack[6] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP38));
+		hjetpack[7] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP39));
+
+		// Jetpack Right
+		hjetpack[8] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP40));
+		hjetpack[9] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP41));
+		hjetpack[10] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP42));
+		hjetpack[11] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP43));
+		hjetpack[12] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP44));
 
 		// 기본 크기 설정
 		BITMAP tempBmp;
@@ -132,6 +144,47 @@ public:
 
 	void Render(HDC mDC1, HDC mDC2, int x, int y) {
 		HBITMAP OldBit;
+		HBITMAP OldJet = (HBITMAP)SelectObject(mDC2, hjetpack[0]);
+
+		switch (jetState) {
+		case 0: // 안누름 → 기본 모형
+			OldJet = (HBITMAP)SelectObject(mDC2, hjetpack[0]);
+			break;
+		case 1: case 2: // 왼쪽 → hjetpack[3~7]
+			OldJet = (HBITMAP)SelectObject(mDC2, hjetpack[3 + jetFrame]);
+			break;
+		case 3: case 4: // 오른쪽 → hjetpack[8~12]
+			OldJet = (HBITMAP)SelectObject(mDC2, hjetpack[8 + jetFrame]);
+			break;
+		case 5: // 동시 → hjetpack[1~2]
+			OldJet = (HBITMAP)SelectObject(mDC2, hjetpack[1 + jetFrame]);
+			break;
+		}
+
+		// 제트팩 회전 적용
+		float rad = angle * 3.14159f / 180.0f;
+		XFORM xform;
+		xform.eM11 = cos(rad);
+		xform.eM12 = sin(rad);
+		xform.eM21 = -sin(rad);
+		xform.eM22 = cos(rad);
+		xform.eDx = (float)x;
+		xform.eDy = (float)y;
+
+		SetGraphicsMode(mDC1, GM_ADVANCED);
+		SetWorldTransform(mDC1, &xform);
+
+		if (playerType == 1) {
+			TransparentBlt(mDC1, -jetWidth / 2 - 20, -jetHeight / 2 - 10, jetWidth + 20, jetHeight + 30,
+				mDC2, 0, 0, jetWidth, jetHeight, RGB(0, 255, 0));
+		}
+		else {
+			TransparentBlt(mDC1, -jetWidth / 2 - 12, -jetHeight / 2 - 20, jetWidth + 20 , jetHeight + 40,
+				mDC2, 0, 0, jetWidth, jetHeight, RGB(0, 255, 0));
+		}
+		SelectObject(mDC2, OldJet);
+
+
 
 		animTimer++;
 		if (animTimer >= 10) {
@@ -158,20 +211,14 @@ public:
 			size = 64; 
 		}
 
-		TransparentBlt(mDC1, x - size / 2, y - size / 2, size, size,
+
+		TransparentBlt(mDC1, -size / 2, -size / 2, size, size,
 			mDC2, 0, 0, width, height, RGB(0, 255, 0));
 		SelectObject(mDC2, OldBit);
 
-
-
-
-		if (jetState != 0) {
-			HBITMAP OldJet = (HBITMAP)SelectObject(mDC2, hjetpack[jetFrame]);
-			TransparentBlt(mDC1, x - jetWidth / 2 - 30, y - jetHeight / 2-30, jetWidth + 10, jetHeight+10, 
-				mDC2, 0, 0, jetWidth, jetHeight, RGB(0, 255, 0));
-			SelectObject(mDC2, OldJet);
-		}
-
+		// 변환 초기화
+		ModifyWorldTransform(mDC1, NULL, MWT_IDENTITY);
+		SetGraphicsMode(mDC1, GM_COMPATIBLE);
 	}
 
 
@@ -182,47 +229,107 @@ public:
 		pos.y += static_cast<int>(Yspeed);
 
 		updateJet(); // 제트팩 애니메이션 업데이트
+
+		angle = (float)Xspeed * 3.0f;
+		if (angle > 30.0f)  angle = 30.0f;
+		if (angle < -30.0f) angle = -30.0f;
 	}
 
 
 
 	// 좌우 키에 따라 달라지는 애니메이션
 	void updateJet() {
-		bool isPressed = (GetAsyncKeyState(VK_LEFT) & 0x8000) || (GetAsyncKeyState(VK_RIGHT) & 0x8000);
+		bool isLeftPressed = (GetAsyncKeyState(VK_LEFT) & 0x8000);
+		bool isRightPressed = (GetAsyncKeyState(VK_RIGHT) & 0x8000);
 
-		// 키 아무것도 안 눌렀을 때
-		if (!isPressed) {
-			jetState = 0;
-			jetFrame = 0;
-			jetTimer = 0;
-		}
-		// 처음 누름
-		else if (jetState == 0) {
-			jetState = 1;
-			jetFrame = 0;
-			jetTimer = 0;
-		}
-		// 발사 중 (1~4프레임)
-		else if (jetState == 1) {
+		switch (jetState) {
+		case 0: // 안누름
+			if (isLeftPressed && isRightPressed) {
+				jetState = 5; jetFrame = 0; jetTimer = 0;
+			}
+			else if (isLeftPressed) {
+				jetState = 1; jetFrame = 0; jetTimer = 0;
+			}
+			else if (isRightPressed) {
+				jetState = 3; jetFrame = 0; jetTimer = 0;
+			}
+			break;
+
+		case 1: // 왼쪽 발사중 (3~6프레임)
+			if (!isLeftPressed && !isRightPressed) {
+				jetState = 0; jetFrame = 0; jetTimer = 0; break;
+			}
+			if (isLeftPressed && isRightPressed) {
+				jetState = 5; jetFrame = 0; jetTimer = 0; break;
+			}
 			jetTimer++;
 			if (jetTimer >= 10) {
 				jetTimer = 0;
 				jetFrame++;
 				if (jetFrame >= 4) {
-					jetState = 2;
-					jetFrame = 4;
+					jetState = 2; jetFrame = 4;
 				}
 			}
-		}
-		// 유지 중 (5~6프레임 반복)
-		else if (jetState == 2) {
+			break;
+
+		case 2: // 왼쪽 유지중 (6~7프레임)
+			if (!isLeftPressed && !isRightPressed) {
+				jetState = 0; jetFrame = 0; jetTimer = 0; break;
+			}
+			if (isLeftPressed && isRightPressed) {
+				jetState = 5; jetFrame = 0; jetTimer = 0; break;
+			}
 			jetTimer++;
 			if (jetTimer >= 10) {
 				jetTimer = 0;
 				jetFrame++;
-				if (jetFrame >= 6) 
-					jetFrame = 4;
+				if (jetFrame >= 5) jetFrame = 4;
 			}
+			break;
+
+		case 3: // 오른쪽 발사중 (8~11프레임)
+			if (!isLeftPressed && !isRightPressed) {
+				jetState = 0; jetFrame = 0; jetTimer = 0; break;
+			}
+			if (isLeftPressed && isRightPressed) {
+				jetState = 5; jetFrame = 0; jetTimer = 0; break;
+			}
+			jetTimer++;
+			if (jetTimer >= 10) {
+				jetTimer = 0;
+				jetFrame++;
+				if (jetFrame >= 4) {
+					jetState = 4; jetFrame = 4;
+				}
+			}
+			break;
+
+		case 4: // 오른쪽 유지중 (11~12프레임 반복)
+			if (!isLeftPressed && !isRightPressed) {
+				jetState = 0; jetFrame = 0; jetTimer = 0; break;
+			}
+			if (isLeftPressed && isRightPressed) {
+				jetState = 5; jetFrame = 0; jetTimer = 0; break;
+			}
+			jetTimer++;
+			if (jetTimer >= 10) {
+				jetTimer = 0;
+				jetFrame++;
+				if (jetFrame >= 5) jetFrame = 4;
+			}
+			break;
+
+		case 5: // 동시 (1~2프레임 반복)
+			if (!isLeftPressed && !isRightPressed) {
+				jetState = 0; jetFrame = 0; jetTimer = 0; break;
+			}
+			jetTimer++;
+			if (jetTimer >= 10) {
+				jetTimer = 0;
+				jetFrame++;
+				if (jetFrame >= 2) jetFrame = 0;
+			}
+			break;
 		}
 	}
 
@@ -250,7 +357,9 @@ private:
 	HBITMAP hPanda[12];
 
 	// 제트팩
-	HBITMAP hjetpack[6];
+	HBITMAP hjetpack[13];
+
+	float angle = 0.0f; // 기울기
 
 	int jetWidth, jetHeight;
 
