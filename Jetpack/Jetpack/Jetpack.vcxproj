@@ -150,7 +150,6 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\..\Downloads\TestImage_AiGenerated.bmp" />
-    <Image Include="Bitmap.bmp" />
     <Image Include="Resources\BackGround.bmp" />
     <Image Include="Resources\cat\Idle_1.bmp" />
     <Image Include="Resources\cat\Idle_10.bmp" />
@@ -181,6 +180,13 @@
     <Image Include="Resources\jetpack\rocket6.bmp" />
     <Image Include="Resources\jetpack\rocket6Left.bmp" />
     <Image Include="Resources\jetpack\rocket6Right.bmp" />
+    <Image Include="Resources\obstacle\구름1.bmp" />
+    <Image Include="Resources\obstacle\구름2.bmp" />
+    <Image Include="Resources\obstacle\구름3.bmp" />
+    <Image Include="Resources\obstacle\구름4.bmp" />
+    <Image Include="Resources\obstacle\구름통로2.bmp" />
+    <Image Include="Resources\obstacle\구름통로3.bmp" />
+    <Image Include="Resources\obstacle\구름통로4.bmp" />
     <Image Include="Resources\panda\PandaWave_1.bmp" />
     <Image Include="Resources\panda\PandaWave_10.bmp" />
     <Image Include="Resources\panda\PandaWave_11.bmp" />

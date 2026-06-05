@@ -6,7 +6,7 @@
 #include <windows.h>
 #include <random>
 
-#define DELETE_DISTANCE 1000 // 플레이어보다 아래로 DELETE_DIST 이상 떨어진 장애물 제거
+#define DELETE_DISTANCE 5000 // 플레이어보다 아래로 DELETE_DIST 이상 떨어진 장애물 제거
 extern HINSTANCE g_hInst;
 
 struct ObsNode {

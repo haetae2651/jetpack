@@ -337,7 +337,7 @@ public:
 private:
 
 	int hp = 1;
-	float fuel = 100;
+	float fuel = 1000;
 	POINT pos;
 
 

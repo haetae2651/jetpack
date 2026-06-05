@@ -8,7 +8,7 @@
 
 class OBS_Random : public Obstacles {
 private:
-    HBITMAP hBitAnim[3];
+    HBITMAP hBitAnim[2];
     int animCount = 0;
     //int chaWidth, chaHeight;
    // int size = 40;                    <- 상위클래스의 변수에 있다.
@@ -36,14 +36,13 @@ public :
 	}
 
     ~OBS_Random() {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 2; i++)
             DeleteObject(hBitAnim[i]);
     }
 
     void setImage(HINSTANCE hInstance) override {
-        hBitAnim[0] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP2));
-        hBitAnim[1] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP3));
-        hBitAnim[2] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP4));
+        hBitAnim[0] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP3));
+        hBitAnim[1] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP4));
 
         GetObject(hBitAnim[0], sizeof(BITMAP), &bmp);
         Width = bmp.bmWidth;
@@ -61,7 +60,7 @@ public :
         if (frameTimer >= 10) {
             frameTimer = 0;
             animCount++;
-            animCount %= 3;
+            animCount %= 2;
         }
     }
 

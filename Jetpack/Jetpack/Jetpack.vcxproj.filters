@@ -114,9 +114,6 @@
     <Image Include="Resources\TestImage_AiGenerated.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="Bitmap.bmp">
-      <Filter>소스 파일</Filter>
-    </Image>
     <Image Include="Resources\cat\Idle_1.bmp">
       <Filter>리소스 파일\Cat</Filter>
     </Image>
@@ -231,20 +228,41 @@
     <Image Include="Resources\jetpack\rocket6Right.bmp">
       <Filter>리소스 파일\Jetpack</Filter>
     </Image>
-    <Image Include="Resources\jetpack\rocket1.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="Resources\jetpack\rocket2.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="Resources\jetpack\rocket3.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
     <Image Include="Resources\UI\설정1.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="Resources\UI\설정2.bmp">
       <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resources\obstacle\구름1.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\obstacle\구름2.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\obstacle\구름3.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\obstacle\구름4.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\obstacle\구름통로2.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\obstacle\구름통로3.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\obstacle\구름통로4.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\jetpack\rocket1.bmp">
+      <Filter>리소스 파일\Jetpack</Filter>
+    </Image>
+    <Image Include="Resources\jetpack\rocket2.bmp">
+      <Filter>리소스 파일\Jetpack</Filter>
+    </Image>
+    <Image Include="Resources\jetpack\rocket3.bmp">
+      <Filter>리소스 파일\Jetpack</Filter>
     </Image>
   </ItemGroup>
 </Project>
