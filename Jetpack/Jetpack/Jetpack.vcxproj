@@ -194,6 +194,8 @@
     <Image Include="Resources\panda\PandaWave_8.bmp" />
     <Image Include="Resources\panda\PandaWave_9.bmp" />
     <Image Include="Resources\TestImage_AiGenerated.bmp" />
+    <Image Include="Resources\UI\설정1.bmp" />
+    <Image Include="Resources\UI\설정2.bmp" />
     <Image Include="Resources\구름통로1.bmp" />
     <Image Include="Resources\설정1.bmp" />
   </ItemGroup>

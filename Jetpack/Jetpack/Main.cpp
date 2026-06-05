@@ -69,6 +69,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 
 }
 
+void Game_Stop(HWND hWnd, bool& isStop) {
+	isStop = !isStop;
+	if (isStop) {
+		KillTimer(hWnd, 1);
+	}
+	else {
+		SetTimer(hWnd, 1, 1, NULL);
+	}
+}
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -110,7 +119,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		IngameUI_Render = true;
 
 
-	
+
 		hDC = GetDC(hWnd);
 		GetClientRect(hWnd, &win);
 
@@ -145,26 +154,39 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 
 
-		ReleaseDC(hWnd, hDC); 
+		ReleaseDC(hWnd, hDC);
 		break;
+
+
 	case WM_LBUTTONDOWN: {
 		int mouseX = LOWORD(lParam);
 		int mouseY = HIWORD(lParam);
 
 		// 왼쪽 상단 버튼 영역 (버튼 크기에 맞게 조절)
-		if (mouseX >= 10 && mouseX <= 10 + 50 &&
-			mouseY >= 10 && mouseY <= 10 + 50) {
-			isStop = !isStop;
+		if (mouseX >= 10 && mouseX <= 10 + 50 && mouseY >= 10 && mouseY <= 10 + 50) {
+			Game_Stop(hWnd, isStop);
+			InvalidateRect(hWnd, NULL, FALSE);
 		}
 		break;
 	}
+
+
 	case WM_KEYDOWN:
-		if (wParam == '1') player.setType(1);
-		if (wParam == '2') player.setType(2);
-		if (wParam == VK_ESCAPE) {
-			isStop = !isStop; // 토글
+		switch (wParam) {
+		case '1':
+			player.setType(1);
+			break;
+		case '2':
+			player.setType(2);
+			break;
+		case VK_ESCAPE:
+			Game_Stop(hWnd, isStop);
+			InvalidateRect(hWnd, NULL, FALSE);
+			break;
 		}
 		break;
+
+
 	case WM_CHAR:
 		switch (wParam) {
 		case 'q': case 'Q':
@@ -201,7 +223,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		//UI 파트
 		scoreRender(mDC1, cameraY, win);
 		fuelRender(mDC1, player.getFuel(), win);
-		escRender(mDC1, g_hInst, win);
+		
 
 		bg.Camera_Update(player.getPos().y);
 
@@ -271,6 +293,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		OldBit[0] = (HBITMAP)SelectObject(mDC1, hBitmap);
 
 		BitBlt(hDC, 0, 0, win.right, win.bottom, mDC1, 0, 0, SRCCOPY);
+
+		escRender(hDC, g_hInst, win, isStop);
 
 		SelectObject(mDC1, OldBit[0]);
 

@@ -37,21 +37,32 @@ void fuelRender(HDC mDC1, float fuel,RECT win)
 	DeleteObject(hFont);
 }
 
-void escRender(HDC mDC1, HINSTANCE hInstance, RECT win) {
+void escRender(HDC mDC1, HINSTANCE hInstance, RECT win, bool isStop) {
 	// 비트맵 로드
+	HBITMAP hEscBtn[2];
 	int size = 40;
-	HBITMAP hEscBtn = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP5));
+
+	hEscBtn[0] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP46)); // 흰색
+	hEscBtn[1] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP47)); // 검은색
+
 	BITMAP bmp;
-	GetObject(hEscBtn, sizeof(BITMAP), &bmp);
-
+	GetObject(hEscBtn[0], sizeof(BITMAP), &bmp);
+	
 	HDC hMemDC = CreateCompatibleDC(mDC1);
-	HBITMAP oldBit = (HBITMAP)SelectObject(hMemDC, hEscBtn);
 
-	// 왼쪽 상단에 렌더링
+	HBITMAP oldBit;
+	if (isStop) {
+		oldBit = (HBITMAP)SelectObject(hMemDC, hEscBtn[1]); // 검은색
+	}
+	else {
+		oldBit = (HBITMAP)SelectObject(hMemDC, hEscBtn[0]); // 흰색
+	}
+	
 	TransparentBlt(mDC1, 10, 10, 40, 40,
 		hMemDC, 0, 0, bmp.bmWidth, bmp.bmHeight, RGB(0, 255, 0));
 
 	SelectObject(hMemDC, oldBit);
 	DeleteDC(hMemDC);
-	DeleteObject(hEscBtn);
+	DeleteObject(hEscBtn[0]);
+	DeleteObject(hEscBtn[1]);
 }
