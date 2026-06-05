@@ -28,12 +28,6 @@
     <Filter Include="헤더 파일\Obstacles">
       <UniqueIdentifier>{63ae5a7e-8055-4352-be32-eedc2f53bcaa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="리소스 파일\Cat">
-      <UniqueIdentifier>{fffdad2f-e821-4db0-b389-915b8b4df0d6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="리소스 파일\Panda">
-      <UniqueIdentifier>{846ef335-06f8-4c3b-bb3f-f53084b1ff0d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="리소스 파일\Jetpack">
       <UniqueIdentifier>{c23a6f85-7222-4a24-a337-e8b0b547981a}</UniqueIdentifier>
     </Filter>
@@ -42,6 +36,21 @@
     </Filter>
     <Filter Include="리소스 파일\Background">
       <UniqueIdentifier>{c384beaf-23c5-4aaf-9f7b-eb53b7cc3df0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\character">
+      <UniqueIdentifier>{c96dcec2-5d22-472a-bb58-1c44e28ad666}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\character\Cat">
+      <UniqueIdentifier>{fffdad2f-e821-4db0-b389-915b8b4df0d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\character\Bunny">
+      <UniqueIdentifier>{3de54b7a-f636-4747-b70e-0ef7c1a10bfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\character\Penguin">
+      <UniqueIdentifier>{4b542512-e161-4284-923f-86e160effceb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\character\Panda">
+      <UniqueIdentifier>{846ef335-06f8-4c3b-bb3f-f53084b1ff0d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -99,9 +108,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\..\..\Downloads\TestImage_AiGenerated.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
     <Image Include="Resources\cloud1.bmp">
       <Filter>리소스 파일\Obstacles</Filter>
     </Image>
@@ -111,74 +117,71 @@
     <Image Include="Resources\cloud22.bmp">
       <Filter>리소스 파일\Obstacles</Filter>
     </Image>
-    <Image Include="Resources\TestImage_AiGenerated.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
     <Image Include="Resources\cat\Idle_1.bmp">
-      <Filter>리소스 파일\Cat</Filter>
+      <Filter>리소스 파일\character\Cat</Filter>
     </Image>
     <Image Include="Resources\cat\Idle_2.bmp">
-      <Filter>리소스 파일\Cat</Filter>
+      <Filter>리소스 파일\character\Cat</Filter>
     </Image>
     <Image Include="Resources\cat\Idle_3.bmp">
-      <Filter>리소스 파일\Cat</Filter>
+      <Filter>리소스 파일\character\Cat</Filter>
     </Image>
     <Image Include="Resources\cat\Idle_4.bmp">
-      <Filter>리소스 파일\Cat</Filter>
+      <Filter>리소스 파일\character\Cat</Filter>
     </Image>
     <Image Include="Resources\cat\Idle_5.bmp">
-      <Filter>리소스 파일\Cat</Filter>
+      <Filter>리소스 파일\character\Cat</Filter>
     </Image>
     <Image Include="Resources\cat\Idle_6.bmp">
-      <Filter>리소스 파일\Cat</Filter>
+      <Filter>리소스 파일\character\Cat</Filter>
     </Image>
     <Image Include="Resources\cat\Idle_7.bmp">
-      <Filter>리소스 파일\Cat</Filter>
+      <Filter>리소스 파일\character\Cat</Filter>
     </Image>
     <Image Include="Resources\cat\Idle_8.bmp">
-      <Filter>리소스 파일\Cat</Filter>
+      <Filter>리소스 파일\character\Cat</Filter>
     </Image>
     <Image Include="Resources\cat\Idle_9.bmp">
-      <Filter>리소스 파일\Cat</Filter>
+      <Filter>리소스 파일\character\Cat</Filter>
     </Image>
     <Image Include="Resources\cat\Idle_10.bmp">
-      <Filter>리소스 파일\Cat</Filter>
+      <Filter>리소스 파일\character\Cat</Filter>
     </Image>
     <Image Include="Resources\panda\PandaWave_1.bmp">
-      <Filter>리소스 파일\Panda</Filter>
+      <Filter>리소스 파일\character\Panda</Filter>
     </Image>
     <Image Include="Resources\panda\PandaWave_2.bmp">
-      <Filter>리소스 파일\Panda</Filter>
+      <Filter>리소스 파일\character\Panda</Filter>
     </Image>
     <Image Include="Resources\panda\PandaWave_3.bmp">
-      <Filter>리소스 파일\Panda</Filter>
+      <Filter>리소스 파일\character\Panda</Filter>
     </Image>
     <Image Include="Resources\panda\PandaWave_4.bmp">
-      <Filter>리소스 파일\Panda</Filter>
+      <Filter>리소스 파일\character\Panda</Filter>
     </Image>
     <Image Include="Resources\panda\PandaWave_5.bmp">
-      <Filter>리소스 파일\Panda</Filter>
+      <Filter>리소스 파일\character\Panda</Filter>
     </Image>
     <Image Include="Resources\panda\PandaWave_6.bmp">
-      <Filter>리소스 파일\Panda</Filter>
+      <Filter>리소스 파일\character\Panda</Filter>
     </Image>
     <Image Include="Resources\panda\PandaWave_7.bmp">
-      <Filter>리소스 파일\Panda</Filter>
+      <Filter>리소스 파일\character\Panda</Filter>
     </Image>
     <Image Include="Resources\panda\PandaWave_8.bmp">
-      <Filter>리소스 파일\Panda</Filter>
+      <Filter>리소스 파일\character\Panda</Filter>
     </Image>
     <Image Include="Resources\panda\PandaWave_9.bmp">
-      <Filter>리소스 파일\Panda</Filter>
+      <Filter>리소스 파일\character\Panda</Filter>
     </Image>
     <Image Include="Resources\panda\PandaWave_10.bmp">
-      <Filter>리소스 파일\Panda</Filter>
+      <Filter>리소스 파일\character\Panda</Filter>
     </Image>
     <Image Include="Resources\panda\PandaWave_11.bmp">
-      <Filter>리소스 파일\Panda</Filter>
+      <Filter>리소스 파일\character\Panda</Filter>
     </Image>
     <Image Include="Resources\panda\PandaWave_12.bmp">
-      <Filter>리소스 파일\Panda</Filter>
+      <Filter>리소스 파일\character\Panda</Filter>
     </Image>
     <Image Include="Resources\jetpack\rocket4.bmp">
       <Filter>리소스 파일\Jetpack</Filter>
@@ -228,12 +231,6 @@
     <Image Include="Resources\jetpack\rocket6Right.bmp">
       <Filter>리소스 파일\Jetpack</Filter>
     </Image>
-    <Image Include="Resources\UI\설정1.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="Resources\UI\설정2.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
     <Image Include="Resources\obstacle\구름1.bmp">
       <Filter>리소스 파일\Obstacles</Filter>
     </Image>
@@ -263,6 +260,120 @@
     </Image>
     <Image Include="Resources\jetpack\rocket3.bmp">
       <Filter>리소스 파일\Jetpack</Filter>
+    </Image>
+    <Image Include="Resources\bunny\bunny_01.bmp">
+      <Filter>리소스 파일\character\Bunny</Filter>
+    </Image>
+    <Image Include="Resources\bunny\bunny_02.bmp">
+      <Filter>리소스 파일\character\Bunny</Filter>
+    </Image>
+    <Image Include="Resources\bunny\bunny_03.bmp">
+      <Filter>리소스 파일\character\Bunny</Filter>
+    </Image>
+    <Image Include="Resources\bunny\bunny_04.bmp">
+      <Filter>리소스 파일\character\Bunny</Filter>
+    </Image>
+    <Image Include="Resources\bunny\bunny_05.bmp">
+      <Filter>리소스 파일\character\Bunny</Filter>
+    </Image>
+    <Image Include="Resources\bunny\bunny_06.bmp">
+      <Filter>리소스 파일\character\Bunny</Filter>
+    </Image>
+    <Image Include="Resources\bunny\bunny_07.bmp">
+      <Filter>리소스 파일\character\Bunny</Filter>
+    </Image>
+    <Image Include="Resources\bunny\bunny_08.bmp">
+      <Filter>리소스 파일\character\Bunny</Filter>
+    </Image>
+    <Image Include="Resources\bunny\bunny_09.bmp">
+      <Filter>리소스 파일\character\Bunny</Filter>
+    </Image>
+    <Image Include="Resources\bunny\bunny_10.bmp">
+      <Filter>리소스 파일\character\Bunny</Filter>
+    </Image>
+    <Image Include="Resources\Penguin\penguin_01.bmp">
+      <Filter>리소스 파일\character\Penguin</Filter>
+    </Image>
+    <Image Include="Resources\Penguin\penguin_02.bmp">
+      <Filter>리소스 파일\character\Penguin</Filter>
+    </Image>
+    <Image Include="Resources\Penguin\penguin_03.bmp">
+      <Filter>리소스 파일\character\Penguin</Filter>
+    </Image>
+    <Image Include="Resources\Penguin\penguin_04.bmp">
+      <Filter>리소스 파일\character\Penguin</Filter>
+    </Image>
+    <Image Include="Resources\Penguin\penguin_05.bmp">
+      <Filter>리소스 파일\character\Penguin</Filter>
+    </Image>
+    <Image Include="Resources\Penguin\penguin_06.bmp">
+      <Filter>리소스 파일\character\Penguin</Filter>
+    </Image>
+    <Image Include="Resources\Penguin\penguin_07.bmp">
+      <Filter>리소스 파일\character\Penguin</Filter>
+    </Image>
+    <Image Include="Resources\Penguin\penguin_08.bmp">
+      <Filter>리소스 파일\character\Penguin</Filter>
+    </Image>
+    <Image Include="Resources\UI\설정1.bmp">
+      <Filter>리소스 파일\UI</Filter>
+    </Image>
+    <Image Include="Resources\UI\설정2.bmp">
+      <Filter>리소스 파일\UI</Filter>
+    </Image>
+    <Image Include="Resources\obstacle\구름통로1.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\TestImage_AiGenerated.bmp">
+      <Filter>리소스 파일\character</Filter>
+    </Image>
+    <Image Include="Resources\Bird\bird_01.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\Bird\bird_02.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\Bird\bird_03.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\Bird\bird_04.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\Bird\bird_05.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\Bird\bird_06.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\Bird\bird_07.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\Bird\bird_08.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\Bird\bird_09.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\Bird\bird_10.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\Bird\bird_11.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\Bird\bird_12.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\Bird\bird_13.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\Bird\bird_14.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\Bird\bird_15.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\Bird\bird_16.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
     </Image>
   </ItemGroup>
 </Project>

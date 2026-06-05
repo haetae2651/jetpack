@@ -86,6 +86,28 @@ public:
 		hPanda[10] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP27));
 		hPanda[11] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP28));
 
+		// Bunny (타입3)
+		hBunny[0] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP55));
+		hBunny[1] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP56));
+		hBunny[2] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP57));
+		hBunny[3] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP58));
+		hBunny[4] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP59));
+		hBunny[5] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP60));
+		hBunny[6] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP61));
+		hBunny[7] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP62));
+		hBunny[8] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP63));
+		hBunny[9] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP64));
+
+		// Penguin (타입4)
+		hPenguin[0] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP65));
+		hPenguin[1] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP66));
+		hPenguin[2] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP67));
+		hPenguin[3] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP68));
+		hPenguin[4] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP69));
+		hPenguin[5] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP70));
+		hPenguin[6] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP71));
+		hPenguin[7] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP72));
+
 		// Jetpack 
 		hjetpack[0] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP29));
 		hjetpack[1] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP33));
@@ -105,11 +127,29 @@ public:
 		hjetpack[11] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP43));
 		hjetpack[12] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP44));
 
-		// 기본 크기 설정
-		BITMAP tempBmp;
-		GetObject(hCat[0], sizeof(BITMAP), &tempBmp);
-		width = tempBmp.bmWidth;
-		height = tempBmp.bmHeight;
+		// 기본 크기 설정 - cat
+		BITMAP CatBmp;
+		GetObject(hCat[0], sizeof(BITMAP), &CatBmp);
+		width = CatBmp.bmWidth;
+		height = CatBmp.bmHeight;
+
+		// 판다
+		BITMAP PandaBmp;
+		GetObject(hPanda[0], sizeof(BITMAP), &PandaBmp);
+		width = PandaBmp.bmWidth;
+		height = PandaBmp.bmHeight;
+
+		// 버니
+		BITMAP BunnyBmp;
+		GetObject(hBunny[0], sizeof(BITMAP), &BunnyBmp);
+		width = BunnyBmp.bmWidth;
+		height = BunnyBmp.bmHeight;
+		
+		// 펭귄
+		BITMAP PenguinBmp;
+		GetObject(hPenguin[0], sizeof(BITMAP), &PenguinBmp);
+		width = PenguinBmp.bmWidth;
+		height = PenguinBmp.bmHeight;
 
 		// 제트팩
 		BITMAP jetBmp;
@@ -135,6 +175,10 @@ public:
 			maxFrame = 10;
 		if (type == 2) 
 			maxFrame = 12;
+		if (type == 3)
+			maxFrame = 10;
+		if (type == 4)
+			maxFrame = 8;
 	}
 
 
@@ -178,8 +222,16 @@ public:
 			TransparentBlt(mDC1, -jetWidth / 2 - 20, -jetHeight / 2 - 10, jetWidth + 20, jetHeight + 30,
 				mDC2, 0, 0, jetWidth, jetHeight, RGB(0, 255, 0));
 		}
-		else {
+		else if (playerType == 2) {
 			TransparentBlt(mDC1, -jetWidth / 2 - 12, -jetHeight / 2 - 20, jetWidth + 20 , jetHeight + 40,
+				mDC2, 0, 0, jetWidth, jetHeight, RGB(0, 255, 0));
+		}
+		else if (playerType == 3) {
+			TransparentBlt(mDC1, -jetWidth / 2 - 12, -jetHeight / 2 - 10, jetWidth + 15, jetHeight + 25,
+				mDC2, 0, 0, jetWidth, jetHeight, RGB(0, 255, 0));
+		}
+		else {
+			TransparentBlt(mDC1, -jetWidth / 2 - 12, -jetHeight / 2 - 10, jetWidth + 15, jetHeight + 25,
 				mDC2, 0, 0, jetWidth, jetHeight, RGB(0, 255, 0));
 		}
 		SelectObject(mDC2, OldJet);
@@ -202,13 +254,29 @@ public:
 			height = tempBmp.bmHeight;
 			size = 64;
 		}
-		else {
+		else if (playerType == 2) {
 			OldBit = (HBITMAP)SelectObject(mDC2, hPanda[animCount]);
 			BITMAP tempBmp;
 			GetObject(hPanda[animCount], sizeof(BITMAP), &tempBmp);
 			width = tempBmp.bmWidth;
 			height = tempBmp.bmHeight;
 			size = 64; 
+		}
+		else if (playerType == 3) {
+			OldBit = (HBITMAP)SelectObject(mDC2, hBunny[animCount]);
+			BITMAP tempBmp;
+			GetObject(hBunny[animCount], sizeof(BITMAP), &tempBmp);
+			width = tempBmp.bmWidth;
+			height = tempBmp.bmHeight;
+			size = 64;
+		}
+		else {
+			OldBit = (HBITMAP)SelectObject(mDC2, hPenguin[animCount]);
+			BITMAP tempBmp;
+			GetObject(hPenguin[animCount], sizeof(BITMAP), &tempBmp);
+			width = tempBmp.bmWidth;
+			height = tempBmp.bmHeight;
+			size = 64;
 		}
 
 
@@ -350,11 +418,13 @@ private:
 	int size;
 
 	// 플레이어 타입
-	int playerType = 1; // 1 = 기본, 2 = 판다
+	int playerType = 1; // 1 = 기본, 2 = 판다, 3 = 토끼, 4 = 펭귄
 
 	// 플레이어 외형
 	HBITMAP hCat[10];
 	HBITMAP hPanda[12];
+	HBITMAP hBunny[10];
+	HBITMAP hPenguin[8];
 
 	// 제트팩
 	HBITMAP hjetpack[13];

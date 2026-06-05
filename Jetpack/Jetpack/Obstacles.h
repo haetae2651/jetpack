@@ -61,7 +61,7 @@ public:
 	protected:
 		POINT pos;
 		int size;
-		int type; // 장애물 종류 (예: 0 = 작은 돌, 1 = 큰 돌, 2 = 움직이는 장애물. 3 = 통로장애물)
+		int type; // 장애물 종류 (예: 0 = 랜덤생성, 1 = 좌우왔다갔다, 2 = 플레이어 따라다니는 장애물. 3 = 통로장애물)
 		float speed;
 		BITMAP bmp;
 		int Width, Height;

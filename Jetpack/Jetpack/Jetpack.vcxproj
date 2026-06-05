@@ -149,8 +149,33 @@
     <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\..\..\Downloads\TestImage_AiGenerated.bmp" />
     <Image Include="Resources\BackGround.bmp" />
+    <Image Include="Resources\Bird\bird_01.bmp" />
+    <Image Include="Resources\Bird\bird_02.bmp" />
+    <Image Include="Resources\Bird\bird_03.bmp" />
+    <Image Include="Resources\Bird\bird_04.bmp" />
+    <Image Include="Resources\Bird\bird_05.bmp" />
+    <Image Include="Resources\Bird\bird_06.bmp" />
+    <Image Include="Resources\Bird\bird_07.bmp" />
+    <Image Include="Resources\Bird\bird_08.bmp" />
+    <Image Include="Resources\Bird\bird_09.bmp" />
+    <Image Include="Resources\Bird\bird_10.bmp" />
+    <Image Include="Resources\Bird\bird_11.bmp" />
+    <Image Include="Resources\Bird\bird_12.bmp" />
+    <Image Include="Resources\Bird\bird_13.bmp" />
+    <Image Include="Resources\Bird\bird_14.bmp" />
+    <Image Include="Resources\Bird\bird_15.bmp" />
+    <Image Include="Resources\Bird\bird_16.bmp" />
+    <Image Include="Resources\bunny\bunny_01.bmp" />
+    <Image Include="Resources\bunny\bunny_02.bmp" />
+    <Image Include="Resources\bunny\bunny_03.bmp" />
+    <Image Include="Resources\bunny\bunny_04.bmp" />
+    <Image Include="Resources\bunny\bunny_05.bmp" />
+    <Image Include="Resources\bunny\bunny_06.bmp" />
+    <Image Include="Resources\bunny\bunny_07.bmp" />
+    <Image Include="Resources\bunny\bunny_08.bmp" />
+    <Image Include="Resources\bunny\bunny_09.bmp" />
+    <Image Include="Resources\bunny\bunny_10.bmp" />
     <Image Include="Resources\cat\Idle_1.bmp" />
     <Image Include="Resources\cat\Idle_10.bmp" />
     <Image Include="Resources\cat\Idle_2.bmp" />
@@ -184,6 +209,7 @@
     <Image Include="Resources\obstacle\구름2.bmp" />
     <Image Include="Resources\obstacle\구름3.bmp" />
     <Image Include="Resources\obstacle\구름4.bmp" />
+    <Image Include="Resources\obstacle\구름통로1.bmp" />
     <Image Include="Resources\obstacle\구름통로2.bmp" />
     <Image Include="Resources\obstacle\구름통로3.bmp" />
     <Image Include="Resources\obstacle\구름통로4.bmp" />
@@ -199,6 +225,14 @@
     <Image Include="Resources\panda\PandaWave_7.bmp" />
     <Image Include="Resources\panda\PandaWave_8.bmp" />
     <Image Include="Resources\panda\PandaWave_9.bmp" />
+    <Image Include="Resources\Penguin\penguin_01.bmp" />
+    <Image Include="Resources\Penguin\penguin_02.bmp" />
+    <Image Include="Resources\Penguin\penguin_03.bmp" />
+    <Image Include="Resources\Penguin\penguin_04.bmp" />
+    <Image Include="Resources\Penguin\penguin_05.bmp" />
+    <Image Include="Resources\Penguin\penguin_06.bmp" />
+    <Image Include="Resources\Penguin\penguin_07.bmp" />
+    <Image Include="Resources\Penguin\penguin_08.bmp" />
     <Image Include="Resources\TestImage_AiGenerated.bmp" />
     <Image Include="Resources\UI\설정1.bmp" />
     <Image Include="Resources\UI\설정2.bmp" />

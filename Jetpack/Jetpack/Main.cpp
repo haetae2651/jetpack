@@ -179,6 +179,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		case '2':
 			player.setType(2);
 			break;
+		case '3':
+			player.setType(3);
+			break;
+		case '4':
+			player.setType(4);
+			break;
 		case VK_ESCAPE:
 			Game_Stop(hWnd, isStop);
 			InvalidateRect(hWnd, NULL, FALSE);
