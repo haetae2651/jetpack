@@ -181,6 +181,7 @@
     <Image Include="Resources\cloud1.bmp" />
     <Image Include="Resources\cloud11.bmp" />
     <Image Include="Resources\cloud22.bmp" />
+    <Image Include="resources\jetpack\FuelBar.bmp" />
     <Image Include="Resources\jetpack\rocket1.bmp" />
     <Image Include="Resources\jetpack\rocket2.bmp" />
     <Image Include="Resources\jetpack\rocket2Left.bmp" />

@@ -328,28 +328,31 @@
       <Filter>리소스 파일\character</Filter>
     </Image>
     <Image Include="Resources\Bird\bird_02.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\Obstacles</Filter>
     </Image>
     <Image Include="Resources\Bird\bird_03.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\Obstacles</Filter>
     </Image>
     <Image Include="Resources\Bird\bird_04.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\Obstacles</Filter>
     </Image>
     <Image Include="Resources\Bird\bird_05.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\Obstacles</Filter>
     </Image>
     <Image Include="Resources\Bird_L\bird_flip_02.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\Obstacles</Filter>
     </Image>
     <Image Include="Resources\Bird_L\bird_flip_03.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\Obstacles</Filter>
     </Image>
     <Image Include="Resources\Bird_L\bird_flip_04.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\Obstacles</Filter>
     </Image>
     <Image Include="Resources\Bird_L\bird_flip_05.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="resources\jetpack\FuelBar.bmp">
+      <Filter>리소스 파일\UI</Filter>
     </Image>
   </ItemGroup>
 </Project>

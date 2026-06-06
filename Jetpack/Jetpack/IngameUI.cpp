@@ -3,10 +3,14 @@
 static HBITMAP hEscBtn[2] = { NULL, NULL };
 static HFONT hFont = NULL;
 
+static HBITMAP hFuelBar = NULL;
+
 void setUI(HINSTANCE hInstance) {
 	hEscBtn[0] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP46)); // 흰색
 	hEscBtn[1] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP47)); // 검은색
 	hFont = CreateFont(40, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH || FF_DONTCARE, L"나눔 명조");
+
+	hFuelBar = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP81)); // 연료바
 }
 
 void ReleaseUI() {
@@ -15,6 +19,10 @@ void ReleaseUI() {
 			DeleteObject(hEscBtn[i]);
 			hEscBtn[i] = NULL;
 		}
+	}
+	if (hFuelBar) {
+		DeleteObject(hFuelBar);
+		hFuelBar = NULL;
 	}
 	if (hFont) {
 		DeleteObject(hFont);
@@ -50,9 +58,23 @@ void fuelRender(HDC mDC1, float fuel,RECT win)
 	TCHAR fuelText[50];
 	wsprintf(fuelText, L"Fuel: %d", intfuel);
 	TextOut(mDC1, win.right - 150, 15, fuelText, wcslen(fuelText));
-
-
 	SelectObject(mDC1, oldFont);
+
+
+	const int sizeY = 400;
+	const int sizeX = 180;
+	BITMAP bmp;
+	HDC hMemDC = CreateCompatibleDC(mDC1);
+	HBITMAP oldBit;
+
+	GetObject(hFuelBar, sizeof(BITMAP), &bmp);
+
+	oldBit = (HBITMAP)SelectObject(hMemDC, hFuelBar);
+	TransparentBlt(mDC1, -20, 150, sizeX, sizeY,
+		hMemDC, 0, 0, bmp.bmWidth, bmp.bmHeight, RGB(0, 255, 0));
+	
+	SelectObject(hMemDC, oldBit);
+	DeleteDC(hMemDC);
 }
 
 void escRender(HDC mDC1, HINSTANCE hInstance, RECT win, bool isStop) {

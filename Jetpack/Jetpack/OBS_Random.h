@@ -19,13 +19,12 @@ private:
     int hitW = Width * 0.8;
     int hitH = Height * 0.8;
 public :
-	OBS_Random(POINT pos, HINSTANCE hInstance) : Obstacles(0, pos, 20) // Obstacles(int type, POINT pos, int size)
+	OBS_Random(POINT pos, HINSTANCE hInstance) : Obstacles(0, pos, 40) // Obstacles(int type, POINT pos, int size)
 	{
 		speed = 2;
         hBitAnim[0] = hBitAnim[1]= NULL;
         Width = Height = 0;
         setImage(hInstance);
-        size = 40;
         //여기다가 히트박스 크기 초기화 하면 될듯. 아니면 다른데다가.
         //히트박스는 이미지 크기에 맞춰서? 예를들어 이미지의 80% 정도가 히트박스가 되도록.
 
