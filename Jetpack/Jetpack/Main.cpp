@@ -19,7 +19,7 @@ using namespace std;
 
 default_random_engine dre{ random_device{}() };
 
-uniform_int_distribution<int> randtype(0, 1);
+uniform_int_distribution<int> randtype(0, 3);
 
 
 int screenWidth = GetSystemMetrics(SM_CXSCREEN);
@@ -94,6 +94,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	static int playerX, playerY;
 	static int maxSpeed = 10;
 	static Player player;
+	static bool playerseen = true;
+	static int seencnt = 0;
 
 	// 임시 테스트용 장애물
 	static Obstacles tempObs{ 0, {1000, -10}, 100 };
@@ -150,7 +152,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		
 		}
 
-		obsManager.Add_Obstacle(new OBS_LeftRight({ 0+10, -200 }, g_hInst));
+		obsManager.Add_Obstacle(new OBS_LeftRight({ 0+10, -200 }, g_hInst,5));
 
 		obsManager.Add_Obstacle(new OBS_Path({ 0, -1000 }, g_hInst, win.right));
 
@@ -211,87 +213,119 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		mDC2 = CreateCompatibleDC(mDC1);
 
 
-		//렌더링 파트
-		HBITMAP oldMDC1Bit = (HBITMAP)SelectObject(mDC1, hBitmap);
 
-		bg.Render(mDC1, mDC2, win);												//배경 렌더링
+		// 이제부터 타이머 ID값으로 분류(1: 게임 업데이트 및 렌더링, 2: 플레이어 깜빡임 3......)
 
+		switch (wParam) {
+		case 1: {
 
-		obsManager.Render_Obstacles(mDC1, cameraY);						// 장애물 렌더링
+			//렌더링 파트
+			HBITMAP oldMDC1Bit = (HBITMAP)SelectObject(mDC1, hBitmap);
 
-
-		playerX = player.getPos().x;
-		playerY = player.getPos().y;
-		player.Render(mDC1, mDC2, playerX,playerY - cameraY);			//플레이어 렌더링
-
-		
+			bg.Render(mDC1, mDC2, win);												//배경 렌더링
 
 
+			obsManager.Render_Obstacles(mDC1, cameraY);						// 장애물 렌더링
 
 
-		//UI 파트
-		scoreRender(mDC1, cameraY, win);
-		fuelRender(mDC1, player.getFuel(), win);
-		
-
-		bg.Camera_Update(player.getPos().y);
-
-		cameraY = bg.GetCameraY();
+			playerX = player.getPos().x;
+			playerY = player.getPos().y;
+			
+			if (playerseen)
+				player.Render(mDC1, mDC2, playerX, playerY - cameraY);			//플레이어 렌더링
 
 
 
 
 
 
-		//게임 업데이트 파트
+			//UI 파트
+			scoreRender(mDC1, cameraY, win);
+			fuelRender(mDC1, player.getFuel(), win);
 
 
-		obsManager.AutoAdd(0, player.getPos().y); //				AutoAdd(type, playerY)
-		obsManager.Update_Obstacles(bg.GetCameraDelta(), cameraY);
-		obsManager.Delete_Obstacles(player.getPos().y);
+			bg.Camera_Update(player.getPos().y);
+
+			cameraY = bg.GetCameraY();
 
 
 
-		player.decel();
-		player.update();
-		player.move(wParam, maxSpeed);
 
-		// 플레이어 히트박스 갱신
-		playerRect.left = playerX - player.getSize() / 2;
-		playerRect.top = (playerY - cameraY) - player.getSize() / 2;
-		playerRect.right = playerX + player.getSize() / 2;
-		playerRect.bottom = (playerY - cameraY) + player.getSize() / 2;
 
-		// 충돌 체크
-		if (obsManager.Check_PlayerCollision(playerRect)) {
-			// 게임오버 처리
-			PostQuitMessage(0);
+
+			//게임 업데이트 파트
+
+
+			obsManager.AutoAdd(randtype(dre), player.getPos().y); //				AutoAdd(type, playerY)
+			obsManager.Update_Obstacles(bg.GetCameraDelta(), cameraY);
+			obsManager.Delete_Obstacles(player.getPos().y);
+
+
+
+			player.decel();
+			player.update();
+			player.move(wParam, maxSpeed);
+
+			// 플레이어 히트박스 갱신
+			playerRect.left = playerX - player.getSize() / 2;
+			playerRect.top = (playerY - cameraY) - player.getSize() / 2;
+			playerRect.right = playerX + player.getSize() / 2;
+			playerRect.bottom = (playerY - cameraY) + player.getSize() / 2;
+
+
+
+			// 충돌 체크
+			if (obsManager.Check_PlayerCollision(playerRect) && !player.getishit()) {
+				player.setishit(true);
+				seencnt = 0;
+				SetTimer(hWnd, 2, 15, NULL); //0.5초마다 깜빡임
+				player.setHp(player.getHp() - 1);
+
+
+			}
+
+
+
+			// ***************************************************************
+			// 플레이어 히트박스 시각화 (파란 사각형) 
+			HBRUSH oldBrush = (HBRUSH)SelectObject(mDC1, GetStockObject(NULL_BRUSH));
+			HPEN hPen = CreatePen(PS_SOLID, 2, RGB(0, 0, 255));
+			HPEN oldPen = (HPEN)SelectObject(mDC1, hPen);
+
+			Rectangle(mDC1, playerRect.left, playerRect.top, playerRect.right, playerRect.bottom);
+
+			SelectObject(mDC1, oldPen);
+			SelectObject(mDC1, oldBrush);
+			DeleteObject(hPen);
+			// ***************************************************************
+
+
+
+			SelectObject(mDC1, oldMDC1Bit);
+			DeleteDC(mDC2);
+			DeleteDC(mDC1);
+			ReleaseDC(hWnd, hDC);
+
+
+			break;
+		}
+		case 2: {
+
+			playerseen = !playerseen;
+			seencnt++;
+			if (seencnt >= 150) {
+				player.setishit(false);
+				KillTimer(hWnd, 2);
+				seencnt = 0;
+			}
+
+			break;
+
 		}
 
-
-
-		// ***************************************************************
-		// 플레이어 히트박스 시각화 (파란 사각형) 
-		HBRUSH oldBrush = (HBRUSH)SelectObject(mDC1, GetStockObject(NULL_BRUSH));
-		HPEN hPen = CreatePen(PS_SOLID, 2, RGB(0, 0, 255));
-		HPEN oldPen = (HPEN)SelectObject(mDC1, hPen);
-
-		Rectangle(mDC1, playerRect.left, playerRect.top, playerRect.right, playerRect.bottom);
-
-		SelectObject(mDC1, oldPen);
-		SelectObject(mDC1, oldBrush);
-		DeleteObject(hPen);
-		// ***************************************************************
-
-
-
-		SelectObject(mDC1, oldMDC1Bit);
-		DeleteDC(mDC2);
-		DeleteDC(mDC1);
-		ReleaseDC(hWnd, hDC);
-
-
+		}
 		InvalidateRect(hWnd, NULL, FALSE);
+
 		break;
 	}
 

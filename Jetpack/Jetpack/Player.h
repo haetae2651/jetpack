@@ -15,13 +15,14 @@ public:
 	POINT getPos() { return pos; }
 	int getHp() { return hp; }
 	int getFuel() { return fuel; }
-
+	bool getishit() { return ishit; }
 	int getSize() { return size; }
 
 	//set함수
 	void setPos(POINT newPos) { pos = newPos; }
 	void setHp(int newHp) { hp = newHp; }
 	void setFuel(int newFuel) { fuel = newFuel; }
+	void setishit(bool newishit) { ishit = newishit; }
 
 
 	void move(WPARAM wParam, int maxSpeed) {
@@ -404,7 +405,7 @@ public:
 
 private:
 
-	int hp = 1;
+	int hp = 5;
 	float fuel = 1000;
 	POINT pos;
 
@@ -440,4 +441,6 @@ private:
 	int animCount = 0;
 	int animTimer = 0;
 	int maxFrame = 10;
+
+	bool ishit = false;
 };

@@ -7,6 +7,7 @@
 #include <windows.h>
 #include <random>
 
+
 #define DELETE_DISTANCE 5000 // 플레이어보다 아래로 DELETE_DIST 이상 떨어진 장애물 제거
 extern HINSTANCE g_hInst;
 
@@ -28,6 +29,7 @@ private :
 
 
 	std::uniform_int_distribution<int> randomX;
+	std::uniform_int_distribution<int> randoffset;
 
 	std::default_random_engine dre{ std::random_device{}() };
 
@@ -54,7 +56,8 @@ public :
 	void setWin(RECT win) {
 		this->win = win; 
 		randomX.param(std::uniform_int_distribution<int>::param_type(win.left, win.right));
-	
+		randoffset.param(std::uniform_int_distribution<int>::param_type(100, 500));
+
 	}
 
 	void Add_Obstacle(Obstacles* newObs) {
@@ -127,14 +130,19 @@ public :
 		//int tObsWidth = topObs->getWidth();
 		int topObsHeight = topObs->getHeight();
 
+		const int spawnDistance = 300; // 장애물이 생성될 플레이어와의 최소 거리
+		offsetY = randoffset(dre);
+		int newY = topObsY - topObsSize - topObsHeight - offsetY;
+
 		switch (type) {
 
 		case 0:											// OBS_Random
 		{
-			if (playerY - 800 < topObsY)
+			
+			if (topObsY - topObsSize - topObsHeight < playerY + spawnDistance)
 			{
 
-				Add_Obstacle(new OBS_Random(POINT{ randomX(dre),topObsY - topObsSize - topObsHeight - offsetY }, g_hInst));
+				Add_Obstacle(new OBS_Random(POINT{ randomX(dre),newY }, g_hInst));
 
 			}
 
@@ -142,15 +150,16 @@ public :
 		}
 		case 1:											// OBS_LeftRight
 		{
-			if (playerY - 800 < topObsY)
+			if (topObsY - topObsSize - topObsHeight < playerY + spawnDistance)
 			{
-				Add_Obstacle(new OBS_LeftRight(POINT{ randomX(dre),topObsY - topObsSize - topObsHeight - offsetY }, g_hInst));
+				//나중에 플레이어Y에 따른 속도조정
+				Add_Obstacle(new OBS_LeftRight(POINT{ randomX(dre),newY }, g_hInst, 5));		//OBS_LeftRight(POINT pos, HINSTANCE hInstance, int speed)
 			}
 			break;
 		}
 		case 2:											// OBS_Follow
 		{
-			if (playerY - 800 < topObsY)
+			if (topObsY - topObsSize - topObsHeight < playerY + spawnDistance)
 			{
 				//Add_Obstacle(new OBS_Follow(POINT{ randomX(dre),topObsY - topObsSize - topObsHeight - offsetY }, g_hInst)); // Follow.h 아직 못 만듦 
 			}
@@ -158,9 +167,9 @@ public :
 		}
 		case 3:											// OBS_Path
 		{
-			if (playerY - 800 < topObsY)
+			if (topObsY - topObsSize - topObsHeight < playerY + spawnDistance)
 			{
-				Add_Obstacle(new OBS_Path(POINT{ 0,topObsY - topObsSize - topObsHeight - offsetY }, g_hInst, win.right));
+				//Add_Obstacle(new OBS_Path(POINT{ 0,topObsY - topObsSize - topObsHeight - offsetY }, g_hInst, win.right));
 			}
 			break;
 

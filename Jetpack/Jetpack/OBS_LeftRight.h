@@ -25,7 +25,7 @@ private:
     bool move_R = false;
 
 public:
-    OBS_LeftRight(POINT pos, HINSTANCE hInstance) : Obstacles(1, pos, 20) // Obstacles(int type, POINT pos, int size)
+    OBS_LeftRight(POINT pos, HINSTANCE hInstance, int speed) : Obstacles(1, pos, 20) // Obstacles(int type, POINT pos, int size)
     {
         for (int i = 0; i < Frame; ++i) {
             hBitAnim_R[i] = NULL;
@@ -35,7 +35,7 @@ public:
 
         setImage(hInstance);
         size = 40;
-        speed = 5; 
+        this->speed = speed;
 
         int hitW = Width * 0.8;
         int hitH = Height * 0.8;
