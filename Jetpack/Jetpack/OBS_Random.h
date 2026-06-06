@@ -22,7 +22,7 @@ public :
 	OBS_Random(POINT pos, HINSTANCE hInstance) : Obstacles(0, pos, 20) // Obstacles(int type, POINT pos, int size)
 	{
 		speed = 2;
-        hBitAnim[0] = hBitAnim[1] = hBitAnim[2] = NULL;
+        hBitAnim[0] = hBitAnim[1]= NULL;
         Width = Height = 0;
         setImage(hInstance);
         size = 40;

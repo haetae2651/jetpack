@@ -83,9 +83,6 @@
     <ClInclude Include="IngameUI.h">
       <Filter>헤더 파일\UI</Filter>
     </ClInclude>
-    <ClInclude Include="OBS_LeftRight.cpp">
-      <Filter>소스 파일\OBSTACLES</Filter>
-    </ClInclude>
     <ClInclude Include="OBS_FollowPlayer.cpp">
       <Filter>소스 파일\OBSTACLES</Filter>
     </ClInclude>
@@ -99,6 +96,9 @@
       <Filter>헤더 파일\Obstacles</Filter>
     </ClInclude>
     <ClInclude Include="OBS_Path.h">
+      <Filter>헤더 파일\Obstacles</Filter>
+    </ClInclude>
+    <ClInclude Include="OBS_LeftRight.h">
       <Filter>헤더 파일\Obstacles</Filter>
     </ClInclude>
   </ItemGroup>
@@ -327,53 +327,29 @@
     <Image Include="Resources\TestImage_AiGenerated.bmp">
       <Filter>리소스 파일\character</Filter>
     </Image>
-    <Image Include="Resources\Bird\bird_01.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
-    </Image>
     <Image Include="Resources\Bird\bird_02.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
+      <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="Resources\Bird\bird_03.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
+      <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="Resources\Bird\bird_04.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
+      <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="Resources\Bird\bird_05.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
+      <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="Resources\Bird\bird_06.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
+    <Image Include="Resources\Bird_L\bird_flip_02.bmp">
+      <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="Resources\Bird\bird_07.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
+    <Image Include="Resources\Bird_L\bird_flip_03.bmp">
+      <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="Resources\Bird\bird_08.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
+    <Image Include="Resources\Bird_L\bird_flip_04.bmp">
+      <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="Resources\Bird\bird_09.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
-    </Image>
-    <Image Include="Resources\Bird\bird_10.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
-    </Image>
-    <Image Include="Resources\Bird\bird_11.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
-    </Image>
-    <Image Include="Resources\Bird\bird_12.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
-    </Image>
-    <Image Include="Resources\Bird\bird_13.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
-    </Image>
-    <Image Include="Resources\Bird\bird_14.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
-    </Image>
-    <Image Include="Resources\Bird\bird_15.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
-    </Image>
-    <Image Include="Resources\Bird\bird_16.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
+    <Image Include="Resources\Bird_L\bird_flip_05.bmp">
+      <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>
 </Project>

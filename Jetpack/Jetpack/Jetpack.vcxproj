@@ -138,7 +138,7 @@
     <ClInclude Include="IngameUI.h" />
     <ClInclude Include="ObstacleManager.h" />
     <ClInclude Include="OBS_FollowPlayer.cpp" />
-    <ClInclude Include="OBS_LeftRight.cpp" />
+    <ClInclude Include="OBS_LeftRight.h" />
     <ClInclude Include="OBS_Path.cpp" />
     <ClInclude Include="OBS_Random.h" />
     <ClInclude Include="Player.h" />
@@ -150,22 +150,14 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\BackGround.bmp" />
-    <Image Include="Resources\Bird\bird_01.bmp" />
     <Image Include="Resources\Bird\bird_02.bmp" />
     <Image Include="Resources\Bird\bird_03.bmp" />
     <Image Include="Resources\Bird\bird_04.bmp" />
     <Image Include="Resources\Bird\bird_05.bmp" />
-    <Image Include="Resources\Bird\bird_06.bmp" />
-    <Image Include="Resources\Bird\bird_07.bmp" />
-    <Image Include="Resources\Bird\bird_08.bmp" />
-    <Image Include="Resources\Bird\bird_09.bmp" />
-    <Image Include="Resources\Bird\bird_10.bmp" />
-    <Image Include="Resources\Bird\bird_11.bmp" />
-    <Image Include="Resources\Bird\bird_12.bmp" />
-    <Image Include="Resources\Bird\bird_13.bmp" />
-    <Image Include="Resources\Bird\bird_14.bmp" />
-    <Image Include="Resources\Bird\bird_15.bmp" />
-    <Image Include="Resources\Bird\bird_16.bmp" />
+    <Image Include="Resources\Bird_L\bird_flip_02.bmp" />
+    <Image Include="Resources\Bird_L\bird_flip_03.bmp" />
+    <Image Include="Resources\Bird_L\bird_flip_04.bmp" />
+    <Image Include="Resources\Bird_L\bird_flip_05.bmp" />
     <Image Include="Resources\bunny\bunny_01.bmp" />
     <Image Include="Resources\bunny\bunny_02.bmp" />
     <Image Include="Resources\bunny\bunny_03.bmp" />

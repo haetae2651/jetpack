@@ -11,6 +11,7 @@
 
 #include "OBS_Random.h"
 #include "OBS_Path.h"
+#include "OBS_LeftRight.h"
 
 #include "IngameUI.h"
 
@@ -21,7 +22,8 @@ default_random_engine dre{ random_device{}() };
 uniform_int_distribution<int> randtype(0, 1);
 
 
-
+int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+int screenHeight = GetSystemMetrics(SM_CYSCREEN);
 
 HINSTANCE g_hInst;
 LPCTSTR lpszClass = L"My Window Class";
@@ -30,8 +32,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
 
-	int screenWidth = GetSystemMetrics(SM_CXSCREEN);
-	int screenHeight = GetSystemMetrics(SM_CYSCREEN);
 
 	HWND hWnd;
 	MSG Message;
@@ -55,8 +55,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 		lpszWindowName,
 		WS_POPUP | WS_VISIBLE, 
 		0, 0,                  
-		GetSystemMetrics(SM_CXSCREEN), 
-		GetSystemMetrics(SM_CYSCREEN),
+		screenWidth, 
+		screenHeight,
 		nullptr, nullptr, hInstance, nullptr
 	);	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
@@ -145,12 +145,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		obsManager.setWin(win);
 		for (int i = 0; i < 5; i++) {
 			POINT p = { rand() % 600 + 100, -(i * 200) };
-
 			obsManager.Add_Obstacle(new OBS_Random(p, g_hInst));
+
+		
 		}
 
+		obsManager.Add_Obstacle(new OBS_LeftRight({ 0+10, -200 }, g_hInst));
 
 		obsManager.Add_Obstacle(new OBS_Path({ 0, -1000 }, g_hInst, win.right));
+
 
 
 

@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "OBS_Random.h"
 #include "OBS_Path.h"
+#include "OBS_LeftRight.h"
 #include <windows.h>
 #include <random>
 
@@ -88,7 +89,7 @@ public :
 		while (current != nullptr) {
 			if (current->obs->getPos().y > playerY + DELETE_DISTANCE) {
 				
-				ObsNode* toDelete = current;
+				ObsNode* topDelete = current;
 				
 				if (current->prev == nullptr) {
 					head = current->next;
@@ -103,8 +104,8 @@ public :
 
 				current = current->next;
 
-				delete toDelete->obs;
-				delete toDelete;
+				delete topDelete->obs;
+				delete topDelete;
 			}
 			else {
 				current = current->next;
@@ -121,29 +122,45 @@ public :
 		}
 
 		Obstacles* topObs = head->obs;
-		int tObsY = topObs->getPos().y;
-		int tObsSize = topObs->getSize();
+		int topObsY = topObs->getPos().y;
+		int topObsSize = topObs->getSize();
 		//int tObsWidth = topObs->getWidth();
-		int tObsHeight = topObs->getHeight();
+		int topObsHeight = topObs->getHeight();
 
 		switch (type) {
 
 		case 0:											// OBS_Random
 		{
-			if (playerY - 800 < tObsY)
+			if (playerY - 800 < topObsY)
 			{
 
-				Add_Obstacle(new OBS_Random(POINT{ randomX(dre),tObsY - tObsSize - tObsHeight - offsetY }, g_hInst));
+				Add_Obstacle(new OBS_Random(POINT{ randomX(dre),topObsY - topObsSize - topObsHeight - offsetY }, g_hInst));
 
 			}
 
 			break;
 		}
-		case 1:											// OBS_Path
+		case 1:											// OBS_LeftRight
 		{
-			if (playerY - 800 < tObsY)
+			if (playerY - 800 < topObsY)
 			{
-				Add_Obstacle(new OBS_Path(POINT{ 0,tObsY - tObsSize - tObsHeight - offsetY }, g_hInst, win.right));
+				Add_Obstacle(new OBS_LeftRight(POINT{ randomX(dre),topObsY - topObsSize - topObsHeight - offsetY }, g_hInst));
+			}
+			break;
+		}
+		case 2:											// OBS_Follow
+		{
+			if (playerY - 800 < topObsY)
+			{
+				//Add_Obstacle(new OBS_Follow(POINT{ randomX(dre),topObsY - topObsSize - topObsHeight - offsetY }, g_hInst)); // Follow.h 아직 못 만듦 
+			}
+			break;
+		}
+		case 3:											// OBS_Path
+		{
+			if (playerY - 800 < topObsY)
+			{
+				Add_Obstacle(new OBS_Path(POINT{ 0,topObsY - topObsSize - topObsHeight - offsetY }, g_hInst, win.right));
 			}
 			break;
 

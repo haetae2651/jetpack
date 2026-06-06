@@ -57,7 +57,7 @@
 #define IDB_BITMAP52                    155
 #define IDB_BITMAP53                    156
 #define IDB_BITMAP54                    157
-#define IDB_BITMAP55                    158 // 버니
+#define IDB_BITMAP55                    158
 #define IDB_BITMAP56                    159
 #define IDB_BITMAP57                    160
 #define IDB_BITMAP58                    161
@@ -75,28 +75,20 @@
 #define IDB_BITMAP70                    173
 #define IDB_BITMAP71                    174
 #define IDB_BITMAP72                    175
-#define IDB_BITMAP73                    176 // 새 장애물
-#define IDB_BITMAP74                    177
-#define IDB_BITMAP75                    178
-#define IDB_BITMAP76                    179
-#define IDB_BITMAP77                    180
-#define IDB_BITMAP78                    181
-#define IDB_BITMAP79                    182
-#define IDB_BITMAP80                    183
-#define IDB_BITMAP81                    184
-#define IDB_BITMAP82                    185
-#define IDB_BITMAP83                    186
-#define IDB_BITMAP84                    187
-#define IDB_BITMAP85                    188
-#define IDB_BITMAP86                    189
-#define IDB_BITMAP87                    190
-#define IDB_BITMAP88                    191
+#define IDB_BITMAP73                    196
+#define IDB_BITMAP74                    197
+#define IDB_BITMAP75                    198
+#define IDB_BITMAP76                    199
+#define IDB_BITMAP77                    200
+#define IDB_BITMAP78                    201
+#define IDB_BITMAP79                    202
+#define IDB_BITMAP80                    203
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        192
+#define _APS_NEXT_RESOURCE_VALUE        204
 #define _APS_NEXT_COMMAND_VALUE         40001
 #define _APS_NEXT_CONTROL_VALUE         1001
 #define _APS_NEXT_SYMED_VALUE           101
