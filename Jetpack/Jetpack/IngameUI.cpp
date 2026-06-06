@@ -1,10 +1,31 @@
 #include "IngameUI.h"
 #include "resource.h"
+static HBITMAP hEscBtn[2] = { NULL, NULL };
+static HFONT hFont = NULL;
+
+void setUI(HINSTANCE hInstance) {
+	hEscBtn[0] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP46)); // 흰색
+	hEscBtn[1] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP47)); // 검은색
+	hFont = CreateFont(40, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH || FF_DONTCARE, L"나눔 명조");
+}
+
+void ReleaseUI() {
+	for (int i = 0; i < 2; i++) {
+		if (hEscBtn[i]) {
+			DeleteObject(hEscBtn[i]);
+			hEscBtn[i] = NULL;
+		}
+	}
+	if (hFont) {
+		DeleteObject(hFont);
+		hFont = NULL;
+	}
+}
+
 
 void scoreRender(HDC mDC1, int cameraY,RECT win) {
 	//카메라 y좌표 = 점수
 
-	HFONT hFont = CreateFont(40, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH || FF_DONTCARE, L"나눔 명조");
 	HFONT oldFont = (HFONT)SelectObject(mDC1, hFont);
 
 
@@ -16,14 +37,12 @@ void scoreRender(HDC mDC1, int cameraY,RECT win) {
 
 
 	SelectObject(mDC1, oldFont);
-	DeleteObject(hFont);
 
 
 }
 
 void fuelRender(HDC mDC1, float fuel,RECT win)
 {
-	HFONT hFont = CreateFont(40, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH || FF_DONTCARE, L"나눔 명조");
 	HFONT oldFont = (HFONT)SelectObject(mDC1, hFont);
 	int intfuel = static_cast<int>(fuel);
 
@@ -34,16 +53,13 @@ void fuelRender(HDC mDC1, float fuel,RECT win)
 
 
 	SelectObject(mDC1, oldFont);
-	DeleteObject(hFont);
 }
 
 void escRender(HDC mDC1, HINSTANCE hInstance, RECT win, bool isStop) {
 	// 비트맵 로드
-	HBITMAP hEscBtn[2];
-	int size = 40;
+		int size = 40;
 
-	hEscBtn[0] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP46)); // 흰색
-	hEscBtn[1] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP47)); // 검은색
+
 
 	BITMAP bmp;
 	GetObject(hEscBtn[0], sizeof(BITMAP), &bmp);
@@ -63,6 +79,4 @@ void escRender(HDC mDC1, HINSTANCE hInstance, RECT win, bool isStop) {
 
 	SelectObject(hMemDC, oldBit);
 	DeleteDC(hMemDC);
-	DeleteObject(hEscBtn[0]);
-	DeleteObject(hEscBtn[1]);
 }

@@ -153,10 +153,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 
 		obsManager.Add_Obstacle(new OBS_LeftRight({ 0+10, -200 }, g_hInst,5));
-
 		obsManager.Add_Obstacle(new OBS_Path({ 0, -1000 }, g_hInst, win.right));
 
-
+		//UI 초기화
+		setUI(g_hInst);
 
 
 		ReleaseDC(hWnd, hDC);
@@ -349,6 +349,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		KillTimer(hWnd, 1);			 
 		DeleteObject(hBitmap); 
+		ReleaseUI();
 		PostQuitMessage(0);
 		break;
 	}
