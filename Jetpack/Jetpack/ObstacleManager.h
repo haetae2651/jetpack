@@ -130,7 +130,7 @@ public :
 		//int tObsWidth = topObs->getWidth();
 		int topObsHeight = topObs->getHeight();
 
-		const int spawnDistance = 300; // 장애물이 생성될 플레이어와의 최소 거리
+		const int spawnDistance = 1000; // 장애물이 생성될 플레이어와의 최소 거리
 		offsetY = randoffset(dre);
 		int newY = topObsY - topObsSize - topObsHeight - offsetY;
 
@@ -139,7 +139,7 @@ public :
 		case 0:											// OBS_Random
 		{
 			
-			if (topObsY - topObsSize - topObsHeight < playerY + spawnDistance)
+			if (topObsY - topObsSize - topObsHeight > playerY - spawnDistance)
 			{
 
 				Add_Obstacle(new OBS_Random(POINT{ randomX(dre),newY }, g_hInst));
@@ -150,7 +150,7 @@ public :
 		}
 		case 1:											// OBS_LeftRight
 		{
-			if (topObsY - topObsSize - topObsHeight < playerY + spawnDistance)
+			if (topObsY - topObsSize - topObsHeight > playerY - spawnDistance)
 			{
 				//나중에 플레이어Y에 따른 속도조정
 				Add_Obstacle(new OBS_LeftRight(POINT{ randomX(dre),newY }, g_hInst, 5));		//OBS_LeftRight(POINT pos, HINSTANCE hInstance, int speed)
@@ -159,7 +159,7 @@ public :
 		}
 		case 2:											// OBS_Follow
 		{
-			if (topObsY - topObsSize - topObsHeight < playerY + spawnDistance)
+			if (topObsY - topObsSize - topObsHeight > playerY - spawnDistance)
 			{
 				//Add_Obstacle(new OBS_Follow(POINT{ randomX(dre),topObsY - topObsSize - topObsHeight - offsetY }, g_hInst)); // Follow.h 아직 못 만듦 
 			}
@@ -167,7 +167,7 @@ public :
 		}
 		case 3:											// OBS_Path
 		{
-			if (topObsY - topObsSize - topObsHeight < playerY + spawnDistance)
+			if (topObsY - topObsSize - topObsHeight > playerY - spawnDistance)
 			{
 				//Add_Obstacle(new OBS_Path(POINT{ 0,topObsY - topObsSize - topObsHeight - offsetY }, g_hInst, win.right));
 			}
