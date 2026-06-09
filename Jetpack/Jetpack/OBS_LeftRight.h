@@ -17,8 +17,6 @@ private:
     int animCount = 0;
     int frameTimer = 10;
 
-    BITMAP bmp;
-
     int hitW = Width * 0.8;
     int hitH = Height * 0.8;
 

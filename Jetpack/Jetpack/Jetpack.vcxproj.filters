@@ -52,6 +52,12 @@
     <Filter Include="리소스 파일\character\Panda">
       <UniqueIdentifier>{846ef335-06f8-4c3b-bb3f-f53084b1ff0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Items">
+      <UniqueIdentifier>{9bb387a9-560d-4834-9550-5cfe368f24ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\Heart">
+      <UniqueIdentifier>{9cb4f6f9-f43a-4abf-980b-088cb1f73707}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -100,6 +106,15 @@
     </ClInclude>
     <ClInclude Include="OBS_LeftRight.h">
       <Filter>헤더 파일\Obstacles</Filter>
+    </ClInclude>
+    <ClInclude Include="Items.h">
+      <Filter>헤더 파일\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemsManager.h">
+      <Filter>헤더 파일\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Item_HP.h">
+      <Filter>헤더 파일\Items</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

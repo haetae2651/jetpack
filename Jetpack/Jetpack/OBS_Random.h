@@ -25,8 +25,7 @@ public :
         hBitAnim[0] = hBitAnim[1]= NULL;
         Width = Height = 0;
         setImage(hInstance);
-        //여기다가 히트박스 크기 초기화 하면 될듯. 아니면 다른데다가.
-        //히트박스는 이미지 크기에 맞춰서? 예를들어 이미지의 80% 정도가 히트박스가 되도록.
+
 
         hitbox.left = pos.x - hitW / 2;
         hitbox.top = pos.y - hitH / 2;

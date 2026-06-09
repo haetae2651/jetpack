@@ -136,6 +136,9 @@
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="IngameUI.h" />
+    <ClInclude Include="Items.h" />
+    <ClInclude Include="ItemsManager.h" />
+    <ClInclude Include="Item_HP.h" />
     <ClInclude Include="ObstacleManager.h" />
     <ClInclude Include="OBS_FollowPlayer.cpp" />
     <ClInclude Include="OBS_LeftRight.h" />
