@@ -11,7 +11,7 @@ class Item_HP : public Items
 
 public:
 
-	Item_HP(POINT pos, HINSTANCE hInstance) : Items(0,pos,30){
+	Item_HP(POINT pos, HINSTANCE hInstance) : Items(0,pos,-50){
 		this->pos = pos;
 		setImage(hInstance);
 
@@ -25,8 +25,8 @@ public:
 		Width = bmp.bmWidth;
 		Height = bmp.bmHeight;
 
-		hitW = static_cast<int>(Width * 1.1);
-		hitH = static_cast<int>(Height * 1.1);
+		hitW = static_cast<int>((Width + size) * 1.1);
+		hitH = static_cast<int>((Height + size) * 1.1);
 
 	}
 

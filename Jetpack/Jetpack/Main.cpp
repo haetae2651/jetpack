@@ -167,7 +167,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		//아이템 초기화
 		itemsManager.setWin(win);
 
-		itemsManager.Add_Item(new Item_HP({ 100,player.getPos().y - 100}, g_hInst));
+		itemsManager.Add_Item(new Item_HP({ 500,-500}, g_hInst));
 
 
 		//UI 초기화
@@ -251,7 +251,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 
 
-
+			itemsManager.Render_Items(mDC1, cameraY);						// 아이템 렌더링
 
 
 			//UI 파트
