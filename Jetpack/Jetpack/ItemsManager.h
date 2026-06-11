@@ -141,7 +141,7 @@ public:
 			if (topItemY - topItemSize - topItemHeight > playerY - spawnDistance)
 			{
 
-				Add_Item(new Items(POINT{ randomX(dre),newY }, g_hInst));
+				//Add_Item(new Items(POINT{ randomX(dre),newY }, g_hInst));
 
 			}
 
@@ -151,7 +151,7 @@ public:
 		{
 			if (topItemY - topItemSize - topItemHeight > playerY - spawnDistance)
 			{
-				Add_Item(new Items(POINT{ randomX(dre),newY }, g_hInst));
+				//Add_Item(new Items(POINT{ randomX(dre),newY }, g_hInst));
 			}
 			break;
 		}

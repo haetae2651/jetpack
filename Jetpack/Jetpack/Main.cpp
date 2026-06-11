@@ -13,6 +13,11 @@
 #include "OBS_Path.h"
 #include "OBS_LeftRight.h"
 
+#include "Items.h"
+#include "ItemsManager.h"
+
+#include "Item_HP.h"
+
 #include "IngameUI.h"
 
 using namespace std;
@@ -96,18 +101,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	static Player player;
 	static bool playerseen = true;
 	static int seencnt = 0;
+	static RECT playerRect;		//충돌 히트박스
+
 
 	// 임시 테스트용 장애물
 	static Obstacles tempObs{ 0, {1000, -10}, 100 };
 	static int obsX, obsY;
 	static int obsSize = tempObs.getSize();
 
+	//장애물 관련 변수
 	static ObstacleManager obsManager; // 5.27
 	static BackGround bg;
 	static float cameraY;
 
-	//6.2 충돌 히트박스
-	static RECT playerRect;
+	//아이템 관련 변수
+	static ItemsManager itemsManager;
+
 
 	//UI 관련 변수
 	static bool IngameUI_Render = false;
@@ -148,12 +157,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		for (int i = 0; i < 5; i++) {
 			POINT p = { rand() % 600 + 100, -(i * 200) };
 			obsManager.Add_Obstacle(new OBS_Random(p, g_hInst));
-
-		
 		}
 
 		obsManager.Add_Obstacle(new OBS_LeftRight({ 0+10, -200 }, g_hInst,5));
 		obsManager.Add_Obstacle(new OBS_Path({ 0, -1000 }, g_hInst, win.right));
+
+
+
+		//아이템 초기화
+		itemsManager.setWin(win);
+
+		itemsManager.Add_Item(new Item_HP({ 100,player.getPos().y - 100}, g_hInst));
+
 
 		//UI 초기화
 		setUI(g_hInst);
@@ -259,6 +274,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			obsManager.AutoAdd(randtype(dre), player.getPos().y); //				AutoAdd(type, playerY)
 			obsManager.Update_Obstacles(bg.GetCameraDelta(), cameraY);
 			obsManager.Delete_Obstacles(player.getPos().y);
+
+			itemsManager.Update_Items(bg.GetCameraDelta(), cameraY);
 
 
 

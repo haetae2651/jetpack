@@ -31,7 +31,6 @@ public:
 		//픽셀 데이터를 함께 추출해야함. ( 통로 이미지인 경우 )
 	}
 	
-	// 6.2 장애물의 크기에 따라 히트박스 크기 조절해주는 함수 -------------------------------- 근데 위에 setImage 함수가 이 함수임? <- 노노 setImage는 이미지 설정하는 함수임
 	virtual void Set_HitBox(RECT& rect, int bitmapWidth, int bitmapHeight) {
 		rect.left = pos.x - bitmapWidth / 2;
 		rect.top = pos.y - bitmapHeight / 2;

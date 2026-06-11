@@ -26,6 +26,8 @@ public :
         Width = Height = 0;
         setImage(hInstance);
 
+        hitW = Width * 0.8;
+         hitH = Height * 0.8;
 
         hitbox.left = pos.x - hitW / 2;
         hitbox.top = pos.y - hitH / 2;

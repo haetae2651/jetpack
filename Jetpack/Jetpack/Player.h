@@ -302,6 +302,17 @@ public:
 		angle = (float)Xspeed * 3.0f;
 		if (angle > 30.0f)  angle = 30.0f;
 		if (angle < -30.0f) angle = -30.0f;
+
+
+		//if (fuel == 100)
+		//{
+		//	TCHAR str[100];
+		//	_stprintf_s(str, L"포지션: %d, %d", pos.x, pos.y);
+		//	MessageBox(NULL, str, L"알림", MB_OK);
+		//}
+
+
+
 	}
 
 

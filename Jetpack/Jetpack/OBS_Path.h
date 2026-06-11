@@ -53,11 +53,15 @@ public:
         HDC hMemDC = CreateCompatibleDC(hdc);
         HBITMAP oldBit = (HBITMAP)SelectObject(hMemDC, hPath[0]);
 
+
+        //잠시 꺼놨다 - 06.11
+        /*
         for (int i = 0; i < 4; i++) {
             SelectObject(hMemDC, hPath[i]);
             TransparentBlt(hdc, 0, screenY - PathHeight[i] * i - 70, winWidth, PathHeight[i],
                 hMemDC, 0, 0, PathWidth[i], PathHeight[i], RGB(0, 255, 0));
         }
+        */
 
         SelectObject(hMemDC, oldBit);
         DeleteDC(hMemDC);
