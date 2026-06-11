@@ -6,6 +6,9 @@ static HFONT hFont = NULL;
 static HBITMAP hFuelBar = NULL;
 static HBRUSH redBrush = NULL;
 static HBRUSH oldBrush = NULL;
+static HBITMAP hHeart = NULL;
+static HBRUSH hHollowBrush = NULL;
+
 void setUI(HINSTANCE hInstance) {
 	//ESC 버튼
 	hEscBtn[0] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP46)); // 흰색
@@ -15,8 +18,12 @@ void setUI(HINSTANCE hInstance) {
 	hFont = CreateFont(40, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH || FF_DONTCARE, L"나눔 명조");
 
 	// 연료바
-	hFuelBar = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP81));
+	//hFuelBar = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP81));
 	redBrush = CreateSolidBrush(RGB(255, 0, 0));
+	hHollowBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
+
+	// 생명력
+	hHeart = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP82));
 
 }
 
@@ -38,6 +45,10 @@ void ReleaseUI() {
 	if (redBrush) {
 		DeleteObject(redBrush);
 		redBrush = NULL;
+	}
+	if (hHeart) {
+		DeleteObject(hHeart);
+		hHeart = NULL;
 	}
 }
 
@@ -65,12 +76,13 @@ void fuelRender(HDC mDC1, float fuel,RECT win)
 	HFONT oldFont = (HFONT)SelectObject(mDC1, hFont);
 	int intfuel = static_cast<int>(fuel);
 
+	/*
 	SetBkMode(mDC1, TRANSPARENT);
 	TCHAR fuelText[50];
 	wsprintf(fuelText, L"Fuel: %d", intfuel);
 	TextOut(mDC1, win.right - 150, 15, fuelText, wcslen(fuelText));
 	SelectObject(mDC1, oldFont);
-
+	*/
 
 	const int sizeY = 400;
 	const int sizeX = 180;
@@ -86,13 +98,12 @@ void fuelRender(HDC mDC1, float fuel,RECT win)
 	Rectangle(mDC1, 50, sizeY + 150, 90, static_cast<int>(targetY));
 	SelectObject(mDC1, oldBrush);
 
-	oldBit = (HBITMAP)SelectObject(hMemDC, hFuelBar);
-	TransparentBlt(mDC1, -20, 150, sizeX, sizeY,
-		hMemDC, 0, 0, bmp.bmWidth, bmp.bmHeight, RGB(0, 255, 0));
+	oldBrush = (HBRUSH)SelectObject(mDC1, hHollowBrush);
+	Rectangle(mDC1, 50, sizeY + 150, 90, 150);
+	SelectObject(mDC1, oldBrush);
 
 
 	
-	SelectObject(hMemDC, oldBit);
 	DeleteDC(hMemDC);
 }
 
@@ -121,3 +132,20 @@ void escRender(HDC mDC1, HINSTANCE hInstance, RECT win, bool isStop) {
 	SelectObject(hMemDC, oldBit);
 	DeleteDC(hMemDC);
 }
+
+void HeartRender(HDC mDC1, int hp, RECT win) {
+	BITMAP bmp;
+	
+	GetObject(hHeart, sizeof(BITMAP), &bmp);
+	HDC hMemDC = CreateCompatibleDC(mDC1);
+	HBITMAP oldBit = (HBITMAP)SelectObject(hMemDC, hHeart);
+	
+	int sizex = bmp.bmWidth - 125;
+	int sizey = bmp.bmHeight - 125;
+	for (int i = 0; i < hp; i++) {
+		TransparentBlt(mDC1, win.right - 20 - sizex - (i * sizex) - (10 * i), 10, sizex, sizey,
+			hMemDC, 0, 0, bmp.bmWidth, bmp.bmHeight, RGB(0, 255, 0));
+	}
+	SelectObject(hMemDC, oldBit);
+	DeleteDC(hMemDC);
+}	

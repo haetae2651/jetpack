@@ -1,17 +1,19 @@
 #pragma once
 #include "Items.h"
 #include "resource.h"
+#include <math.h>
 class Item_HP : public Items
 {
 	int hitW;
 	int hitH;
 
+	float speed = 0;
 	HBITMAP hBitmap;
 	BITMAP bmp;
 
 public:
 
-	Item_HP(POINT pos, HINSTANCE hInstance) : Items(0,pos,-50){
+	Item_HP(POINT pos, HINSTANCE hInstance) : Items(0, pos, -120) { // Items(int type, POINT pos, int size)
 		this->pos = pos;
 		setImage(hInstance);
 
@@ -25,16 +27,49 @@ public:
 		Width = bmp.bmWidth;
 		Height = bmp.bmHeight;
 
-		hitW = static_cast<int>((Width + size) * 1.1);
-		hitH = static_cast<int>((Height + size) * 1.1);
+		hitW = static_cast<int>((Width + size) * 1);
+		hitH = static_cast<int>((Height + size) * 1);
 
 	}
 
-	void Update(float cameraDelta, float cameraY) override{
-		hitbox.left = pos.x - 1 / Width + 30;
-		hitbox.top = (pos.y - cameraY) - 1 / Height + 20;
-		hitbox.right = pos.x + Width / 1.25;
-		hitbox.bottom = (pos.y - cameraY) + Height / 1.25;
+	void Update(float cameraDelta, float cameraY, int playerY, int playerX) override{
+
+		hitbox.left = pos.x - size / 2;
+		hitbox.top = (pos.y - cameraY) - size / 2;
+		hitbox.right = pos.x + hitW + 55;
+		hitbox.bottom = (pos.y - cameraY) + hitH + 60;
+
+		//무빙파트
+
+		float vecX = (float)(playerX - pos.x);
+		float vecY = (float)(playerY - pos.y);
+
+		float distance = std::sqrt((vecX * vecX) + (vecY * vecY));
+
+		float normX = 0.0f;
+		float normY = 0.0f;
+
+		if (distance > 0.0001f) {
+			normX = vecX / distance;
+			normY = vecY / distance;
+		}
+		else {
+			normX = 0.0f;
+			normY = -1.0f;
+		}
+
+		float mindis = 350.0f;
+		if (distance < mindis)
+		{
+
+
+			float ratio = (mindis - distance) / mindis;
+			speed = -(ratio * ratio) * 7.0f;
+		}
+		else
+			speed = 0;
+		pos.x += normX * speed;
+		pos.y += normY * speed;
 
 	}
 
@@ -50,7 +85,7 @@ public:
 		Height = bmp.bmHeight;
 
 
-		TransparentBlt(hdc, pos.x - size / 2, screenY - size / 2, size + Width, size + Height,
+		TransparentBlt(hdc, pos.x - size / 2, screenY - size / 2, size + Width - 5, size + Height,
 			hMemDC, 0, 0, Width, Height, RGB(0, 255, 0));
 
 
@@ -59,7 +94,7 @@ public:
 
 
 		HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, GetStockObject(NULL_BRUSH));
-		HPEN hPen = CreatePen(PS_SOLID, 2, RGB(255, 0, 0));
+		HPEN hPen = CreatePen(PS_SOLID, 2, RGB(0, 255, 0));
 		HPEN oldPen = (HPEN)SelectObject(hdc, hPen);
 
 		Rectangle(hdc, hitbox.left, hitbox.top, hitbox.right, hitbox.bottom);
@@ -71,7 +106,7 @@ public:
 
 	~Item_HP()
 	{
-
+		DeleteObject(hBitmap);
 	}
 
 };

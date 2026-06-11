@@ -131,7 +131,6 @@
     <ClCompile Include="IngameUI.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Obstacles.h" />
-    <ClCompile Include="PlayerCon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackGround.h" />

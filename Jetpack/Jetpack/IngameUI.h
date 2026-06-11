@@ -6,3 +6,4 @@ void escRender(HDC mDC1, HINSTANCE hInstance, RECT win, bool isStop);
 
 void setUI(HINSTANCE hInstance);
 void ReleaseUI();
+void HeartRender(HDC mDC1, int hp, RECT win);

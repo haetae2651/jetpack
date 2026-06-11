@@ -26,28 +26,22 @@ public:
 
 	void setPos(POINT newPos) { this->pos = newPos; }
 
-
+	
 	// 가상함수들
-	virtual void setImage(HINSTANCE hInstance) {
+	virtual void setImage(HINSTANCE hInstance)  = 0;
 
-	}
+	virtual void Update(float cameraDelta, float cameraY, int playerY, int playerX) = 0;
 
-	virtual void Update(float cameraDelta, float cameraY) {
-
-	}
-
-	virtual void Render(HDC hdc, float cameraY) {
-
-	}
+	virtual void Render(HDC hdc, float cameraY) = 0;
 
 	virtual ~Items()
 	{
-
+		
 	}
 protected:
 	POINT pos;
 	int size;
-	int type; // 아이템 종류 (0 = 생명력팩, 1 = 좌우왔다갔다, 2 = 연료)
+	int type; // 아이템 종류 (0 = 생명력팩,2 = 연료)
 	float speed;
 	BITMAP bmp;
 	int Width, Height;

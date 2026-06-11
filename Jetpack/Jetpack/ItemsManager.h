@@ -1,5 +1,6 @@
 #pragma once
 #include "Items.h"
+#include "Item_HP.h"
 #include <windows.h>
 #include <random>
 
@@ -52,7 +53,7 @@ public:
 	void setWin(RECT win) {
 		this->win = win;
 		randomX.param(std::uniform_int_distribution<int>::param_type(win.left, win.right));
-		randoffset.param(std::uniform_int_distribution<int>::param_type(800, 1500));
+		randoffset.param(std::uniform_int_distribution<int>::param_type(1500, 3000));
 
 	}
 
@@ -75,10 +76,10 @@ public:
 		}
 	}
 
-	void Update_Items(float cameraDelta, float cameraY) {
+	void Update_Items(float cameraDelta, float cameraY, int playerY,int playerX) {
 		ItemNode* current = head;
 		while (current != nullptr) {
-			current->item->Update(cameraDelta, cameraY);
+			current->item->Update(cameraDelta, cameraY, playerY, playerX);
 			current = current->next;
 		}
 	}
@@ -126,7 +127,7 @@ public:
 		//int tItemWidth = topItem->getWidth();
 		int topItemHeight = topItem->getHeight();
 
-		const int spawnDistance = 1000; // 장애물이 생성될 플레이어와의 최소 거리
+		const int spawnDistance = 1000; // 아이템이 생성될 플레이어와의 최소 거리
 
 		//randoffset.param(std::uniform_int_distribution<int>::param_type(100, 500));
 
@@ -141,7 +142,7 @@ public:
 			if (topItemY - topItemSize - topItemHeight > playerY - spawnDistance)
 			{
 
-				//Add_Item(new Items(POINT{ randomX(dre),newY }, g_hInst));
+				Add_Item(new Item_HP(POINT{ randomX(dre),newY }, g_hInst));
 
 			}
 
@@ -178,5 +179,35 @@ public:
 			current = current->next;
 		}
 		return false; // 충돌X
+	}
+
+
+	int Check_And_Eat_Item(const RECT& playerHitbox) {
+		ItemNode* current = head;
+		while (current != nullptr) {
+			if (Check_Collision(playerHitbox, current->item->getHitBox())) {
+
+				int hitType = current->item->getType();
+
+				ItemNode* hitNode = current;
+
+				if (current->prev == nullptr) {
+					head = current->next;
+				}
+				else {
+					current->prev->next = current->next;
+				}
+				if (current->next != nullptr) {
+					current->next->prev = current->prev;
+				}
+
+				delete hitNode->item;
+				delete hitNode;
+
+				return hitType; 
+			}
+			current = current->next;
+		}
+		return -1; // 충돌한 아이템이 없으면 -1 반환
 	}
 };

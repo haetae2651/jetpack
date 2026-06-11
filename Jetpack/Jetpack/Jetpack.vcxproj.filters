@@ -63,9 +63,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerCon.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="BackGround.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>

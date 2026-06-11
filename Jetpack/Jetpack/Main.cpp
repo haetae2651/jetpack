@@ -257,7 +257,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			//UI 파트
 			scoreRender(mDC1, cameraY, win);
 			fuelRender(mDC1, player.getFuel(), win);
-
+			HeartRender(mDC1, player.getHp(), win);
 
 			bg.Camera_Update(player.getPos().y);
 
@@ -275,13 +275,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			obsManager.Update_Obstacles(bg.GetCameraDelta(), cameraY);
 			obsManager.Delete_Obstacles(player.getPos().y);
 
-			itemsManager.Update_Items(bg.GetCameraDelta(), cameraY);
-
-
+			itemsManager.Update_Items(bg.GetCameraDelta(), cameraY,playerY,playerX);
+			itemsManager.Delete_Items(player.getPos().y);
+			itemsManager.AutoAdd(0, player.getPos().y);
 
 			player.decel();
 			player.update();
 			player.move(wParam, maxSpeed);
+
+			
 
 			// 플레이어 히트박스 갱신
 			playerRect.left = playerX - player.getSize() / 2;
@@ -298,6 +300,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				SetTimer(hWnd, 2, 15, NULL); //0.5초마다 깜빡임
 				player.setHp(player.getHp() - 1);
 
+
+			}
+
+			int hitItemType = itemsManager.Check_And_Eat_Item(playerRect);
+
+			if (hitItemType != -1) // -1이 아니라면 무언가 아이템과 충돌하여 먹은 상태
+			{
+				if (hitItemType == 0) {
+					player.setHp(player.getHp() + 1);
+					if (player.getHp() > 5)
+						player.setHp(5);
+
+					player.setFuel(player.getFuel() + 20);
+					if (player.getFuel() > 100)
+						player.setFuel(100);
+
+				}
+				else if (hitItemType == 1) {
+				}
 
 			}
 
