@@ -324,6 +324,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				seencnt = 0;
 				SetTimer(hWnd, 2, 15, NULL); //0.5초마다 깜빡임
 				player.setHp(player.getHp() - 1);
+				
+				player.setSpeed(player.getXSpeed() * -1, player.getYSpeed() * -1);
 
 
 			}

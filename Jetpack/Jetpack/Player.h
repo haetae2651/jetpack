@@ -17,12 +17,15 @@ public:
 	int getFuel() { return fuel; }
 	bool getishit() { return ishit; }
 	int getSize() { return size; }
+	float getXSpeed() { return Xspeed; }
+	float getYSpeed() { return Yspeed; }
 
 	//set함수
 	void setPos(POINT newPos) { pos = newPos; }
 	void setHp(int newHp) { hp = newHp; }
 	void setFuel(int newFuel) { fuel = newFuel; }
 	void setishit(bool newishit) { ishit = newishit; }
+	void setSpeed(float Xspeed, float Yspeed) { this->Xspeed = Xspeed, this->Yspeed = Yspeed; }
 
 
 	void move(WPARAM wParam, int maxSpeed,HDC hdc,RECT win) {
@@ -48,7 +51,7 @@ public:
 			RECT hitbox = { pos.x - size/2,500,pos.x + size/2,600};
 
 			if (hitbox.right > win.right || hitbox.left < win.left)
-				Xspeed = -Xspeed;
+				Xspeed = -Xspeed * 1.1f;
 			
 		}
 
