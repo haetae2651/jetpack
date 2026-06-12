@@ -6,7 +6,7 @@ class Item_HP : public Items
 {
 	int hitW;
 	int hitH;
-
+	RECT win;
 	float speed = 0;
 	HBITMAP hBitmap;
 	BITMAP bmp;
@@ -21,6 +21,9 @@ public:
 		
 	}
 
+	void setWin(RECT win) override {
+		this->win = win;
+	}
 	void setImage(HINSTANCE hInstance) override {
 		hBitmap = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP82));
 		GetObject(hBitmap, sizeof(BITMAP), &bmp);

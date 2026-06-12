@@ -30,6 +30,8 @@ private :
 
 	std::uniform_int_distribution<int> randomX;
 	std::uniform_int_distribution<int> randoffset;
+	std::uniform_int_distribution<int> randnum;
+	std::uniform_int_distribution<int> Yoffset;
 
 	std::default_random_engine dre{ std::random_device{}() };
 
@@ -55,8 +57,10 @@ public :
 
 	void setWin(RECT win) {
 		this->win = win; 
-		randomX.param(std::uniform_int_distribution<int>::param_type(win.left, win.right));
+		randomX.param(std::uniform_int_distribution<int>::param_type(win.left + 100, win.right - 100));
 		randoffset.param(std::uniform_int_distribution<int>::param_type(100, 500));
+		randnum.param(std::uniform_int_distribution<int>::param_type(1, 4));
+		Yoffset.param(std::uniform_int_distribution<int>::param_type(-100, 100));
 
 	}
 
@@ -141,8 +145,12 @@ public :
 			
 			if (topObsY - topObsSize - topObsHeight > playerY - spawnDistance)
 			{
+				int num = randnum(dre);
+				for (int i = 0; i < num; ++i)
+				{
+					Add_Obstacle(new OBS_Random(POINT{ randomX(dre),newY + Yoffset(dre)}, g_hInst));
 
-				Add_Obstacle(new OBS_Random(POINT{ randomX(dre),newY }, g_hInst));
+				}
 
 			}
 

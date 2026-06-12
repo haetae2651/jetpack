@@ -7,10 +7,19 @@ class Item_Fuel : public Items
 {
 	int hitW;
 	int hitH;
-
+	RECT win;
 	float speed = 0;
+	float k = 0.0f;
+
+	int startX;
+	bool isInitialized = false;
+
 	HBITMAP hBitmap;
 	BITMAP bmp;
+
+	std::uniform_int_distribution<int> randoffset;
+	std::default_random_engine dre{ std::random_device{}() };
+
 
 public:
 
@@ -19,6 +28,13 @@ public:
 		setImage(hInstance);
 
 
+
+	}
+
+	void setWin(RECT win) override{
+		this->win = win;
+
+		randoffset.param(std::uniform_int_distribution<int>::param_type(-1, 1));
 
 	}
 
@@ -35,43 +51,26 @@ public:
 
 	void Update(float cameraDelta, float cameraY, int playerY, int playerX) override {
 
+		if (!isInitialized) {
+			startX = pos.x;
+			isInitialized = true;
+			k = randoffset(dre);
+		}
+
+
 		hitbox.left = pos.x - size / 2;
 		hitbox.top = (pos.y - cameraY) - size / 2;
 		hitbox.right = pos.x + hitW + 55;
 		hitbox.bottom = (pos.y - cameraY) + hitH + 60;
 
 		//무빙파트
+		if (win.right > 0) {
+			float amplitude = (win.right / 2.0f) - 300.0f;
 
-		float vecX = (float)(playerX - pos.x);
-		float vecY = (float)(playerY - pos.y);
+			pos.x = startX + static_cast<int>(sin(k) * amplitude);
 
-		float distance = sqrt((vecX * vecX) + (vecY * vecY));
-
-		float normX = 0.0f;
-		float normY = 0.0f;
-
-		if (distance > 0.0001f) {
-			normX = vecX / distance;
-			normY = vecY / distance;
+			k += 0.02f;
 		}
-		else {
-			normX = 0.0f;
-			normY = -1.0f;
-		}
-
-		float mindis = 350.0f;
-		if (distance < mindis)
-		{
-
-
-			float ratio = (mindis - distance) / mindis;
-			speed = (ratio * ratio) * 7.0f;
-		}
-		else
-			speed = 0;
-		pos.x += normX * speed;
-		pos.y += normY * speed;
-
 	}
 
 	void Render(HDC hdc, float cameraY) override {

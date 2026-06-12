@@ -281,7 +281,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 			player.decel();
 			player.update();
-			player.move(wParam, maxSpeed);
+			player.move(wParam, maxSpeed,mDC1,win);
 
 			
 
@@ -312,7 +312,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 					if (player.getHp() > maxHP)
 						player.setHp(maxHP);
 
-					player.setFuel(player.getFuel() + 20);
+					player.setFuel((100.0f - player.getFuel()) * 0.1 + 20 + player.getFuel());
 					if (player.getFuel() > 100)
 						player.setFuel(100);
 

@@ -34,6 +34,8 @@ public:
 
 	virtual void Render(HDC hdc, float cameraY) = 0;
 
+	virtual void setWin(RECT win) = 0;
+
 	virtual ~Items()
 	{
 		

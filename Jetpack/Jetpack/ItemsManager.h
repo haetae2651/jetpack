@@ -54,7 +54,7 @@ public:
 	void setWin(RECT win) {
 		this->win = win;
 		randomX.param(std::uniform_int_distribution<int>::param_type(win.left, win.right));
-		randoffset.param(std::uniform_int_distribution<int>::param_type(1500, 3000));
+		randoffset.param(std::uniform_int_distribution<int>::param_type(3000, 4000));
 
 	}
 
@@ -67,6 +67,8 @@ public:
 			head->prev = newNode;
 		}
 		head = newNode;
+
+		newNode->item->setWin(win);
 	}
 
 	void Render_Items(HDC hdc, float cameraY) {
@@ -153,7 +155,7 @@ public:
 		{
 			if (topItemY - topItemSize - topItemHeight > playerY - spawnDistance)
 			{
-				Add_Item(new Item_Fuel(POINT{ randomX(dre),newY }, g_hInst));
+				Add_Item(new Item_Fuel(POINT{ win.right / 2,newY }, g_hInst));
 			}
 			break;
 		}
@@ -173,7 +175,7 @@ public:
 		{
 			if (topItemY - topItemSize - topItemHeight > playerY - spawnDistance)
 			{
-				Add_Item(new Item_Fuel(POINT{ randomX(dre),newY }, g_hInst));
+				Add_Item(new Item_Fuel(POINT{ win.right / 2,newY }, g_hInst));
 			}
 			break;
 		}

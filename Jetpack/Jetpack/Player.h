@@ -25,9 +25,9 @@ public:
 	void setishit(bool newishit) { ishit = newishit; }
 
 
-	void move(WPARAM wParam, int maxSpeed) {
+	void move(WPARAM wParam, int maxSpeed,HDC hdc,RECT win) {
 		
-
+		float fuelconsume = 0.05f;
 
 		if (Xspeed <= maxSpeed && Xspeed >= -maxSpeed)
 		{
@@ -36,15 +36,20 @@ public:
 					Xspeed -= 0.5;
 					if (Yspeed > -12.0) Yspeed -= 0.3;
 
-					fuel -= 0.1f;
+					fuel -= fuelconsume;
 				}
 				if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
 					Xspeed += 0.5;
 					if (Yspeed > -12.0) Yspeed -= 0.3;
 
-					fuel -= 0.1f;
+					fuel -= fuelconsume;
 				}
 			}
+			RECT hitbox = { pos.x - size/2,500,pos.x + size/2,600};
+
+			if (hitbox.right > win.right || hitbox.left < win.left)
+				Xspeed = -Xspeed;
+			
 		}
 
 	}
@@ -304,12 +309,6 @@ public:
 		if (angle < -30.0f) angle = -30.0f;
 
 
-		//if (fuel == 100)
-		//{
-		//	TCHAR str[100];
-		//	_stprintf_s(str, L"포지션: %d, %d", pos.x, pos.y);
-		//	MessageBox(NULL, str, L"알림", MB_OK);
-		//}
 
 
 
