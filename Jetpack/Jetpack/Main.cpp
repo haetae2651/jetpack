@@ -126,6 +126,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 	switch (uMsg) {
 	case WM_CREATE:
+	{
+		hDC = GetDC(hWnd);
+		mDC1 = CreateCompatibleDC(hDC);
+		mDC2 = CreateCompatibleDC(mDC1);
 
 		IngameUI_Render = true;
 
@@ -134,7 +138,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		hDC = GetDC(hWnd);
 		GetClientRect(hWnd, &win);
 
-		SetTimer(hWnd, 1, 1, NULL);
+		//SetTimer(hWnd, 1, 1, NULL);
 
 		player.setPos({ win.right / 2, win.bottom / 2 });
 
@@ -159,7 +163,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			obsManager.Add_Obstacle(new OBS_Random(p, g_hInst));
 		}
 
-		obsManager.Add_Obstacle(new OBS_LeftRight({ 0+10, -200 }, g_hInst,5));
+		obsManager.Add_Obstacle(new OBS_LeftRight({ 0 + 10, -200 }, g_hInst, 5));
 		obsManager.Add_Obstacle(new OBS_Path({ 0, -1000 }, g_hInst, win.right));
 
 
@@ -167,16 +171,34 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		//아이템 초기화
 		itemsManager.setWin(win);
 
-		itemsManager.Add_Item(new Item_HP({ 500,-500}, g_hInst));
+		itemsManager.Add_Item(new Item_HP({ 500,-500 }, g_hInst));
 
 
 		//UI 초기화
 		setUI(g_hInst);
 
+		//초기 렌더링
+		HBITMAP oldMDC1Bit = (HBITMAP)SelectObject(mDC1, hBitmap);
+		bg.Render(mDC1, mDC2, win);												//배경 렌더링
+		obsManager.Render_Obstacles(mDC1, cameraY);						// 장애물 렌더링
+		playerX = player.getPos().x;
+		playerY = player.getPos().y;
+		if (playerseen)
+			player.Render(mDC1, mDC2, playerX, playerY - cameraY);			//플레이어 렌더링
+		itemsManager.Render_Items(mDC1, cameraY);
 
+		TCHAR str[200];
+		wsprintf(str, L"SPACE키를 눌러 시작(PregameUI를 위해 임시로 해놨다.)");
+
+		TextOut(mDC1, 500, 600, str, wcslen(str));
+		SelectObject(mDC1, oldMDC1Bit);
+		DeleteDC(mDC2);
+		DeleteDC(mDC1);
+
+		InvalidateRect(hWnd, NULL, FALSE);
 		ReleaseDC(hWnd, hDC);
 		break;
-
+	}
 
 	case WM_LBUTTONDOWN: {
 		int mouseX = LOWORD(lParam);
@@ -215,12 +237,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 	case WM_CHAR:
 		switch (wParam) {
-		case 'q': case 'Q':
+		case 'q': case 'Q': {
 			PostQuitMessage(0);
 			break;
 		}
-		break;
-
+		case VK_SPACE: {
+			SetTimer(hWnd, 1, 1, NULL);
+			break;
+		}
+		}
 	case WM_TIMER:
 	{
 		hDC = GetDC(hWnd);

@@ -67,7 +67,7 @@ public:
 
 
 			float ratio = (mindis - distance) / mindis;
-			speed = -(ratio * ratio) * 7.0f;
+			speed = -(ratio * ratio) * 10.0f;
 		}
 		else
 			speed = 0;
