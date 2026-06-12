@@ -34,13 +34,13 @@ public:
 			if (fuel > 0) {
 				if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
 					Xspeed -= 0.5;
-					if (Yspeed > -10.0) Yspeed -= 0.4;
+					if (Yspeed > -12.0) Yspeed -= 0.3;
 
 					fuel -= 0.1f;
 				}
 				if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
 					Xspeed += 0.5;
-					if (Yspeed > -10.0) Yspeed -= 0.4;
+					if (Yspeed > -12.0) Yspeed -= 0.3;
 
 					fuel -= 0.1f;
 				}

@@ -2,7 +2,8 @@
 #include "Items.h"
 #include "resource.h"
 #include <math.h>
-class Item_HP : public Items
+
+class Item_Fuel : public Items
 {
 	int hitW;
 	int hitH;
@@ -13,16 +14,16 @@ class Item_HP : public Items
 
 public:
 
-	Item_HP(POINT pos, HINSTANCE hInstance) : Items(0, pos, -120) { // Items(int type, POINT pos, int size)
+	Item_Fuel(POINT pos, HINSTANCE hInstance) : Items(1, pos, -120) { // Items(int type, POINT pos, int size)
 		this->pos = pos;
 		setImage(hInstance);
 
 
-		
+
 	}
 
 	void setImage(HINSTANCE hInstance) override {
-		hBitmap = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP82));
+		hBitmap = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP83));
 		GetObject(hBitmap, sizeof(BITMAP), &bmp);
 		Width = bmp.bmWidth;
 		Height = bmp.bmHeight;
@@ -32,7 +33,7 @@ public:
 
 	}
 
-	void Update(float cameraDelta, float cameraY, int playerY, int playerX) override{
+	void Update(float cameraDelta, float cameraY, int playerY, int playerX) override {
 
 		hitbox.left = pos.x - size / 2;
 		hitbox.top = (pos.y - cameraY) - size / 2;
@@ -64,7 +65,7 @@ public:
 
 
 			float ratio = (mindis - distance) / mindis;
-			speed = -(ratio * ratio) * 7.0f;
+			speed = (ratio * ratio) * 7.0f;
 		}
 		else
 			speed = 0;
@@ -104,7 +105,7 @@ public:
 		DeleteObject(hPen);
 	}
 
-	~Item_HP()
+	~Item_Fuel()
 	{
 		DeleteObject(hBitmap);
 	}

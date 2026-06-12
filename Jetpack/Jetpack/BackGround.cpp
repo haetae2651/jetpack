@@ -40,7 +40,7 @@ void BackGround::Render(HDC mDC1,HDC mDC2, RECT win)
 void BackGround::Camera_Init(int winBottom)
 {
     cameraY = winBottom / 2; // 카메라 초기값
-	critical_point = winBottom * 0.4; // 임계점 초기화
+	critical_point = winBottom * 0.6; // 임계점 초기화
 }
 
 void BackGround::Camera_Update(float playerY) 

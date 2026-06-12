@@ -1,6 +1,7 @@
 #pragma once
 #include "Items.h"
 #include "Item_HP.h"
+#include "Item_Fuel.h"
 #include <windows.h>
 #include <random>
 
@@ -152,7 +153,27 @@ public:
 		{
 			if (topItemY - topItemSize - topItemHeight > playerY - spawnDistance)
 			{
-				//Add_Item(new Items(POINT{ randomX(dre),newY }, g_hInst));
+				Add_Item(new Item_Fuel(POINT{ randomX(dre),newY }, g_hInst));
+			}
+			break;
+		}
+		case 3:
+		{
+
+			if (topItemY - topItemSize - topItemHeight > playerY - spawnDistance)
+			{
+
+				Add_Item(new Item_HP(POINT{ randomX(dre),newY }, g_hInst));
+
+			}
+
+			break;
+		}
+		case 4:											
+		{
+			if (topItemY - topItemSize - topItemHeight > playerY - spawnDistance)
+			{
+				Add_Item(new Item_Fuel(POINT{ randomX(dre),newY }, g_hInst));
 			}
 			break;
 		}

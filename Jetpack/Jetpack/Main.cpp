@@ -277,7 +277,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 			itemsManager.Update_Items(bg.GetCameraDelta(), cameraY,playerY,playerX);
 			itemsManager.Delete_Items(player.getPos().y);
-			itemsManager.AutoAdd(0, player.getPos().y);
+			itemsManager.AutoAdd(randtype(dre), player.getPos().y);
 
 			player.decel();
 			player.update();
@@ -304,13 +304,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			}
 
 			int hitItemType = itemsManager.Check_And_Eat_Item(playerRect);
-
+			int maxHP = 5;
 			if (hitItemType != -1) // -1이 아니라면 무언가 아이템과 충돌하여 먹은 상태
 			{
 				if (hitItemType == 0) {
 					player.setHp(player.getHp() + 1);
-					if (player.getHp() > 5)
-						player.setHp(5);
+					if (player.getHp() > maxHP)
+						player.setHp(maxHP);
 
 					player.setFuel(player.getFuel() + 20);
 					if (player.getFuel() > 100)
@@ -318,6 +318,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 				}
 				else if (hitItemType == 1) {
+
+					player.setFuel(player.getFuel() + 80);
+					if (player.getFuel() > 100)
+						player.setFuel(100);
 				}
 
 			}

@@ -113,6 +113,9 @@
     <ClInclude Include="Item_HP.h">
       <Filter>헤더 파일\Items</Filter>
     </ClInclude>
+    <ClInclude Include="Item_Fuel.h">
+      <Filter>헤더 파일\Items</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
