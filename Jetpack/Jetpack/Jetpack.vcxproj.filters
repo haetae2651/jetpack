@@ -366,5 +366,11 @@
     <Image Include="resources\jetpack\FuelBar.bmp">
       <Filter>리소스 파일\UI</Filter>
     </Image>
+    <Image Include="Resources\FuelTank\FuelTank.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resources\Heart\Heart.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
 </Project>
