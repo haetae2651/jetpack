@@ -23,7 +23,15 @@ private:
 
     bool move_R = false;
 
-    
+    float k{};
+    float ampfig{};
+    float kfig{};
+
+    std::uniform_real_distribution<float> randamp;
+    std::uniform_real_distribution<float> randk;
+
+    std::default_random_engine dre{ std::random_device{}() };
+
 
 public:
     OBS_LeftRight(POINT pos, HINSTANCE hInstance, int speed) : Obstacles(1, pos, 40) // Obstacles(int type, POINT pos, int size)
@@ -44,6 +52,13 @@ public:
         hitbox.top = pos.y - hitH / 2;
         hitbox.right = pos.x + hitW / 2;
         hitbox.bottom = pos.y + hitH / 2;
+
+
+        randamp.param(std::uniform_real_distribution<float>::param_type(3.0f, 8.0f));
+        randk.param(std::uniform_real_distribution<float>::param_type(0.01f, 0.05f));
+        ampfig = randamp(dre);
+        kfig = randk(dre);
+
     }
 
     ~OBS_LeftRight() {
@@ -100,6 +115,18 @@ public:
             animCount++;
             animCount %= Frame;
         }
+
+        
+        if (1 > 0) {
+            float amplitude = ampfig;
+
+            pos.y +=  static_cast<int>(sin(k) * amplitude);
+
+            k += kfig;
+        }
+
+
+
     }
 
     void Render(HDC hdc, float cameraY) override {

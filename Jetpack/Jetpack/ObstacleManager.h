@@ -32,6 +32,7 @@ private :
 	std::uniform_int_distribution<int> randoffset;
 	std::uniform_int_distribution<int> randnum;
 	std::uniform_int_distribution<int> Yoffset;
+	std::uniform_int_distribution<int> LRoffset;
 
 	std::default_random_engine dre{ std::random_device{}() };
 
@@ -61,6 +62,7 @@ public :
 		randoffset.param(std::uniform_int_distribution<int>::param_type(100, 500));
 		randnum.param(std::uniform_int_distribution<int>::param_type(1, 4));
 		Yoffset.param(std::uniform_int_distribution<int>::param_type(-100, 100));
+		LRoffset.param(std::uniform_int_distribution<int>::param_type(-1000, 300));
 
 	}
 
@@ -186,7 +188,19 @@ public :
 		{
 			if (condition > playerY - spawnDistance)
 			{
+
+				int num = randnum(dre);
+				for (int i = 0; i < num; ++i)
+				{
+					Add_Obstacle(new OBS_LeftRight(POINT{ randomX(dre),newY + LRoffset(dre) }, g_hInst, 5));
+
+				}
+
 				Add_Obstacle(new OBS_Path(POINT{ randomX(dre),newY + Yoffset(dre) - 800 }, g_hInst, win.right));
+
+				
+			
+				
 
 			}
 		}
