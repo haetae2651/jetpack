@@ -75,6 +75,9 @@
     <ClCompile Include="PregameUI.cpp">
       <Filter>소스 파일\UI</Filter>
     </ClCompile>
+    <ClCompile Include="fade.cpp">
+      <Filter>소스 파일\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -120,6 +123,12 @@
       <Filter>헤더 파일\Items</Filter>
     </ClInclude>
     <ClInclude Include="PregameUI.h">
+      <Filter>헤더 파일\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="particle.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="fade.h">
       <Filter>헤더 파일\UI</Filter>
     </ClInclude>
   </ItemGroup>
@@ -388,6 +397,18 @@
       <Filter>리소스 파일\Background</Filter>
     </Image>
     <Image Include="Resources\obstacle\별.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resources\UI\pregame\TitleBG.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resources\UI\pregame\StartGame.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resources\UI\pregame\Option.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resources\UI\black.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

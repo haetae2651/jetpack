@@ -9,6 +9,7 @@ static HBRUSH oldBrush = NULL;
 static HBITMAP hHeart = NULL;
 static HBRUSH hHollowBrush = NULL;
 
+
 void setUI(HINSTANCE hInstance) {
 	//ESC 버튼
 	hEscBtn[0] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP46)); // 흰색
@@ -25,6 +26,7 @@ void setUI(HINSTANCE hInstance) {
 	// 생명력
 	hHeart = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP82));
 
+	
 }
 
 void ReleaseUI() {
@@ -149,3 +151,5 @@ void HeartRender(HDC mDC1, int hp, RECT win) {
 	SelectObject(hMemDC, oldBit);
 	DeleteDC(hMemDC);
 }	
+
+

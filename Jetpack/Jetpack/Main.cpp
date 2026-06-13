@@ -19,7 +19,8 @@
 #include "Item_HP.h"
 
 #include "IngameUI.h"
-
+#include "PregameUI.h"
+#include "fade.h"
 using namespace std;
 
 default_random_engine dre{ random_device{}() };
@@ -120,7 +121,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 	//UI 관련 변수
 	static bool IngameUI_Render = false;
-
+	static int selected = 0;
+	static bool isFadeIn = false;
 	//6.2 게임설정
 	static bool isStop = false; // 게임 멈추기
 
@@ -138,7 +140,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		hDC = GetDC(hWnd);
 		GetClientRect(hWnd, &win);
 
-		//SetTimer(hWnd, 1, 1, NULL);
+		SetTimer(hWnd, 3, 1, NULL);
 
 		player.setPos({ win.right / 2, win.bottom / 2 });
 
@@ -156,33 +158,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		// 플레이어 초기화
 		player.setImage(g_hInst);
 
-		// 5.27 랜덤장애물 초기화
 
 		
 		obsManager.setWin(win);
-		//
-		//for (int i = 0; i < 5; i++) {
-		//	POINT p = { rand() % 600 + 100, -(i * 200) };
-		//	obsManager.Add_Obstacle(new OBS_Random(p, g_hInst));
-		//}
-
-		//obsManager.Add_Obstacle(new OBS_LeftRight({ 0 + 10, -200 }, g_hInst, 5));
-		//obsManager.Add_Obstacle(new OBS_Path({ 0, -1000 }, g_hInst, win.right));
 
 		
 
 		//아이템 초기화
 
 		itemsManager.Add_Item(new Item_HP({ 500,-500 }, g_hInst));
-
-		
-
 		itemsManager.setWin(win);
 
 		//UI 초기화
 		setUI(g_hInst);
+		pre_setUI(g_hInst);;
 
 		//초기 렌더링
+
+		/*
 		HBITMAP oldMDC1Bit = (HBITMAP)SelectObject(mDC1, hBitmap);
 		bg.Render(mDC1, mDC2, win);												//배경 렌더링
 		obsManager.Render_Obstacles(mDC1, cameraY);						// 장애물 렌더링
@@ -200,6 +193,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		DeleteDC(mDC2);
 		DeleteDC(mDC1);
 
+		*/
+
+
+
+		SetTimer(hWnd, 3, 1, NULL);
 		InvalidateRect(hWnd, NULL, FALSE);
 		ReleaseDC(hWnd, hDC);
 		break;
@@ -236,7 +234,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			Game_Stop(hWnd, isStop);
 			InvalidateRect(hWnd, NULL, FALSE);
 			break;
+		case VK_RIGHT: {
+			selected++;
+			if (selected >= 2)
+				selected = 0;
+			break;
 		}
+		case VK_LEFT: {
+			selected--;
+			if (selected <= -1)
+				selected = 1;
+			break;
+		}
+		}
+
 		break;
 
 
@@ -247,10 +258,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			break;
 		}
 		case VK_SPACE: {
-			SetTimer(hWnd, 1, 1, NULL);
-			break;
+ 					break;
 		}
+
+	
 		}
+
+
 	case WM_TIMER:
 	{
 		hDC = GetDC(hWnd);
@@ -259,7 +273,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 
 
-		// 이제부터 타이머 ID값으로 분류(1: 게임 업데이트 및 렌더링, 2: 플레이어 깜빡임 3......)
+		// 이제부터 타이머 ID값으로 분류(1: 게임 업데이트 및 렌더링, 2: 플레이어 깜빡임 3: 타이틀화면UI
 
 		switch (wParam) {
 		case 1: {
@@ -330,6 +344,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				player.setHp(player.getHp() - 1);
 				
 				player.setSpeed(player.getXSpeed() * -1, player.getYSpeed() * -1);
+				player.setFuel(player.getFuel() - 10);
 
 
 			}
@@ -354,7 +369,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 					if (player.getFuel() > 100)
 						player.setFuel(100);
 				}
+				
 
+				// 게임 오버
+				
 			}
 
 
@@ -373,6 +391,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			// ***************************************************************
 
 
+			escRender(mDC1, g_hInst, win, isStop);
+
+			if (isFadeIn) {
+				if (fadein_update(mDC1)) {
+					isFadeIn = false; // 완전히 화면이 걷히면 더 이상 그리지 않음
+				}
+			}
 
 			SelectObject(mDC1, oldMDC1Bit);
 			DeleteDC(mDC2);
@@ -395,6 +420,53 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			break;
 
 		}
+		case 3:
+		{
+			HBITMAP oldMDC1Bit = (HBITMAP)SelectObject(mDC1, hBitmap);
+
+			staticUIRender(mDC1, win);
+			dynamicUIRender(mDC1, win, hWnd,selected);
+
+			SelectObject(mDC1, oldMDC1Bit);
+
+
+			if (GetAsyncKeyState(VK_SPACE) & 0x8000 && selected == 0)
+			{
+				KillTimer(hWnd, 3); 
+				fadeset(g_hInst, win);       
+				SetTimer(hWnd, 4, 1, NULL);
+
+			}
+
+			DeleteDC(mDC2);
+			DeleteDC(mDC1);
+			ReleaseDC(hWnd, hDC);
+			break;
+		}
+		case 4:
+		{
+			HBITMAP oldMDC1Bit = (HBITMAP)SelectObject(mDC1, hBitmap);
+
+			staticUIRender(mDC1, win);
+			dynamicUIRender(mDC1, win, hWnd, selected);
+
+			bool isFadeFinished = fadeout_update(mDC1);
+
+			SelectObject(mDC1, oldMDC1Bit);
+			DeleteDC(mDC2);
+			DeleteDC(mDC1);
+			ReleaseDC(hWnd, hDC);
+
+			if (isFadeFinished)
+			{
+				KillTimer(hWnd, 4);          
+
+				fadeset_in(win);
+				isFadeIn = true;
+				SetTimer(hWnd, 1, 15, NULL);
+			}
+			break;
+		}
 
 		}
 		InvalidateRect(hWnd, NULL, FALSE);
@@ -410,7 +482,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		BitBlt(hDC, 0, 0, win.right, win.bottom, mDC1, 0, 0, SRCCOPY);
 
-		escRender(hDC, g_hInst, win, isStop);
+		
 
 		SelectObject(mDC1, OldBit[0]);
 
@@ -427,4 +499,5 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		break;
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
+
 }
