@@ -3,9 +3,10 @@
 
 class BackGround {
 private :
-	HBITMAP hBitmap;
+	HBITMAP hBack[7];
 	HDC hMemDC;
 	HWND hWnd;
+	BITMAP Bgbmp[7];
 
 	float cameraDelta = 0.0f; // 프레임 카메라
 	float cameraY = 0.0f; // 카메라의 Y 위치
@@ -29,4 +30,5 @@ public :
 	void Camera_Update(float playerY);
 	void Render_Objects(HDC hDC);
 	float GetCameraY() const;
+	int GetScore() const;
 };

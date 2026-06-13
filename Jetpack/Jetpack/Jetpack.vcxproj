@@ -155,6 +155,14 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\BackGround.bmp" />
+    <Image Include="Resources\background\BackGround.bmp" />
+    <Image Include="Resources\background\morning1.bmp" />
+    <Image Include="Resources\background\morning2.bmp" />
+    <Image Include="Resources\background\morning3.bmp" />
+    <Image Include="Resources\background\morning4.bmp" />
+    <Image Include="Resources\background\morning_highview.bmp" />
+    <Image Include="Resources\background\night.bmp" />
+    <Image Include="Resources\background\universe.bmp" />
     <Image Include="Resources\Bird\bird_02.bmp" />
     <Image Include="Resources\Bird\bird_03.bmp" />
     <Image Include="Resources\Bird\bird_04.bmp" />
@@ -208,6 +216,7 @@
     <Image Include="Resources\obstacle\구름통로2.bmp" />
     <Image Include="Resources\obstacle\구름통로3.bmp" />
     <Image Include="Resources\obstacle\구름통로4.bmp" />
+    <Image Include="Resources\obstacle\별.bmp" />
     <Image Include="Resources\panda\PandaWave_1.bmp" />
     <Image Include="Resources\panda\PandaWave_10.bmp" />
     <Image Include="Resources\panda\PandaWave_11.bmp" />

@@ -14,6 +14,7 @@ private:
 
     HBITMAP hBitAnim_R[4];
     HBITMAP hBitAnim_L[4];
+    HBITMAP hStar;
     int animCount = 0;
     int frameTimer = 10;
 
@@ -21,6 +22,8 @@ private:
     int hitH = Height * 0.8;
 
     bool move_R = false;
+
+    
 
 public:
     OBS_LeftRight(POINT pos, HINSTANCE hInstance, int speed) : Obstacles(1, pos, 40) // Obstacles(int type, POINT pos, int size)
@@ -61,9 +64,12 @@ public:
         hBitAnim_L[2] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP79));
         hBitAnim_L[3] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP80));
 
+        hStar = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP100));
 
         GetObject(hBitAnim_R[0], sizeof(BITMAP), &bmp);
         GetObject(hBitAnim_L[0], sizeof(BITMAP), &bmp);
+        GetObject(hStar, sizeof(BITMAP), &bmp);
+
         Width = bmp.bmWidth;
         Height = bmp.bmHeight;
     }
@@ -98,6 +104,7 @@ public:
 
     void Render(HDC hdc, float cameraY) override {
         int screenY = (int)(pos.y - cameraY);
+        int score = (-cameraY + 172) / 10;
 
         HDC hMemDC = CreateCompatibleDC(hdc);
         HBITMAP oldBit = (HBITMAP)SelectObject(hMemDC, hBitAnim_R[animCount]);
@@ -105,16 +112,33 @@ public:
         Width = bmp.bmWidth;
         Height = bmp.bmHeight;
 
-		if (move_R) {
-			TransparentBlt(hdc, pos.x - size / 2, screenY - size / 2, size + Width, size + Height,
-				hMemDC, 0, 0, Width, Height, RGB(0, 255, 0));
-		}
+        if (score <= 600) { // 밤 시작 부분 600
+            if (move_R) {
+                TransparentBlt(hdc, pos.x - size / 2, screenY - size / 2, size + Width, size + Height,
+                    hMemDC, 0, 0, Width, Height, RGB(0, 255, 0));
+            }
+            else {
+                SelectObject(hMemDC, hBitAnim_L[animCount]);
+                TransparentBlt(hdc, pos.x - size / 2, screenY - size / 2, size + Width, size + Height,
+                    hMemDC, 0, 0, Width, Height, RGB(0, 255, 0));
+            }
+        }
 		else {
-			SelectObject(hMemDC, hBitAnim_L[animCount]);
-			TransparentBlt(hdc, pos.x - size / 2, screenY - size / 2, size + Width, size + Height,
-				hMemDC, 0, 0, Width, Height, RGB(0, 255, 0));
-		}
+            GetObject(hStar, sizeof(BITMAP), &bmp);
+            int starWidth = bmp.bmWidth;
+            int starHeight = bmp.bmHeight;
 
+            int starDrawSize = 60;
+            SelectObject(hMemDC, hStar);
+            TransparentBlt(hdc, pos.x - starDrawSize / 2, screenY - starDrawSize / 2, starDrawSize, starDrawSize,
+                hMemDC, 0, 0, starWidth, starHeight, RGB(0, 255, 0));
+
+            // 별 히트박스
+            hitbox.left = pos.x - starDrawSize / 2;
+            hitbox.top = screenY - starDrawSize / 2;
+            hitbox.right = pos.x + starDrawSize / 2;
+            hitbox.bottom = screenY + starDrawSize / 2;
+		}
         SelectObject(hMemDC, oldBit);
         DeleteDC(hMemDC);
 

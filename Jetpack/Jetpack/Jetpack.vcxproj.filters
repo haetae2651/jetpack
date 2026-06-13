@@ -363,5 +363,32 @@
     <Image Include="Resources\obstacle\cloud22.bmp">
       <Filter>리소스 파일\Obstacles</Filter>
     </Image>
+    <Image Include="Resources\background\morning1.bmp">
+      <Filter>리소스 파일\Background</Filter>
+    </Image>
+    <Image Include="Resources\background\morning2.bmp">
+      <Filter>리소스 파일\Background</Filter>
+    </Image>
+    <Image Include="Resources\background\morning3.bmp">
+      <Filter>리소스 파일\Background</Filter>
+    </Image>
+    <Image Include="Resources\background\morning4.bmp">
+      <Filter>리소스 파일\Background</Filter>
+    </Image>
+    <Image Include="Resources\background\night.bmp">
+      <Filter>리소스 파일\Background</Filter>
+    </Image>
+    <Image Include="Resources\background\universe.bmp">
+      <Filter>리소스 파일\Background</Filter>
+    </Image>
+    <Image Include="Resources\background\BackGround.bmp">
+      <Filter>리소스 파일\Background</Filter>
+    </Image>
+    <Image Include="Resources\background\morning_highview.bmp">
+      <Filter>리소스 파일\Background</Filter>
+    </Image>
+    <Image Include="Resources\obstacle\별.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
 </Project>
