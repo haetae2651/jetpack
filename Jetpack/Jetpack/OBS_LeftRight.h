@@ -83,7 +83,7 @@ public:
 			}
 		}
 		else {
-			pos.x -= speed; \
+			pos.x -= speed;
             if (pos.x <= 0) {  
                 move_R = true;
             }
