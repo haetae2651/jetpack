@@ -24,7 +24,7 @@ using namespace std;
 
 default_random_engine dre{ random_device{}() };
 
-uniform_int_distribution<int> randtype(0, 3);
+uniform_int_distribution<int> randtype(0, 10);
 
 
 int screenWidth = GetSystemMetrics(SM_CXSCREEN);
@@ -157,22 +157,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		player.setImage(g_hInst);
 
 		// 5.27 랜덤장애물 초기화
+
+		
 		obsManager.setWin(win);
-		for (int i = 0; i < 5; i++) {
-			POINT p = { rand() % 600 + 100, -(i * 200) };
-			obsManager.Add_Obstacle(new OBS_Random(p, g_hInst));
-		}
+		//
+		//for (int i = 0; i < 5; i++) {
+		//	POINT p = { rand() % 600 + 100, -(i * 200) };
+		//	obsManager.Add_Obstacle(new OBS_Random(p, g_hInst));
+		//}
 
-		obsManager.Add_Obstacle(new OBS_LeftRight({ 0 + 10, -200 }, g_hInst, 5));
-		obsManager.Add_Obstacle(new OBS_Path({ 0, -1000 }, g_hInst, win.right));
+		//obsManager.Add_Obstacle(new OBS_LeftRight({ 0 + 10, -200 }, g_hInst, 5));
+		//obsManager.Add_Obstacle(new OBS_Path({ 0, -1000 }, g_hInst, win.right));
 
-
+		
 
 		//아이템 초기화
-		itemsManager.setWin(win);
 
 		itemsManager.Add_Item(new Item_HP({ 500,-500 }, g_hInst));
 
+		
+
+		itemsManager.setWin(win);
 
 		//UI 초기화
 		setUI(g_hInst);

@@ -123,27 +123,39 @@ public :
 
 	void AutoAdd(int type, int playerY)
 	{
-		if (head == nullptr)
-		{
-			return;
-		}
-
-		Obstacles* topObs = head->obs;
-		int topObsY = topObs->getPos().y;
-		int topObsSize = topObs->getSize();
-		//int tObsWidth = topObs->getWidth();
-		int topObsHeight = topObs->getHeight();
+		int newY{}, condition{};
+		int topObsY{};
+		int topObsSize{};
+		int topObsHeight{};
 
 		const int spawnDistance = 1000; // 장애물이 생성될 플레이어와의 최소 거리
-		offsetY = randoffset(dre);
-		int newY = topObsY - topObsSize - topObsHeight - offsetY;
 
-		switch (type) {
-
-		case 0:											// OBS_Random
+		if (head == nullptr)
 		{
+			offsetY = randoffset(dre);
 
-			if (topObsY - topObsSize - topObsHeight > playerY - spawnDistance)
+			newY = playerY - offsetY - 100;
+			condition = 0;
+
+
+		}
+		else
+		{
+			Obstacles* topObs = head->obs;
+			topObsY = topObs->getPos().y;
+			topObsSize = topObs->getSize();
+			topObsHeight = topObs->getHeight();
+
+			newY = topObsY - topObsSize - topObsHeight - offsetY;
+			condition = topObsY - topObsSize - topObsHeight;
+		}
+
+		
+
+
+		if (type >= 0 && type <= 2)
+		{
+			if (condition > playerY - spawnDistance)
 			{
 				int num = randnum(dre);
 				for (int i = 0; i < num; ++i)
@@ -154,36 +166,34 @@ public :
 
 			}
 
-			break;
 		}
-		case 1:											// OBS_LeftRight
+		else if (type >= 3 && type <= 6)
 		{
-			if (topObsY - topObsSize - topObsHeight > playerY - spawnDistance)
+			if (condition > playerY - spawnDistance)
 			{
 				//나중에 플레이어Y에 따른 속도조정
 				Add_Obstacle(new OBS_LeftRight(POINT{ randomX(dre),newY }, g_hInst, 5));		//OBS_LeftRight(POINT pos, HINSTANCE hInstance, int speed)
 			}
-			break;
 		}
-		case 2:											// OBS_Follow
+		else if (type >= 7 && type <= 8)
 		{
-			if (topObsY - topObsSize - topObsHeight > playerY - spawnDistance)
+			if (condition > playerY - spawnDistance)
 			{
 				//Add_Obstacle(new OBS_Follow(POINT{ randomX(dre),topObsY - topObsSize - topObsHeight - offsetY }, g_hInst)); // Follow.h 아직 못 만듦 
 			}
-			break;
 		}
-		case 3:											// OBS_Path
+		else if (type >= 9 && type <= 10)
 		{
-			if (topObsY - topObsSize - topObsHeight > playerY - spawnDistance)
+			if (condition > playerY - spawnDistance)
 			{
-				//Add_Obstacle(new OBS_Path(POINT{ 0,topObsY - topObsSize - topObsHeight - offsetY }, g_hInst, win.right));
+				Add_Obstacle(new OBS_Path(POINT{ randomX(dre),newY + Yoffset(dre) - 800 }, g_hInst, win.right));
+
 			}
-			break;
-
 		}
 
-		}
+
+
+		
 	}
 
 	// 직접 메인에서 쓸 함수

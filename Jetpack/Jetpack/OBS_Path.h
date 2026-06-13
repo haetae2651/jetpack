@@ -1,58 +1,82 @@
 ﻿#pragma once
 #include <windows.h>
+#include <random>
 #include "resource.h"
 #include "Obstacles.h"
 
 class OBS_Path : public Obstacles {
 private:
-    HBITMAP hPath[3];
-    int frameTimer = 0;
+    HBITMAP hPath;      // 배열 대신 1개만 저장하도록 변경
+    int pathType;       // 0, 1, 2 중 당첨된 랜덤 타입
     int winWidth;
-    int PathWidth[3], PathHeight[3];
+    int PathWidth, PathHeight;
     int stepHeight = 1200; // 통로 y길이
 
+    // 타입별 원본 충돌 좌표 데이터
     POINT Points_0L[2] = { {420, 0}, {420, 720} };
     POINT Points_0R[2] = { {795, 0}, {795, 720} };
-    
+
     POINT Points_1L[2] = { {824, 0}, {179, 720} };
     POINT Points_1R[2] = { {1081, 0}, {436, 720} };
-    
+
     POINT Points_3L[2] = { {132, 0}, {777, 720} };
     POINT Points_3R[2] = { {389, 0}, {1034, 720} };
 
-    // hPath[i]에 대응하는 점배열 + 점 개수 묶음
-    POINT* LeftPts[3] = { Points_0L, Points_1L, Points_3L };
-    int    LeftCount[3] = { 2, 2, 2 };
-
-    POINT* RightPts[3] = { Points_0R, Points_1R, Points_3R };
-    int    RightCount[3] = { 2, 2, 2 };
+    // 현재 선택된 경로의 포인터를 가리킬 변수
+    POINT* LeftPts;
+    POINT* RightPts;
+    int PtsCount = 2; // 점의 개수 (모두 2개로 동일하므로 하나로 통일)
 
 public:
     OBS_Path(POINT pos, HINSTANCE hInstance, int winWidth) : Obstacles(3, pos, 40)
     {
         this->winWidth = winWidth;
-        hPath[0] = NULL, hPath[1] = NULL, hPath[2] = NULL;
+        hPath = NULL;
         Width = Height = 0;
+        Height = stepHeight;
+
+        // 1. 객체 생성 시 0~2 중 하나를 랜덤으로 선택
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<int> dist(0, 2);
+        pathType = dist(gen);
+
+        // 2. 선택된 타입에 맞게 충돌 좌표 포인터 매핑
+        if (pathType == 0) {
+            LeftPts = Points_0L;
+            RightPts = Points_0R;
+        }
+        else if (pathType == 1) {
+            LeftPts = Points_1L;
+            RightPts = Points_1R;
+        }
+        else {
+            LeftPts = Points_3L;
+            RightPts = Points_3R;
+        }
+
         setImage(hInstance);
     }
 
     ~OBS_Path() {
-        for (int i = 0; i < 3; i++)
-            DeleteObject(hPath[i]);
+        if (hPath != NULL) {
+            DeleteObject(hPath);
+        }
     }
 
     void setImage(HINSTANCE hInstance) override {
-        hPath[0] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP90));
-        hPath[1] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP91));
-        hPath[2] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP93));
+        // 3. 선택된 타입의 비트맵만 메모리에 로드 (메모리 절약)
+        int bmpID;
+        if (pathType == 0) bmpID = IDB_BITMAP90;
+        else if (pathType == 1) bmpID = IDB_BITMAP91;
+        else bmpID = IDB_BITMAP93;
 
+        hPath = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(bmpID));
 
         BITMAP tempBmp;
-        for (int i = 0; i < 3; i++) {
-            GetObject(hPath[i], sizeof(BITMAP), &tempBmp);
-            PathWidth[i] = tempBmp.bmWidth;
-            PathHeight[i] = tempBmp.bmHeight;
-        }
+        GetObject(hPath, sizeof(BITMAP), &tempBmp);
+        PathWidth = tempBmp.bmWidth;
+        PathHeight = tempBmp.bmHeight;
     }
 
     void Update(float cameraDelta, float cameraY) override {
@@ -64,15 +88,14 @@ public:
 
     void Render(HDC mdc, float cameraY) override {
         int screenY = (int)(pos.y - cameraY);
+        int segTop = screenY - 70; // 단일 객체이므로 for문의 인덱스 오프셋 제거
 
         HDC hMemDC = CreateCompatibleDC(mdc);
-        HBITMAP oldBit = (HBITMAP)SelectObject(hMemDC, hPath[0]);
+        HBITMAP oldBit = (HBITMAP)SelectObject(hMemDC, hPath);
 
-        for (int i = 0; i < 3; i++) {
-            SelectObject(hMemDC, hPath[i]);
-            TransparentBlt(mdc, 0, screenY - stepHeight * i - 70, winWidth, stepHeight,
-                hMemDC, 0, 0, PathWidth[i], PathHeight[i], RGB(0, 255, 0));
-        }
+        // 선택된 이미지만 렌더링
+        TransparentBlt(mdc, 0, segTop, winWidth, stepHeight,
+            hMemDC, 0, 0, PathWidth, PathHeight, RGB(0, 255, 0));
 
         SelectObject(hMemDC, oldBit);
         DeleteDC(hMemDC);
@@ -81,44 +104,35 @@ public:
         HPEN hPen = CreatePen(PS_SOLID, 2, RGB(255, 0, 0));
         HPEN oldPen = (HPEN)SelectObject(mdc, hPen);
 
-        for (int i = 0; i < 3; i++) {
-            int segTop = screenY - stepHeight * i - 70;
-            float scaleX = (float)winWidth / PathWidth[i];
-            float scaleY = (float)stepHeight / PathHeight[i];
+        float scaleX = (float)winWidth / PathWidth;
+        float scaleY = (float)stepHeight / PathHeight;
 
-            // 왼쪽 벽 - 점들을 순서대로 이어서 그림
-            for (int j = 0; j < LeftCount[i] - 1; j++) {
-                int x1 = (int)(LeftPts[i][j].x * scaleX);
-                int y1 = segTop + (int)(LeftPts[i][j].y * scaleY);
-                int x2 = (int)(LeftPts[i][j + 1].x * scaleX);
-                int y2 = segTop + (int)(LeftPts[i][j + 1].y * scaleY);
-                MoveToEx(mdc, x1, y1, NULL);
-                LineTo(mdc, x2, y2);
-            }
-
-            // 오른쪽 벽
-            for (int j = 0; j < RightCount[i] - 1; j++) {
-                int x1 = (int)(RightPts[i][j].x * scaleX);
-                int y1 = segTop + (int)(RightPts[i][j].y * scaleY);
-                int x2 = (int)(RightPts[i][j + 1].x * scaleX);
-                int y2 = segTop + (int)(RightPts[i][j + 1].y * scaleY);
-                MoveToEx(mdc, x1, y1, NULL);
-                LineTo(mdc, x2, y2);
-
-            }
-
-            // 가로 - 귀찮으니 가로 한 줄로 그림
-            for (int i = 0; i < 3; i++) {
-                int segTop = screenY - stepHeight * i - 80;
-                int segBottom = segTop + stepHeight;
-
-                MoveToEx(mdc, 0, segTop, NULL);
-                LineTo(mdc, winWidth, segTop);
-
-                MoveToEx(mdc, 0, segBottom, NULL);
-                LineTo(mdc, winWidth, segBottom);
-            }
+        // 왼쪽 벽
+        for (int j = 0; j < PtsCount - 1; j++) {
+            int x1 = (int)(LeftPts[j].x * scaleX);
+            int y1 = segTop + (int)(LeftPts[j].y * scaleY);
+            int x2 = (int)(LeftPts[j + 1].x * scaleX);
+            int y2 = segTop + (int)(LeftPts[j + 1].y * scaleY);
+            MoveToEx(mdc, x1, y1, NULL);
+            LineTo(mdc, x2, y2);
         }
+
+        // 오른쪽 벽
+        for (int j = 0; j < PtsCount - 1; j++) {
+            int x1 = (int)(RightPts[j].x * scaleX);
+            int y1 = segTop + (int)(RightPts[j].y * scaleY);
+            int x2 = (int)(RightPts[j + 1].x * scaleX);
+            int y2 = segTop + (int)(RightPts[j + 1].y * scaleY);
+            MoveToEx(mdc, x1, y1, NULL);
+            LineTo(mdc, x2, y2);
+        }
+
+        // 가로선 (시작/끝 지점)
+        int segBottom = segTop + stepHeight;
+        MoveToEx(mdc, 0, segTop, NULL);
+        LineTo(mdc, winWidth, segTop);
+        MoveToEx(mdc, 0, segBottom, NULL);
+        LineTo(mdc, winWidth, segBottom);
 
         SelectObject(mdc, oldPen);
         DeleteObject(hPen);
@@ -129,10 +143,10 @@ public:
     float Getwall(float y, float x1, float y1, float x2, float y2)
     {
         if (y2 == y1) {
-            return x1; 
+            return x1;
         }
         else {
-			float t = (y - y1) / (y2 - y1); // (진행률) 0~1사이 값 나옴, y가 y1과 y2 사이에 있을 때만 유효하다
+            float t = (y - y1) / (y2 - y1); // 진행률 (0~1)
             return x1 + t * (x2 - x1);
         }
     }
@@ -140,64 +154,39 @@ public:
     bool Check(RECT rect, float cameraY) override
     {
         int screenY = (int)(pos.y - cameraY);
+        int Top = screenY - 70;
+        int Bottom = Top + stepHeight;
 
+        // 렉트가 이 통로의 y범위를 완전히 벗어나면 검사 패스
+        if (rect.bottom < Top || rect.top > Bottom)
+            return false;
 
+        float scaleX = (float)winWidth / PathWidth;
+        float scaleY = (float)stepHeight / PathHeight;
 
-        for (int i = 0; i < 3; i++) {
-            int Top = screenY - stepHeight * i - 70;
-            int Bottom = Top + stepHeight;
+        // 화면 y -> 비트맵 원본 y로 변환
+        float bitmapTop = (rect.top - Top) / scaleY;
+        float bitmapBottom = (rect.bottom - Top) / scaleY;
 
-            if (rect.bottom < Top || rect.top > Bottom)
-                continue;
+        // 현재 선택된 통로(LeftPts, RightPts)에 대해서만 충돌 검사
+        float LtopX = Getwall(bitmapTop, LeftPts[0].x, LeftPts[0].y, LeftPts[1].x, LeftPts[1].y);
+        float LbottomX = Getwall(bitmapBottom, LeftPts[0].x, LeftPts[0].y, LeftPts[1].x, LeftPts[1].y);
 
+        float RtopX = Getwall(bitmapTop, RightPts[0].x, RightPts[0].y, RightPts[1].x, RightPts[1].y);
+        float RbottomX = Getwall(bitmapBottom, RightPts[0].x, RightPts[0].y, RightPts[1].x, RightPts[1].y);
 
+        float Ltop = LtopX * scaleX;
+        float Lbottom = LbottomX * scaleX;
+        float Rtop = RtopX * scaleX;
+        float Rbottom = RbottomX * scaleX;
 
-            float scaleX = (float)winWidth / PathWidth[i];
-            float scaleY = (float)stepHeight / PathHeight[i];
+        // 왼쪽 벽을 넘어갔는지
+        if (rect.left < Ltop || rect.left < Lbottom)
+            return true;
 
-
-
-            // 화면 y -> 비트맵 원본 y로 변환
-            float bitmapTop = (rect.top - Top) / scaleY;
-            float bitmapBottom = (rect.bottom - Top) / scaleY;
-
-            float LtopX = Getwall(bitmapTop, 
-                LeftPts[i][0].x, 
-                LeftPts[i][0].y, 
-                LeftPts[i][1].x, 
-                LeftPts[i][1].y);
-            float LbottomX = Getwall(bitmapBottom,
-                LeftPts[i][0].x,
-                LeftPts[i][0].y,
-                LeftPts[i][1].x,
-                LeftPts[i][1].y);
-            float RtopX = Getwall(bitmapTop, 
-                RightPts[i][0].x, 
-                RightPts[i][0].y, 
-                RightPts[i][1].x, 
-                RightPts[i][1].y);
-            float RbottomX = Getwall(bitmapBottom, 
-                RightPts[i][0].x, 
-                RightPts[i][0].y, 
-                RightPts[i][1].x, 
-                RightPts[i][1].y);
-
-            float Ltop = LtopX * scaleX;
-            float Lbottom = LbottomX * scaleX;
-            float Rtop = RtopX * scaleX;
-            float Rbottom = RbottomX * scaleX;
-
-
-
-            if (rect.left < Ltop || rect.left < Lbottom)
-                return true;
-
-
-
-
-            if (rect.right > Rtop || rect.right > Rbottom)
-                return true; // 트루면 충돌
-        }
+        // 오른쪽 벽을 넘어갔는지
+        if (rect.right > Rtop || rect.right > Rbottom)
+            return true;
 
         return false;
     }
