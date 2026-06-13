@@ -40,9 +40,35 @@ public :
             DeleteObject(hBitAnim[i]);
     }
 
+    float LengthPts(int x1, int y1, int x2, int y2)
+    {
+        return (sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)));
+    }
+
+
+    bool PointInRange(int px, int py, int x_min, int x_max, int y_min, int y_max) {
+        if (px < x_max && px > x_min && py < y_max && py > y_min)
+            return true;
+        return false;
+    }
+
+    bool Check_PlayerCollision(RECT playerRect, float cameraY) {
+        int screenY = (int)(pos.y - cameraY);
+
+        POINT corners[4] = {
+            {playerRect.left, playerRect.top},
+            {playerRect.right, playerRect.top},
+            {playerRect.left, playerRect.bottom},
+            {playerRect.right, playerRect.bottom}
+        };
+    }
+
+
+
+
     void setImage(HINSTANCE hInstance) override {
-        hBitAnim[0] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP3));
-        hBitAnim[1] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP4));
+        hBitAnim[0] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP88));
+        hBitAnim[1] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP89));
 
         GetObject(hBitAnim[0], sizeof(BITMAP), &bmp);
         Width = bmp.bmWidth;
@@ -50,11 +76,10 @@ public :
     }
 
     void Update(float cameraDelta, float cameraY) override {
-        // 카메라 위치에 따라 히트박스도 달라져야하니 다시 초기화
-        hitbox.left = pos.x - 1/Width + 30;
-        hitbox.top = (pos.y - cameraY) - 1/Height + 20;
-        hitbox.right = pos.x + Width / 1.25;
-        hitbox.bottom = (pos.y - cameraY) + Height / 1.25;
+        hitbox.left = pos.x - hitW / 2 + 150;
+        hitbox.top = (pos.y - cameraY) - hitH / 2 + 100;
+        hitbox.right = hitbox.left + 130;
+        hitbox.bottom = hitbox.top + 70;
 
         frameTimer++;
         if (frameTimer >= 10) {

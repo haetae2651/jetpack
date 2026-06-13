@@ -142,13 +142,13 @@ public :
 
 		case 0:											// OBS_Random
 		{
-			
+
 			if (topObsY - topObsSize - topObsHeight > playerY - spawnDistance)
 			{
 				int num = randnum(dre);
 				for (int i = 0; i < num; ++i)
 				{
-					Add_Obstacle(new OBS_Random(POINT{ randomX(dre),newY + Yoffset(dre)}, g_hInst));
+					Add_Obstacle(new OBS_Random(POINT{ randomX(dre),newY + Yoffset(dre) }, g_hInst));
 
 				}
 
@@ -186,19 +186,11 @@ public :
 		}
 	}
 
-	bool Check_Collision(const RECT& rect1, const RECT& rect2) {
-		if (rect1.right <= rect2.left || rect1.left >= rect2.right ||
-			rect1.bottom <= rect2.top || rect1.top >= rect2.bottom) {
-			return false; // 충돌X
-		}
-		return true; // 충돌O
-	}
-
 	// 직접 메인에서 쓸 함수
-	bool Check_PlayerCollision(const RECT& playerHitbox) {
+	bool Check_PlayerCollision(const RECT& playerHitbox, float cameraY) {
 		ObsNode* current = head;
 		while (current != nullptr) {
-			if (Check_Collision(playerHitbox, current->obs->getHitBox())) {
+			if (current->obs->Check(playerHitbox, cameraY)) {
 				return true; // 충돌O
 			}
 			current = current->next;

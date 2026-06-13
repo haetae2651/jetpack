@@ -4,6 +4,7 @@
 extern HINSTANCE hInstance;
 extern HWND hWnd;
 extern RECT win;
+extern float cameraY;
 
 BackGround::BackGround() 
 {

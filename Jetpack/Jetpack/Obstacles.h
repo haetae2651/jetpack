@@ -53,6 +53,14 @@ public:
 			pos.x + size, screenY + size);
 	}
 
+	virtual bool Check(RECT rect, float cameraY) {
+		if (rect.right <= hitbox.left || rect.left >= hitbox.right ||
+			rect.bottom <= hitbox.top || rect.top >= hitbox.bottom) {
+			return false;
+		}
+		return true;
+	}
+
 	virtual ~Obstacles()
 	{
 

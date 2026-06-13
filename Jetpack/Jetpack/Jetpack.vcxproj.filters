@@ -129,15 +129,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resources\cloud1.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
-    </Image>
-    <Image Include="Resources\cloud11.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
-    </Image>
-    <Image Include="Resources\cloud22.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
-    </Image>
     <Image Include="Resources\cat\Idle_1.bmp">
       <Filter>리소스 파일\character\Cat</Filter>
     </Image>
@@ -216,9 +207,6 @@
     <Image Include="Resources\설정1.bmp">
       <Filter>리소스 파일\UI</Filter>
     </Image>
-    <Image Include="Resources\구름통로1.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
-    </Image>
     <Image Include="Resources\BackGround.bmp">
       <Filter>리소스 파일\Background</Filter>
     </Image>
@@ -251,27 +239,6 @@
     </Image>
     <Image Include="Resources\jetpack\rocket6Right.bmp">
       <Filter>리소스 파일\Jetpack</Filter>
-    </Image>
-    <Image Include="Resources\obstacle\구름1.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
-    </Image>
-    <Image Include="Resources\obstacle\구름2.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
-    </Image>
-    <Image Include="Resources\obstacle\구름3.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
-    </Image>
-    <Image Include="Resources\obstacle\구름4.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
-    </Image>
-    <Image Include="Resources\obstacle\구름통로2.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
-    </Image>
-    <Image Include="Resources\obstacle\구름통로3.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
-    </Image>
-    <Image Include="Resources\obstacle\구름통로4.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
     </Image>
     <Image Include="Resources\jetpack\rocket1.bmp">
       <Filter>리소스 파일\Jetpack</Filter>
@@ -342,9 +309,6 @@
     <Image Include="Resources\UI\설정2.bmp">
       <Filter>리소스 파일\UI</Filter>
     </Image>
-    <Image Include="Resources\obstacle\구름통로1.bmp">
-      <Filter>리소스 파일\Obstacles</Filter>
-    </Image>
     <Image Include="Resources\TestImage_AiGenerated.bmp">
       <Filter>리소스 파일\character</Filter>
     </Image>
@@ -380,6 +344,24 @@
     </Image>
     <Image Include="Resources\Heart\Heart.bmp">
       <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resources\obstacle\구름통로1.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\obstacle\구름통로2.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\obstacle\구름통로3.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\obstacle\구름통로4.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\obstacle\cloud11.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
+    </Image>
+    <Image Include="Resources\obstacle\cloud22.bmp">
+      <Filter>리소스 파일\Obstacles</Filter>
     </Image>
   </ItemGroup>
 </Project>

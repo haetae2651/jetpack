@@ -29,6 +29,7 @@ uniform_int_distribution<int> randtype(0, 3);
 
 int screenWidth = GetSystemMetrics(SM_CXSCREEN);
 int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+float cameraY;
 
 HINSTANCE g_hInst;
 LPCTSTR lpszClass = L"My Window Class";
@@ -112,7 +113,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	//장애물 관련 변수
 	static ObstacleManager obsManager; // 5.27
 	static BackGround bg;
-	static float cameraY;
 
 	//아이템 관련 변수
 	static ItemsManager itemsManager;
@@ -311,15 +311,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			
 
 			// 플레이어 히트박스 갱신
-			playerRect.left = playerX - player.getSize() / 2;
-			playerRect.top = (playerY - cameraY) - player.getSize() / 2;
-			playerRect.right = playerX + player.getSize() / 2;
-			playerRect.bottom = (playerY - cameraY) + player.getSize() / 2;
-
+			playerRect.left = playerX - player.getSize() / 2 + 10;
+			playerRect.top = (playerY - cameraY) - player.getSize() / 2 + 10;
+			playerRect.right = playerRect.left + 40;
+			playerRect.bottom = playerRect.top + 50;
 
 
 			// 충돌 체크
-			if (obsManager.Check_PlayerCollision(playerRect) && !player.getishit()) {
+			if (obsManager.Check_PlayerCollision(playerRect, cameraY) && !player.getishit()) {
 				player.setishit(true);
 				seencnt = 0;
 				SetTimer(hWnd, 2, 15, NULL); //0.5초마다 깜빡임
