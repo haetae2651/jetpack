@@ -244,6 +244,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				selected = 1;
 			break;
 		}
+
 		}
 
 		break;
@@ -255,9 +256,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			PostQuitMessage(0);
 			break;
 		}
-		case VK_SPACE: {
- 					break;
-		}
+	
 		case 'r': case 'R':{
 			if (isStop)
 			{
@@ -277,7 +276,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		mDC1 = CreateCompatibleDC(hDC);
 		mDC2 = CreateCompatibleDC(mDC1);
 
+		if (GetAsyncKeyState(VK_SPACE) & 0x8000 && selected == 1 && !isTitleFadeIn)
+		{
+			PostQuitMessage(0);
 
+		}
 
 		// 이제부터 타이머 ID값으로 분류(1: 게임 업데이트 및 렌더링, 2: 플레이어 깜빡임 3: 타이틀화면UI
 
