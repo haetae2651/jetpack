@@ -100,7 +100,12 @@ public:
 	{
 		if (pSystem && pHitSound)
 		{
-			pSystem->playSound(pHitSound, 0, false, nullptr);
+			FMOD::Channel* pTempChannel = nullptr;
+			pSystem->playSound(pHitSound, 0, false, &pTempChannel);
+
+			if (pTempChannel) {
+				pTempChannel->setVolume(3.0f);
+			}
 		}
 	}
 
@@ -109,6 +114,7 @@ public:
 		if (pSystem && pItemSound)
 		{
 			pSystem->playSound(pItemSound, 0, false, nullptr);
+
 		}
 	}
 

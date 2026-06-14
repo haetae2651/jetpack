@@ -121,15 +121,79 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	static bool isFadeIn = false;
 	static bool isGameOverFade = false;
 	static bool isTitleFadeIn = true;
+	static bool isIngame = false;
 
 	//6.2 게임설정
 	static bool isStop = false; // 게임 멈추기
 	static bool timer1init = false;
 
 	static int selectedChar = 0; // 0=Cat, 1=Panda, 2=Bunny, 3=Penguin
+
+	//소리변수
+	static FMOD::System* pMainBgmSystem = nullptr;
+	static FMOD::Sound* pTitleBGM = nullptr; // Timer 3용 (IDR_WAVE4)
+	static FMOD::Sound* pGameBGM = nullptr;  // Timer 1용 (IDR_WAVE5)
+	static FMOD::Channel* pBgmChannel = nullptr;
+	static FMOD::Sound* pKeySound = nullptr;   // 좌우 키 입력음 (IDR_WAVE5)
+	static FMOD::Sound* pEnterSound = nullptr; // 엔터 선택음 (IDR_WAVE6)
+
 	switch (uMsg) {
 	case WM_CREATE:
 	{
+
+		FMOD::System_Create(&pMainBgmSystem);
+		pMainBgmSystem->init(32, FMOD_INIT_NORMAL, nullptr);
+
+		// IDR_WAVE4 (타이틀 브금) 로드 - FMOD_LOOP_NORMAL로 반복 재생
+		HRSRC hRes4 = FindResource(g_hInst, MAKEINTRESOURCE(IDR_WAVE4), TEXT("WAVE"));
+		if (hRes4) {
+			HGLOBAL hData = LoadResource(g_hInst, hRes4);
+			DWORD size = SizeofResource(g_hInst, hRes4);
+			FMOD_CREATESOUNDEXINFO ex = { 0 };
+			ex.cbsize = sizeof(FMOD_CREATESOUNDEXINFO); ex.length = size;
+			pMainBgmSystem->createSound((const char*)LockResource(hData), FMOD_OPENMEMORY | FMOD_LOOP_NORMAL, &ex, &pTitleBGM);
+		}
+
+		// IDR_WAVE5 (인게임 브금) 로드
+		HRSRC hRes5 = FindResource(g_hInst, MAKEINTRESOURCE(IDR_WAVE5), TEXT("WAVE"));
+		if (hRes5) {
+			HGLOBAL hData = LoadResource(g_hInst, hRes5);
+			DWORD size = SizeofResource(g_hInst, hRes5);
+			FMOD_CREATESOUNDEXINFO ex = { 0 };
+			ex.cbsize = sizeof(FMOD_CREATESOUNDEXINFO); ex.length = size;
+			pMainBgmSystem->createSound((const char*)LockResource(hData), FMOD_OPENMEMORY | FMOD_LOOP_NORMAL, &ex, &pGameBGM);
+		}
+
+		// 방향키 입력음 (IDR_WAVE6) 로드
+
+		HRSRC hResKey = FindResource(g_hInst, MAKEINTRESOURCE(IDR_WAVE7), TEXT("WAVE"));
+		if (hResKey) {
+			HGLOBAL hData = LoadResource(g_hInst, hResKey);
+			DWORD size = SizeofResource(g_hInst, hResKey);
+			FMOD_CREATESOUNDEXINFO ex = { 0 };
+			ex.cbsize = sizeof(FMOD_CREATESOUNDEXINFO); ex.length = size;
+			// FMOD_DEFAULT 사용 (반복 안 함)
+			pMainBgmSystem->createSound((const char*)LockResource(hData), FMOD_OPENMEMORY | FMOD_DEFAULT, &ex, &pKeySound);
+		}
+
+		// 엔터 입력음 (IDR_WAVE7) 로드
+		HRSRC hResEnter = FindResource(g_hInst, MAKEINTRESOURCE(IDR_WAVE6), TEXT("WAVE"));
+		if (hResEnter) {
+			HGLOBAL hData = LoadResource(g_hInst, hResEnter);
+			DWORD size = SizeofResource(g_hInst, hResEnter);
+			FMOD_CREATESOUNDEXINFO ex = { 0 };
+			ex.cbsize = sizeof(FMOD_CREATESOUNDEXINFO); ex.length = size;
+			// FMOD_DEFAULT 사용 (반복 안 함)
+			pMainBgmSystem->createSound((const char*)LockResource(hData), FMOD_OPENMEMORY | FMOD_DEFAULT, &ex, &pEnterSound);
+		}
+
+		// 프로그램 켜지자마자 타이틀화면(Timer 3)이므로 타이틀 브금 재생 시작
+		if (pMainBgmSystem && pTitleBGM) {
+			pMainBgmSystem->playSound(pTitleBGM, 0, false, &pBgmChannel);
+		}
+
+
+
 		hDC = GetDC(hWnd);
 		mDC1 = CreateCompatibleDC(hDC);
 		mDC2 = CreateCompatibleDC(mDC1);
@@ -231,7 +295,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			selectedChar++;
 			if (selectedChar >= 4)
 				selectedChar = 0;
-				selected = 0;
+
+			if (pMainBgmSystem && pKeySound && !isIngame) {
+				pMainBgmSystem->playSound(pKeySound, 0, false, nullptr);
+			}
+
 			break;
 		}
 
@@ -242,6 +310,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			selectedChar--;
 			if (selectedChar <= -1)
 				selectedChar = 3;
+
+			if (pMainBgmSystem && pKeySound&&!isIngame) {
+				pMainBgmSystem->playSound(pKeySound, 0, false, nullptr);
+			}
 			break;
 		}
 
@@ -287,9 +359,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		switch (wParam) {
 		case 1: {
 
-			//렌더링 파트
 			if (!timer1init)
 			{
+
+				if (pBgmChannel) pBgmChannel->stop();
+				if (pMainBgmSystem && pGameBGM) {
+					pMainBgmSystem->playSound(pGameBGM, 0, false, &pBgmChannel);
+				}
 
 				itemsManager.Clear();
 				obsManager.Clear();
@@ -310,7 +386,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				cameraY = bg.GetCameraY();
 				isStop = false;
 				timer1init = true;
+				isIngame = true;
 			}
+
+			//렌더링 파트
 
 
 
@@ -444,6 +523,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 				if (isFadeFinished)
 				{
+
+					if (pBgmChannel) pBgmChannel->stop();
+					if (pMainBgmSystem && pTitleBGM) {
+						pMainBgmSystem->playSound(pTitleBGM, 0, false, &pBgmChannel);
+					}
+
 					isGameOverFade = false;
 					timer1init = false; 
 
@@ -479,6 +564,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 		case 3:
 		{
+			isIngame = false;
 			HBITMAP oldMDC1Bit = (HBITMAP)SelectObject(mDC1, hBitmap);
 
 			staticUIRender(mDC1, win);
@@ -551,6 +637,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 			if (GetAsyncKeyState(VK_RETURN) & 0x8000 && !isFadeIn)
 			{
+				if (pMainBgmSystem && pEnterSound) {
+					pMainBgmSystem->playSound(pEnterSound, 0, false, nullptr);
+				}
+
 				player.setType(selectedChar + 1); // 1~4
 				KillTimer(hWnd, 5);
 				fadeset(g_hInst, win);
@@ -582,6 +672,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			break;
 		}
 		}
+
+		if (pMainBgmSystem) {
+			pMainBgmSystem->update();
+		}
+
 		InvalidateRect(hWnd, NULL, FALSE);
 
 		break;
@@ -609,6 +704,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		DeleteObject(hBitmap); 
 		ReleaseUI();
 		PostQuitMessage(0);
+
+		if (pTitleBGM) pTitleBGM->release();
+		if (pGameBGM) pGameBGM->release();
+
+		if (pKeySound) pKeySound->release();
+		if (pEnterSound) pEnterSound->release();
+
+		if (pMainBgmSystem) {
+			pMainBgmSystem->close();
+			pMainBgmSystem->release();
+		}
+
+
 		break;
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);

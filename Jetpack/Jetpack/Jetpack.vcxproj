@@ -255,9 +255,13 @@
     <Image Include="Resources\설정1.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <Media Include="Resources\Sounds\Bg.wav" />
+    <Media Include="Resources\Sounds\Bg2.wav" />
     <Media Include="Resources\Sounds\Hit.wav" />
     <Media Include="Resources\Sounds\Item.wav" />
     <Media Include="Resources\Sounds\Jetpack.wav" />
+    <Media Include="Resources\Sounds\liecio-achive-sound-132273.wav" />
+    <Media Include="Resources\Sounds\select.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
