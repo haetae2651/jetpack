@@ -37,6 +37,9 @@ cmake_install.cmake
 *.lib
 *.exp
 
+!**/FMOD_SDK/**/*.lib
+!**/fmod.dll
+
 # Logs
 *.log
 
