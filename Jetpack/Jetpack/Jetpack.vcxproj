@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="fade.h" />
+    <ClInclude Include="OBS_Following.h" />
     <ClInclude Include="particle.h" />
     <ClInclude Include="IngameUI.h" />
     <ClInclude Include="Items.h" />

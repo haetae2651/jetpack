@@ -105,17 +105,5 @@ public :
 
         SelectObject(hMemDC, oldBit);
         DeleteDC(hMemDC);
-
-
-        // 히트박스 범위 보이는 코드 - ai썻음 ㅎ
-        HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, GetStockObject(NULL_BRUSH));
-        HPEN hPen = CreatePen(PS_SOLID, 2, RGB(255, 0, 0));
-        HPEN oldPen = (HPEN)SelectObject(hdc, hPen);
-
-        Rectangle(hdc, hitbox.left, hitbox.top, hitbox.right, hitbox.bottom);
-
-        SelectObject(hdc, oldPen);
-        SelectObject(hdc, oldBrush);
-        DeleteObject(hPen);
     }
 };

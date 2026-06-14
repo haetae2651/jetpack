@@ -99,44 +99,6 @@ public:
 
         SelectObject(hMemDC, oldBit);
         DeleteDC(hMemDC);
-
-        // ----- 디버그: 벽 선분 그려보기 -----
-        HPEN hPen = CreatePen(PS_SOLID, 2, RGB(255, 0, 0));
-        HPEN oldPen = (HPEN)SelectObject(mdc, hPen);
-
-        float scaleX = (float)winWidth / PathWidth;
-        float scaleY = (float)stepHeight / PathHeight;
-
-        // 왼쪽 벽
-        for (int j = 0; j < PtsCount - 1; j++) {
-            int x1 = (int)(LeftPts[j].x * scaleX);
-            int y1 = segTop + (int)(LeftPts[j].y * scaleY);
-            int x2 = (int)(LeftPts[j + 1].x * scaleX);
-            int y2 = segTop + (int)(LeftPts[j + 1].y * scaleY);
-            MoveToEx(mdc, x1, y1, NULL);
-            LineTo(mdc, x2, y2);
-        }
-
-        // 오른쪽 벽
-        for (int j = 0; j < PtsCount - 1; j++) {
-            int x1 = (int)(RightPts[j].x * scaleX);
-            int y1 = segTop + (int)(RightPts[j].y * scaleY);
-            int x2 = (int)(RightPts[j + 1].x * scaleX);
-            int y2 = segTop + (int)(RightPts[j + 1].y * scaleY);
-            MoveToEx(mdc, x1, y1, NULL);
-            LineTo(mdc, x2, y2);
-        }
-
-        // 가로선 (시작/끝 지점)
-        int segBottom = segTop + stepHeight;
-        MoveToEx(mdc, 0, segTop, NULL);
-        LineTo(mdc, winWidth, segTop);
-        MoveToEx(mdc, 0, segBottom, NULL);
-        LineTo(mdc, winWidth, segBottom);
-
-        SelectObject(mdc, oldPen);
-        DeleteObject(hPen);
-        // -----------------------------------
     }
 
     // y좌표에 있는 (x1, y1)에서 (x2, y2)까지 함수

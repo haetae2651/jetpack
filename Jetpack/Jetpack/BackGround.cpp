@@ -60,13 +60,13 @@ void BackGround::Render(HDC mDC1, HDC mDC2, RECT win)
     else if (score <= animStart+15) {
         index = 1;
     }
-	else if (score <= animStart + 30) {
+	else if (score <= spaceStart - 60) {
 		index = 2;
 	}
-	else if (score <= animStart + 45) {
+	else if (score <= spaceStart - 45) {
 		index = 3;
 	}
-	else if (score <= animStart + 60) {
+	else if (score <= spaceStart - 30) {
 		index = 4;
 	}
     else if (score <= spaceStart) {

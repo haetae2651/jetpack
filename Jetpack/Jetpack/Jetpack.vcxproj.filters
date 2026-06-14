@@ -131,6 +131,9 @@
     <ClInclude Include="fade.h">
       <Filter>헤더 파일\UI</Filter>
     </ClInclude>
+    <ClInclude Include="OBS_Following.h">
+      <Filter>헤더 파일\Obstacles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">

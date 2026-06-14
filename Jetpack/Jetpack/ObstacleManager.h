@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "OBS_Random.h"
 #include "OBS_Path.h"
+#include "OBS_Following.h"
 #include "OBS_LeftRight.h"
 #include <windows.h>
 #include <random>
@@ -123,7 +124,7 @@ public :
 	}
 
 
-	void AutoAdd(int type, int playerY)
+	void AutoAdd(int type, int playerY, int playerX)
 	{
 		int newY{}, condition{};
 		int topObsY{};
@@ -181,7 +182,7 @@ public :
 		{
 			if (condition > playerY - spawnDistance)
 			{
-				//Add_Obstacle(new OBS_Follow(POINT{ randomX(dre),topObsY - topObsSize - topObsHeight - offsetY }, g_hInst)); // Follow.h 아직 못 만듦 
+				Add_Obstacle(new OBS_Following(POINT{ randomX(dre), newY }, g_hInst, playerX, playerY));
 			}
 		}
 		else if (type >= 9 && type <= 10)

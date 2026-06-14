@@ -12,6 +12,7 @@
 #include "OBS_Random.h"
 #include "OBS_Path.h"
 #include "OBS_LeftRight.h"
+#include "OBS_Following.h"
 
 #include "Items.h"
 #include "ItemsManager.h"
@@ -124,6 +125,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	//6.2 게임설정
 	static bool isStop = false; // 게임 멈추기
 	static bool timer1init = false;
+
+	static int selectedChar = 0; // 0=Cat, 1=Panda, 2=Bunny, 3=Penguin
 	switch (uMsg) {
 	case WM_CREATE:
 	{
@@ -216,32 +219,29 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 	case WM_KEYDOWN:
 		switch (wParam) {
-		case '1':
-			player.setType(1);
-			break;
-		case '2':
-			player.setType(2);
-			break;
-		case '3':
-			player.setType(3);
-			break;
-		case '4':
-			player.setType(4);
-			break;
 		case VK_ESCAPE:
 			Game_Stop(hWnd, isStop);
 			InvalidateRect(hWnd, NULL, FALSE);
 			break;
+
 		case VK_RIGHT: {
 			selected++;
 			if (selected >= 2)
 				selected = 0;
+			selectedChar++;
+			if (selectedChar >= 4)
+				selectedChar = 0;
+				selected = 0;
 			break;
 		}
+
 		case VK_LEFT: {
 			selected--;
 			if (selected <= -1)
 				selected = 1;
+			selectedChar--;
+			if (selectedChar <= -1)
+				selectedChar = 3;
 			break;
 		}
 
@@ -353,7 +353,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 
 
-				obsManager.AutoAdd(randtype(dre), player.getPos().y); //				AutoAdd(type, playerY)
+				obsManager.AutoAdd(randtype(dre), player.getPos().y, playerX); //				AutoAdd(type, playerY)
 				obsManager.Update_Obstacles(bg.GetCameraDelta(), cameraY);
 				obsManager.Delete_Obstacles(player.getPos().y);
 
@@ -425,18 +425,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 					}
 				}
 
-				// ***************************************************************
-				// 플레이어 히트박스 시각화 (파란 사각형) 
-				HBRUSH oldBrush = (HBRUSH)SelectObject(mDC1, GetStockObject(NULL_BRUSH));
-				HPEN hPen = CreatePen(PS_SOLID, 2, RGB(0, 0, 255));
-				HPEN oldPen = (HPEN)SelectObject(mDC1, hPen);
-
-				Rectangle(mDC1, playerRect.left, playerRect.top, playerRect.right, playerRect.bottom);
-
-				SelectObject(mDC1, oldPen);
-				SelectObject(mDC1, oldBrush);
-				DeleteObject(hPen);
-				// ***************************************************************
 
 			}
 			escRender(mDC1, g_hInst, win, isStop);
@@ -539,12 +527,59 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 				fadeset_in(win);
 				isFadeIn = true;
-				SetTimer(hWnd, 1, 1, NULL);
-				timer1init = false;
+				SetTimer(hWnd, 5, 1, NULL); // 캐릭터선택화면으로 넘어가기
 			}
 			break;
 		}
+		case 5:
+		{
+			HBITMAP oldMDC1Bit = (HBITMAP)SelectObject(mDC1, hBitmap);
 
+			charSelectRender(mDC1, win, selectedChar);
+
+			if (isFadeIn) {
+				if (fadein_update(mDC1)) {
+					isFadeIn = false;
+				}
+			}
+
+			SelectObject(mDC1, oldMDC1Bit);
+			DeleteDC(mDC2);
+			DeleteDC(mDC1);
+			ReleaseDC(hWnd, hDC);
+
+			if (GetAsyncKeyState(VK_RETURN) & 0x8000 && !isFadeIn)
+			{
+				player.setType(selectedChar + 1); // 1~4
+				KillTimer(hWnd, 5);
+				fadeset(g_hInst, win);
+				SetTimer(hWnd, 6, 1, NULL);
+			}
+			break;
+		}
+		case 6:
+		{
+			HBITMAP oldMDC1Bit = (HBITMAP)SelectObject(mDC1, hBitmap);
+
+			charSelectRender(mDC1, win, selectedChar);
+
+			bool isFadeFinished = fadeout_update(mDC1);
+
+			SelectObject(mDC1, oldMDC1Bit);
+			DeleteDC(mDC2);
+			DeleteDC(mDC1);
+			ReleaseDC(hWnd, hDC);
+
+			if (isFadeFinished)
+			{
+				KillTimer(hWnd, 6);
+				fadeset_in(win);
+				isFadeIn = true;
+				timer1init = false;
+				SetTimer(hWnd, 1, 1, NULL); // 게임 시작
+			}
+			break;
+		}
 		}
 		InvalidateRect(hWnd, NULL, FALSE);
 
