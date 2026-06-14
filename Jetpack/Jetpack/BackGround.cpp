@@ -49,8 +49,8 @@ void BackGround::Render(HDC mDC1, HDC mDC2, RECT win)
 {
     int score = GetScore(); // *** score에 따라 바뀌는 배경 ***
 
-    int animStart = 300;   
-    int spaceStart = 600;  // 값 고칠시에 LR장애물도 같이 고쳐야함
+    int animStart = 400;   
+    int spaceStart = 800;  // 값 고칠시에 LR장애물도 같이 고쳐야함
 
     int index = 0;
 

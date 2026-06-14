@@ -139,7 +139,7 @@ public:
         Width = bmp.bmWidth;
         Height = bmp.bmHeight;
 
-        if (score <= 600) { // 밤 시작 부분 600
+        if (score <= 800) { // 밤 시작 부분 600
             if (move_R) {
                 TransparentBlt(hdc, pos.x - size / 2, screenY - size / 2, size + Width, size + Height,
                     hMemDC, 0, 0, Width, Height, RGB(0, 255, 0));

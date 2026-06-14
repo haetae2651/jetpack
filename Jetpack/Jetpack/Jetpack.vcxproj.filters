@@ -425,5 +425,20 @@
     <Media Include="Resources\Sounds\Hit.wav">
       <Filter>리소스 파일</Filter>
     </Media>
+    <Media Include="Resources\Sounds\Bg.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resources\Sounds\Bg2.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resources\Sounds\Item.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resources\Sounds\liecio-achive-sound-132273.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resources\Sounds\select.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
   </ItemGroup>
 </Project>
