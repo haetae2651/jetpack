@@ -245,6 +245,7 @@
     <Image Include="Resources\UI\pregame\Option.bmp" />
     <Image Include="Resources\UI\pregame\StartGame.bmp" />
     <Image Include="Resources\UI\pregame\TitleBG.bmp" />
+    <Image Include="Resources\UI\Restart.bmp" />
     <Image Include="Resources\UI\설정1.bmp" />
     <Image Include="Resources\UI\설정2.bmp" />
     <Image Include="Resources\설정1.bmp" />

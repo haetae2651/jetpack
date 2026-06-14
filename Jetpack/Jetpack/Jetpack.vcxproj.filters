@@ -411,5 +411,8 @@
     <Image Include="Resources\UI\black.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="Resources\UI\Restart.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
 </Project>

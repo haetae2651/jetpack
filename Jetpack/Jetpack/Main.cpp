@@ -78,12 +78,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 
 void Game_Stop(HWND hWnd, bool& isStop) {
 	isStop = !isStop;
-	if (isStop) {
-		KillTimer(hWnd, 1);
-	}
-	else {
-		SetTimer(hWnd, 1, 1, NULL);
-	}
+
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -123,9 +118,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	static bool IngameUI_Render = false;
 	static int selected = 0;
 	static bool isFadeIn = false;
+	static bool isGameOverFade = false;
+	static bool isTitleFadeIn = true;
+
 	//6.2 게임설정
 	static bool isStop = false; // 게임 멈추기
-
+	static bool timer1init = false;
 	switch (uMsg) {
 	case WM_CREATE:
 	{
@@ -136,7 +134,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		IngameUI_Render = true;
 
 
-
+		fadeset_in(win);
 		hDC = GetDC(hWnd);
 		GetClientRect(hWnd, &win);
 
@@ -260,6 +258,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		case VK_SPACE: {
  					break;
 		}
+		case 'r': case 'R':{
+			if (isStop)
+			{
+
+				timer1init = false;
+			}
+			break;
+		}
 
 	
 		}
@@ -279,6 +285,32 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		case 1: {
 
 			//렌더링 파트
+			if (!timer1init)
+			{
+
+				itemsManager.Clear();
+				obsManager.Clear();
+				player.setFuel(100);
+				player.setHp(5);
+				player.setSpeed(0,0);
+				player.setPos({ win.right / 2, win.bottom / 2 });
+				playerX = player.getPos().x;
+				playerY = player.getPos().y;
+				player.setishit(false);
+				playerseen = true;
+				isStop = false;
+				timer1init = true;
+
+				KillTimer(hWnd, 2);
+				seencnt = 0;
+				bg.Camera_Init(win.bottom);
+				cameraY = bg.GetCameraY();
+				isStop = false;
+				timer1init = true;
+			}
+
+
+
 			HBITMAP oldMDC1Bit = (HBITMAP)SelectObject(mDC1, hBitmap);
 
 			bg.Render(mDC1, mDC2, win);												//배경 렌더링
@@ -313,89 +345,122 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 
 			//게임 업데이트 파트
+			if (!isStop)
+			{
 
 
-			obsManager.AutoAdd(randtype(dre), player.getPos().y); //				AutoAdd(type, playerY)
-			obsManager.Update_Obstacles(bg.GetCameraDelta(), cameraY);
-			obsManager.Delete_Obstacles(player.getPos().y);
 
-			itemsManager.Update_Items(bg.GetCameraDelta(), cameraY,playerY,playerX);
-			itemsManager.Delete_Items(player.getPos().y);
-			itemsManager.AutoAdd(randtype(dre), player.getPos().y);
+				obsManager.AutoAdd(randtype(dre), player.getPos().y); //				AutoAdd(type, playerY)
+				obsManager.Update_Obstacles(bg.GetCameraDelta(), cameraY);
+				obsManager.Delete_Obstacles(player.getPos().y);
 
-			player.decel();
-			player.update();
-			player.move(wParam, maxSpeed,mDC1,win);
+				itemsManager.Update_Items(bg.GetCameraDelta(), cameraY, playerY, playerX);
+				itemsManager.Delete_Items(player.getPos().y);
+				itemsManager.AutoAdd(randtype(dre), player.getPos().y);
+
+				player.decel();
+				player.update();
+				player.move(wParam, maxSpeed, mDC1, win);
+
+
+
+				// 플레이어 히트박스 갱신
+				playerRect.left = playerX - player.getSize() / 2 + 10;
+				playerRect.top = (playerY - cameraY) - player.getSize() / 2 + 10;
+				playerRect.right = playerRect.left + 40;
+				playerRect.bottom = playerRect.top + 50;
+
+
+				// 충돌 체크
+				if (obsManager.Check_PlayerCollision(playerRect, cameraY) && !player.getishit()) {
+					player.setishit(true);
+					seencnt = 0;
+					SetTimer(hWnd, 2, 15, NULL); //0.5초마다 깜빡임
+					player.setHp(player.getHp() - 1);
+
+					player.setSpeed(player.getXSpeed() * -1, player.getYSpeed() * -1);
+					player.setFuel(player.getFuel() - 10);
+
+
+				}
+
+				int hitItemType = itemsManager.Check_And_Eat_Item(playerRect);
+				int maxHP = 5;
+				if (hitItemType != -1) // -1이 아니라면 무언가 아이템과 충돌하여 먹은 상태
+				{
+					if (hitItemType == 0) {
+						player.setHp(player.getHp() + 1);
+						if (player.getHp() > maxHP)
+							player.setHp(maxHP);
+
+						player.setFuel((100.0f - player.getFuel()) * 0.1 + 20 + player.getFuel());
+						if (player.getFuel() > 100)
+							player.setFuel(100);
+
+					}
+					else if (hitItemType == 1) {
+
+						player.setFuel(player.getFuel() + 80);
+						if (player.getFuel() > 100)
+							player.setFuel(100);
+					}
+
+
+					// 게임 오버
+
+					
+
+				}
+
+				if (player.getHp() < 1 || player.getPos().y - cameraY > win.bottom + 100)
+				{
+					if (!isGameOverFade)
+					{
+						isStop = false;
+						fadeset(g_hInst, win);
+						isGameOverFade = true;
+					}
+				}
+
+				// ***************************************************************
+				// 플레이어 히트박스 시각화 (파란 사각형) 
+				HBRUSH oldBrush = (HBRUSH)SelectObject(mDC1, GetStockObject(NULL_BRUSH));
+				HPEN hPen = CreatePen(PS_SOLID, 2, RGB(0, 0, 255));
+				HPEN oldPen = (HPEN)SelectObject(mDC1, hPen);
+
+				Rectangle(mDC1, playerRect.left, playerRect.top, playerRect.right, playerRect.bottom);
+
+				SelectObject(mDC1, oldPen);
+				SelectObject(mDC1, oldBrush);
+				DeleteObject(hPen);
+				// ***************************************************************
+
+			}
+			escRender(mDC1, g_hInst, win, isStop);
 
 			
-
-			// 플레이어 히트박스 갱신
-			playerRect.left = playerX - player.getSize() / 2 + 10;
-			playerRect.top = (playerY - cameraY) - player.getSize() / 2 + 10;
-			playerRect.right = playerRect.left + 40;
-			playerRect.bottom = playerRect.top + 50;
-
-
-			// 충돌 체크
-			if (obsManager.Check_PlayerCollision(playerRect, cameraY) && !player.getishit()) {
-				player.setishit(true);
-				seencnt = 0;
-				SetTimer(hWnd, 2, 15, NULL); //0.5초마다 깜빡임
-				player.setHp(player.getHp() - 1);
-				
-				player.setSpeed(player.getXSpeed() * -1, player.getYSpeed() * -1);
-				player.setFuel(player.getFuel() - 10);
-
-
-			}
-
-			int hitItemType = itemsManager.Check_And_Eat_Item(playerRect);
-			int maxHP = 5;
-			if (hitItemType != -1) // -1이 아니라면 무언가 아이템과 충돌하여 먹은 상태
-			{
-				if (hitItemType == 0) {
-					player.setHp(player.getHp() + 1);
-					if (player.getHp() > maxHP)
-						player.setHp(maxHP);
-
-					player.setFuel((100.0f - player.getFuel()) * 0.1 + 20 + player.getFuel());
-					if (player.getFuel() > 100)
-						player.setFuel(100);
-
-				}
-				else if (hitItemType == 1) {
-
-					player.setFuel(player.getFuel() + 80);
-					if (player.getFuel() > 100)
-						player.setFuel(100);
-				}
-				
-
-				// 게임 오버
-				
-			}
-
-
-
-			// ***************************************************************
-			// 플레이어 히트박스 시각화 (파란 사각형) 
-			HBRUSH oldBrush = (HBRUSH)SelectObject(mDC1, GetStockObject(NULL_BRUSH));
-			HPEN hPen = CreatePen(PS_SOLID, 2, RGB(0, 0, 255));
-			HPEN oldPen = (HPEN)SelectObject(mDC1, hPen);
-
-			Rectangle(mDC1, playerRect.left, playerRect.top, playerRect.right, playerRect.bottom);
-
-			SelectObject(mDC1, oldPen);
-			SelectObject(mDC1, oldBrush);
-			DeleteObject(hPen);
-			// ***************************************************************
-
-
-			escRender(mDC1, g_hInst, win, isStop);
 
 			if (isFadeIn) {
 				if (fadein_update(mDC1)) {
 					isFadeIn = false; // 완전히 화면이 걷히면 더 이상 그리지 않음
+				}
+			}
+
+			if (isGameOverFade)
+			{
+				bool isFadeFinished = fadeout_update(mDC1);
+
+				if (isFadeFinished)
+				{
+					isGameOverFade = false;
+					timer1init = false; 
+
+					KillTimer(hWnd, 1); 
+					KillTimer(hWnd, 2);
+					fadeset_in(win);
+					isTitleFadeIn = true;
+					SetTimer(hWnd, 3, 1, NULL); 
+					timer1init = false;
 				}
 			}
 
@@ -427,15 +492,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			staticUIRender(mDC1, win);
 			dynamicUIRender(mDC1, win, hWnd,selected);
 
+			if (isTitleFadeIn) {
+				if (fadein_update(mDC1)) {
+					isTitleFadeIn = false; // 완전히 밝아지면 업데이트 중지
+				}
+			}
+
 			SelectObject(mDC1, oldMDC1Bit);
 
 
-			if (GetAsyncKeyState(VK_SPACE) & 0x8000 && selected == 0)
+			if (GetAsyncKeyState(VK_SPACE) & 0x8000 && selected == 0 && !isTitleFadeIn)
 			{
-				KillTimer(hWnd, 3); 
-				fadeset(g_hInst, win);       
+				KillTimer(hWnd, 3);
+				fadeset(g_hInst, win);
 				SetTimer(hWnd, 4, 1, NULL);
-
 			}
 
 			DeleteDC(mDC2);
@@ -460,10 +530,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			if (isFadeFinished)
 			{
 				KillTimer(hWnd, 4);          
+				KillTimer(hWnd, 1);
+				KillTimer(hWnd, 2);
+				KillTimer(hWnd, 3);
 
 				fadeset_in(win);
 				isFadeIn = true;
-				SetTimer(hWnd, 1, 15, NULL);
+				SetTimer(hWnd, 1, 1, NULL);
+				timer1init = false;
 			}
 			break;
 		}

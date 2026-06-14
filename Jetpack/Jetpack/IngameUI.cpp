@@ -7,6 +7,7 @@ static HBITMAP hFuelBar = NULL;
 static HBRUSH redBrush = NULL;
 static HBRUSH oldBrush = NULL;
 static HBITMAP hHeart = NULL;
+static HBITMAP restart = NULL;
 static HBRUSH hHollowBrush = NULL;
 
 
@@ -14,6 +15,7 @@ void setUI(HINSTANCE hInstance) {
 	//ESC 버튼
 	hEscBtn[0] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP46)); // 흰색
 	hEscBtn[1] = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP47)); // 검은색
+	restart = (HBITMAP)LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP106)); // 검은색
 
 	//폰트 (점수)
 	hFont = CreateFont(40, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH || FF_DONTCARE, L"나눔 명조");
@@ -51,6 +53,10 @@ void ReleaseUI() {
 	if (hHeart) {
 		DeleteObject(hHeart);
 		hHeart = NULL;
+	}
+	if (restart) {
+		DeleteObject(restart);
+		restart = NULL;
 	}
 }
 
@@ -130,6 +136,14 @@ void escRender(HDC mDC1, HINSTANCE hInstance, RECT win, bool isStop) {
 	
 	TransparentBlt(mDC1, 10, 10, 40, 40,
 		hMemDC, 0, 0, bmp.bmWidth, bmp.bmHeight, RGB(0, 255, 0));
+
+	if (isStop)
+	{
+		GetObject(restart, sizeof(bmp), &bmp);
+		SelectObject(hMemDC, restart); // 흰색
+		TransparentBlt(mDC1, 10, 50, bmp.bmWidth * 0.3f, bmp.bmHeight * 0.3f,
+			hMemDC, 0, 0, bmp.bmWidth, bmp.bmHeight, RGB(0, 255, 0));
+	}
 
 	SelectObject(hMemDC, oldBit);
 	DeleteDC(hMemDC);
