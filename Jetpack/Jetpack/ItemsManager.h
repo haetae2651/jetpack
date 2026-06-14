@@ -121,6 +121,8 @@ public:
 	{
 		if (head == nullptr)
 		{
+			Add_Item(new Item_HP({ 500,-500 }, g_hInst));
+
 			return;
 		}
 

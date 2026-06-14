@@ -418,4 +418,12 @@
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\Sounds\Jetpack.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resources\Sounds\Hit.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+  </ItemGroup>
 </Project>

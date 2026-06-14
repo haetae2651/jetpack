@@ -93,15 +93,7 @@ public:
 		DeleteDC(hMemDC);
 
 
-		HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, GetStockObject(NULL_BRUSH));
-		HPEN hPen = CreatePen(PS_SOLID, 2, RGB(0, 255, 0));
-		HPEN oldPen = (HPEN)SelectObject(hdc, hPen);
-
-		Rectangle(hdc, hitbox.left, hitbox.top, hitbox.right, hitbox.bottom);
-
-		SelectObject(hdc, oldPen);
-		SelectObject(hdc, oldBrush);
-		DeleteObject(hPen);
+		
 	}
 
 	~Item_Fuel()

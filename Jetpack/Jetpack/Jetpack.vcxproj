@@ -105,10 +105,13 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)FMOD_SDK\inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)FMOD_SDK\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmod_vc.lib; $(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -250,6 +253,11 @@
     <Image Include="Resources\UI\설정1.bmp" />
     <Image Include="Resources\UI\설정2.bmp" />
     <Image Include="Resources\설정1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\Sounds\Hit.wav" />
+    <Media Include="Resources\Sounds\Item.wav" />
+    <Media Include="Resources\Sounds\Jetpack.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

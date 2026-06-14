@@ -4,6 +4,9 @@
 #include <cmath>
 #pragma comment(lib, "msimg32.lib")
 
+#include "fmod.hpp"
+#include "fmod_errors.h"
+
 
 class Player {
 
@@ -26,6 +29,88 @@ public:
 	void setFuel(int newFuel) { fuel = newFuel; }
 	void setishit(bool newishit) { ishit = newishit; }
 	void setSpeed(float Xspeed, float Yspeed) { this->Xspeed = Xspeed, this->Yspeed = Yspeed; }
+
+	void initAudio(HINSTANCE hInstance) {
+		// 1. FMOD 시스템 생성 및 초기화
+		FMOD::System_Create(&pSystem);
+		pSystem->setDSPBufferSize(512, 4);
+		pSystem->init(32, FMOD_INIT_NORMAL, nullptr);
+
+		// 2. Win32 API를 사용해 리소스에서 WAVE 파일 찾기 및 로드
+		HRSRC hResInfo = FindResource(hInstance, MAKEINTRESOURCE(IDR_WAVE1), TEXT("WAVE"));
+		if (hResInfo != nullptr) {
+			HGLOBAL hResData = LoadResource(hInstance, hResInfo);
+			void* pSoundData = LockResource(hResData);
+			DWORD soundSize = SizeofResource(hInstance, hResInfo);
+
+			// 3. FMOD에게 메모리에서 소리를 읽어오도록 설정 정보 전달
+			FMOD_CREATESOUNDEXINFO exinfo;
+			memset(&exinfo, 0, sizeof(FMOD_CREATESOUNDEXINFO));
+			exinfo.cbsize = sizeof(FMOD_CREATESOUNDEXINFO);
+			exinfo.length = soundSize;
+
+			// FMOD_OPENMEMORY 플래그를 사용하여 메모리에서 로드, FMOD_LOOP_NORMAL로 반복 재생 설정
+			pSystem->createSound((const char*)pSoundData, FMOD_OPENMEMORY | FMOD_LOOP_NORMAL, &exinfo, &pJetSound);
+			if (pJetSound) {
+				pSystem->playSound(pJetSound, 0, true, &pJetChannel);
+			}
+
+
+			//hit
+			HRSRC hResInfo2 = FindResource(hInstance, MAKEINTRESOURCE(IDR_WAVE2), TEXT("WAVE"));
+			if (hResInfo2 != nullptr) {
+				HGLOBAL hResData2 = LoadResource(hInstance, hResInfo2);
+				void* pSoundData2 = LockResource(hResData2);
+				DWORD soundSize2 = SizeofResource(hInstance, hResInfo2);
+
+				FMOD_CREATESOUNDEXINFO exinfo2;
+				memset(&exinfo2, 0, sizeof(FMOD_CREATESOUNDEXINFO));
+				exinfo2.cbsize = sizeof(FMOD_CREATESOUNDEXINFO);
+				exinfo2.length = soundSize2;
+
+				// 💡 FMOD_DEFAULT를 사용하여 단발성(반복 안 함) 사운드로 생성합니다.
+				pSystem->createSound((const char*)pSoundData2, FMOD_OPENMEMORY | FMOD_DEFAULT, &exinfo2, &pHitSound);
+			}
+
+
+			//item
+
+
+
+			HRSRC hResInfo3 = FindResource(hInstance, MAKEINTRESOURCE(IDR_WAVE3), TEXT("WAVE"));
+			if (hResInfo3 != nullptr) {
+				HGLOBAL hResData3 = LoadResource(hInstance, hResInfo3);
+				void* pSoundData3 = LockResource(hResData3);
+				DWORD soundSize3 = SizeofResource(hInstance, hResInfo3);
+
+				FMOD_CREATESOUNDEXINFO exinfo3;
+				memset(&exinfo3, 0, sizeof(FMOD_CREATESOUNDEXINFO));
+				exinfo3.cbsize = sizeof(FMOD_CREATESOUNDEXINFO);
+				exinfo3.length = soundSize3;
+
+				// 💡 FMOD_DEFAULT를 사용하여 단발성(반복 안 함) 사운드로 생성합니다.
+				pSystem->createSound((const char*)pSoundData3, FMOD_OPENMEMORY | FMOD_DEFAULT, &exinfo3, &pItemSound);
+			}
+		}
+
+
+	}
+
+	void Hitsound()
+	{
+		if (pSystem && pHitSound)
+		{
+			pSystem->playSound(pHitSound, 0, false, nullptr);
+		}
+	}
+
+	void Itemsound()
+	{
+		if (pSystem && pItemSound)
+		{
+			pSystem->playSound(pItemSound, 0, false, nullptr);
+		}
+	}
 
 
 	void move(WPARAM wParam, int maxSpeed,HDC hdc,RECT win) {
@@ -166,12 +251,9 @@ public:
 		jetWidth = jetBmp.bmWidth;
 		jetHeight = jetBmp.bmHeight;
 
-		//플레이어 이미지 설정
-		//플레이어 속도에 따라 각도가 다른 이미지 로드
+		size = static_cast<int>(max(width, height) * 0.2); 
 
-
-		// ************************* 이게 무슨 말인지 잘 모르겠사옵니다
-		size = static_cast<int>(max(width, height) * 0.2); //렌더링 및 충돌판정	에 사용할 크기
+		initAudio(hInstance);
 
 	}
 
@@ -312,7 +394,9 @@ public:
 		if (angle < -30.0f) angle = -30.0f;
 
 
-
+		if (pSystem) {
+			pSystem->update();
+		}
 
 
 	}
@@ -323,6 +407,20 @@ public:
 	void updateJet() {
 		bool isLeftPressed = (GetAsyncKeyState(VK_LEFT) & 0x8000);
 		bool isRightPressed = (GetAsyncKeyState(VK_RIGHT) & 0x8000);
+
+		if (pSystem && pJetSound) {
+			bool isPlaying = false;
+
+			// 채널이 유효한지 확인하고, 현재 재생 중인지 상태를 가져옴
+			if (pJetChannel) {
+				if (isLeftPressed || isRightPressed) {
+					pJetChannel->setPaused(false); // 일시정지 해제 -> 즉각 재생
+				}
+				else {
+					pJetChannel->setPaused(true);  // 일시정지 -> 즉각 멈춤
+				}
+			}
+		}
 
 		switch (jetState) {
 		case 0: // 안누름
@@ -415,6 +513,22 @@ public:
 		}
 	}
 
+	~Player() {
+		if (pJetSound) {
+			pJetSound->release();
+		}
+		if (pHitSound) {
+			pHitSound->release();
+		}
+		if (pItemSound) {
+			pItemSound->release();
+		}
+		if (pSystem) {
+			pSystem->close();
+			pSystem->release();
+		}
+	}
+
 
 private:
 
@@ -456,4 +570,12 @@ private:
 	int maxFrame = 10;
 
 	bool ishit = false;
+
+	// FMOD 관련 변수
+	FMOD::System* pSystem = nullptr;
+	FMOD::Sound* pJetSound = nullptr;
+	FMOD::Sound* pHitSound = nullptr;
+	FMOD::Sound* pItemSound = nullptr;
+	FMOD::Channel* pJetChannel = nullptr;
+
 };

@@ -380,7 +380,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 					seencnt = 0;
 					SetTimer(hWnd, 2, 15, NULL); //0.5초마다 깜빡임
 					player.setHp(player.getHp() - 1);
-
+					player.Hitsound();
 					player.setSpeed(player.getXSpeed() * -1, player.getYSpeed() * -1);
 					player.setFuel(player.getFuel() - 10);
 
@@ -391,6 +391,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				int maxHP = 5;
 				if (hitItemType != -1) // -1이 아니라면 무언가 아이템과 충돌하여 먹은 상태
 				{
+					player.Itemsound();
 					if (hitItemType == 0) {
 						player.setHp(player.getHp() + 1);
 						if (player.getHp() > maxHP)
